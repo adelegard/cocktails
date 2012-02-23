@@ -1,0 +1,3 @@
+%form.span11.well.form-search{:id => "search_form",:action => "/search", :method => :get}
+    %input.input-medium.search-query.span8{:id => "search_input", :name => "q", :value => @q, "x-webkit-grammar" => "builtin:search", "x-webkit-speech" => ""}
+    %button.btn{:type => "submit"} Search

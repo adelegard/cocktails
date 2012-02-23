@@ -1,0 +1,61 @@
+-@pageTitle = "Recipe - #{@recipe.title}"
+
+.cb
+#recipe
+	%h2= @recipe.title
+	%br
+	.btn-group
+		%a.btn.btn-primary.dropdown-toggle{"data-toggle" => "dropdown", :href => "#"}
+			Actions
+			%span.caret
+		%ul.dropdown-menu
+			%li
+				%a{:href => "#"} Favorite
+			%li
+				%a{:href => "#"} Email
+			%li
+				%a{:href => "#"} Share
+			%li.divider
+			%li
+				%a{:href => "#"} Print
+	%br
+	=render :partial => '/widgets/facebook', :locals => {:href => "http://www.blahcocktails.com/recipe/#{@recipe.id}"}
+	%br
+	%br
+	.rating
+		Rating:
+		= @recipe.rating_avg
+	.count
+		Num Ratings:
+		= @recipe.rating_count
+	%br
+	.ingredients
+		- @ingredients.each do |ingredient|
+			.ingredient
+				= ingredient[:amount]
+				= ingredient[:ingredient]
+	%br
+	.directions
+		Directions:
+		= @recipe.directions
+	%br
+	-if @recipe.alcohol != ""
+		.alcohol_percent
+			Alcohol Percent:
+			= @recipe.alcohol
+	-if @recipe.glass != ""
+		.serve_in
+			Serve in:
+			= @recipe.glass
+-if user_signed_in?
+	%br
+	Current Rating: 
+	=@recipe_user.rating
+	%br
+	Starred: 
+	=@recipe_user.starred
+	%br
+=render :partial => '/recipes/rating_links'
+%br
+%br
+%a{:href => "/star?recipe_id=#{@recipe.id}"} Star

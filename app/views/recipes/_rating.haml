@@ -1,0 +1,19 @@
+= form_tag("/recipes/rate", :method => "post") do
+	%input{:type => "hidden", :name => "recipe_id", :value => @recipe.id}
+
+	%label{:for => "rate1"} 1
+	%input#rate1{:type => "radio", :name => "rating", :value => 1}
+
+	%label{:for => "rate2"} 2
+	%input#rate2{:type => "radio", :name => "rating", :value => 2}
+
+	%label{:for => "rate3"} 3
+	%input#rate3{:type => "radio", :name => "rating", :value => 3}
+
+	%label{:for => "rate4"} 4
+	%input#rate4{:type => "radio", :name => "rating", :value => 4}
+
+	%label{:for => "rate5"} 5
+	%input#rate5{:type => "radio", :name => "rating", :value => 5}
+	%br
+	= submit_tag("Submit")

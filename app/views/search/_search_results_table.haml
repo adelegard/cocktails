@@ -1,0 +1,15 @@
+#search_results
+  -if @recipes.length > 0 then
+    %table.table.table-striped
+      %thead
+        %tr
+          %th.tal= "Title"
+          %th.tal= "Rating avg"
+          %th.tal= "Rating count"
+      %tbody
+        -@recipes.each do |recipe|
+          %tr
+            %td.tal.recipe_title= link_to(recipe.title, recipe)
+            %td.tal.search_link= recipe.rating_avg
+            %td.tal.search_link= recipe.rating_count
+  = will_paginate @recipes

@@ -1,0 +1,105 @@
+%html
+    %head
+        %meta{:charset => "utf-8"}
+        %meta{:content => "IE=edge,chrome=1", "http-equiv" => "X-UA-Compatible"}
+        %meta{:content => "Cocktails", :name => "description"}
+        %meta{:content => "cocktails.com", :name => "author"}
+        %meta{:content => "width=1024", :name => "viewport"}
+        %title Cocktails | Cocktails.com
+        = stylesheet_link_tag "application"
+        = javascript_include_tag "application"
+        %script{:src => "https://apis.google.com/js/plusone.js", :type => "text/javascript"}
+    %body
+        #fb-root
+        :javascript
+            (function(d, s, id) {
+                var js, fjs = d.getElementsByTagName(s)[0];
+                if (d.getElementById(id)) return;
+                js = d.createElement(s); js.id = id;
+                js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
+                fjs.parentNode.insertBefore(js, fjs);
+            }(document, 'script', 'facebook-jssdk'));
+        .navbar.navbar-fixed-top
+            .navbar-inner
+                .container-fluid
+                    %a.btn.btn-navbar{"data-toggle" => "collapse", "data-target" => ".nav-collapse"}
+                        %span.icon-bar
+                        %span.icon-bar
+                        %span.icon-bar
+                    %a.brand{:href => "/"} Cocktail Recipes
+                    .nav-collapse
+                        %ul.nav
+                            %li.active
+                                %a{:href => "#"} Home
+                            %li
+                                %a{:href => "#about"} About
+                            %li
+                                %a{:href => "#contact"} Contact
+                        %form.navbar-search{:action => "/search", :method => :get}
+                            %input.search-query.span3{:placeholder => "Search", :type => "text", :name => "q", :value => @q}
+                            %input.btn{:type => "submit", :value => "Search"}
+                        %ul.nav.pull-right
+                            - if user_signed_in?
+                                %li.dropdown
+                                    %a.dropdown-toggle{"data-toggle" => "dropdown", :href => "#"}
+                                        = current_user.email
+                                        %b.caret
+                                    %ul.dropdown-menu
+                                        %li
+                                            %a{:href => "#"} Profile
+                                        %li
+                                            %a{:href => "#"} Favorites
+                                        %li
+                                            %a{:href => "#"} Something else here
+                                        %li.divider
+                                        %li
+                                            = link_to "Sign out", destroy_user_session_path, :method => :delete
+                            - else
+                                %p.navbar-text
+                                    = link_to "Sign up", new_user_registration_path
+                                    or 
+                                    = link_to "Sign in", new_user_session_path
+        .container-fluid
+            .row-fluid
+                .span3
+                    .well.sidebar-nav
+                        %ul.nav.nav-list
+                            %li.nav-header Spirit
+                            %li.active
+                                %a{:href => "/search?q="} All
+                            %li
+                                %a{:href => "/search?q=vodka"} Vodka
+                            %li
+                                %a{:href => "/search?q=rum"} Rum
+                            %li
+                                %a{:href => "/search?q=gin"} Gin
+                            %li
+                                %a{:href => "/search?q=tequila"} Tequila
+                            %li
+                                %a{:href => "/search?q=whiskey"} Whiskey
+                            %li
+                                %a{:href => "/search?q=champagne"} Champagne
+                            %li.nav-header Ingredients
+                            %li
+                                %a{:href => "#"} Link
+                            %li
+                                %a{:href => "#"} Link
+                            %li
+                                %a{:href => "#"} Link
+                            %li
+                                %a{:href => "#"} Link
+                            %li
+                                %a{:href => "#"} Link
+                            %li
+                                %a{:href => "#"} Link
+                            %li.nav-header Sidebar
+                            %li
+                                %a{:href => "#"} Link
+                            %li
+                                %a{:href => "#"} Link
+                            %li
+                                %a{:href => "#"} Link
+                .span9
+                    %p.notice.dn= notice
+                    %p.alert.dn= alert
+                    = yield

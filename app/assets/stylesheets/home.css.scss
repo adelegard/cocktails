@@ -1,0 +1,52 @@
+// Place all the styles related to the home controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+body {
+	padding-top: 60px;
+}
+
+.navbar input {
+	margin-top: 5px;
+}
+
+.navbar-search {
+	margin-top: 0px;
+}
+
+form {
+	margin-bottom: 0px;
+}
+
+.alert {
+	color: white;
+	background-color: white;
+}
+
+/* star rating */
+.rating-list{
+	border:1px solid #efefef;
+	-moz-border-radius:6px;
+	-webkit-border-radius:6px;
+	border-radius:6px;
+	padding:3px 3px 1px 4px;
+	width:198px;
+	height:13px;
+	font-size:11px;
+	text-align:left;
+}
+.rating-list:hover{
+	-moz-box-shadow:0 1px 5px rgba(0, 0, 0, 0.5);
+	-webkit-box-shadow:0 1px 5px rgba(0, 0, 0, 0.5);
+}
+.rating-list .rating-stars a{
+	width:14px;
+}
+.rating-list .rating-rating{
+	margin:-1px 0 0 143px;
+	width:40px;
+	font-size:11px;
+}
+.rating-list .rating-cancel{
+	margin:-1px 0 0 185px;
+}

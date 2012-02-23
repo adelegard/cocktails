@@ -1,0 +1,15 @@
+// Widget Sizes
+//  * Large: 250 x 250, 336 x 280
+//  * Sidebar: 120 x 300, 160 x 300
+//  * Compact: 125 x 125, 120 x 90, 234 x 60
+:javascript
+  var amzn_wdgt={widget: 'MP3Clips'};
+  amzn_wdgt.tag='opelyr08-20';
+  amzn_wdgt.widgetType='ASINList';
+  amzn_wdgt.ASIN='#{asin}';
+  amzn_wdgt.title='#{title}';
+  amzn_wdgt.width= '#{width}';
+  amzn_wdgt.height= '#{height}';
+  amzn_wdgt.shuffleTracks='True';
+  amzn_wdgt.marketPlace='US';
+%script{:src => "http://wms.assoc-amazon.com/20070822/US/js/swfobject_1_5.js", :type => "text/javascript"}

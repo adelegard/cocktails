@@ -1,0 +1,2 @@
+module RecipeUsersHelper
+end
