@@ -38,4 +38,7 @@ Cocktails::Application.configure do
   config.action_mailer.default_url_options = { :host => 'localhost:3000' }
   
   config.log_tags = [:uuid]
+
+  # Let paperclip know where ImageMagick is
+  Paperclip.options[:command_path] = "/usr/local/bin/"
 end

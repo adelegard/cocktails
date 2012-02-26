@@ -1,0 +1,5 @@
+-@pageTitle = "Upload Photo for - #{@recipe.title}"
+
+=form_for @recipe, :html => { :multipart => true } do |f|
+	= f.file_field :photo
+	= f.submit

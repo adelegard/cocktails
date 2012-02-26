@@ -1,3 +1,26 @@
+-if @recipe_user.rating != nil
+	.rating-box.rating.value-title.my{:class => "stars#{@recipe_user.rating}", :title => "#{@recipe_user.rating}"}
+		%span
+			Rated
+			=@recipe.rating_avg
+			stars out of 5
+-else
+	.rating-box.rating.value-title{:class => "stars#{@recipe.rating_avg}", :title => "#{@recipe.rating_avg}"}
+		%span
+			Rated
+			=@recipe.rating_avg
+			stars out of 5
+%br
+%br
+Ratings: 
+=@recipe.rating_avg
+="/"
+5
+from
+=@recipe.rating_count
+users
+%br
+%br
 %a{:href => "/rate?recipe_id=#{@recipe.id}&rating=1"} 1
 %a{:href => "/rate?recipe_id=#{@recipe.id}&rating=2"} 2
 %a{:href => "/rate?recipe_id=#{@recipe.id}&rating=3"} 3

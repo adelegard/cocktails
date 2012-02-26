@@ -48,7 +48,9 @@
                                         %li
                                             %a{:href => "#"} Profile
                                         %li
-                                            %a{:href => "#"} Favorites
+                                            %a{:href => "/favorites"} Favorites
+                                        %li
+                                            %a{:href => "/all_rated"} Rated
                                         %li
                                             %a{:href => "#"} Something else here
                                         %li.divider
@@ -65,20 +67,20 @@
                     .well.sidebar-nav
                         %ul.nav.nav-list
                             %li.nav-header Spirit
-                            %li.active
+                            %li{:class => (@sidebar_link == 'all' || @sidebar_link == nil ? 'active' : nil)}
                                 %a{:href => "/search?q="} All
-                            %li
-                                %a{:href => "/search?q=vodka"} Vodka
-                            %li
-                                %a{:href => "/search?q=rum"} Rum
-                            %li
-                                %a{:href => "/search?q=gin"} Gin
-                            %li
-                                %a{:href => "/search?q=tequila"} Tequila
-                            %li
-                                %a{:href => "/search?q=whiskey"} Whiskey
-                            %li
-                                %a{:href => "/search?q=champagne"} Champagne
+                            %li{:class => (@sidebar_link == 'vodka' ? 'active' : nil)}
+                                %a{:href => "/search?sidebar_link=vodka"} Vodka
+                            %li{:class => (@sidebar_link == 'rum' ? 'active' : nil)}
+                                %a{:href => "/search?sidebar_link=rum"} Rum
+                            %li{:class => (@sidebar_link == 'gin' ? 'active' : nil)}
+                                %a{:href => "/search?sidebar_link=gin"} Gin
+                            %li{:class => (@sidebar_link == 'tequila' ? 'active' : nil)}
+                                %a{:href => "/search?sidebar_link=tequila"} Tequila
+                            %li{:class => (@sidebar_link == 'whiskey' ? 'active' : nil)}
+                                %a{:href => "/search?sidebar_link=whiskey"} Whiskey
+                            %li{:class => (@sidebar_link == 'champagne' ? 'active' : nil)}
+                                %a{:href => "/search?sidebar_link=champagne"} Champagne
                             %li.nav-header Ingredients
                             %li
                                 %a{:href => "#"} Link

@@ -1,0 +1,14 @@
+%h2 New Recipe
+%br
+=form_for @recipe, :html => { :multipart => true} do |f|
+	%div
+		= f.label :title
+		= f.text_field :title
+	%div
+		= f.label :photo, 'Choose a photo:'
+		= f.file_field :photo
+	%div
+		= f.label :directions
+		= f.text_field :directions
+
+	= f.submit 'Create Recipe'

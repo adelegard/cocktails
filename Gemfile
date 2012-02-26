@@ -7,11 +7,14 @@ gem 'rails', '3.2.1'
 
 gem 'mysql2'
 gem 'nokogiri'
-gem "bootstrap-sass", "~> 2.0.0"
+gem "bootstrap-sass", "~> 2.0.1"
 gem 'will_paginate'
 gem "devise", "~> 2.0.4"
 gem "haml-rails"
 gem 'bootstrap-will_paginate'
+gem "aws-s3", "~> 0.6.2"
+gem "paperclip", "~> 2.7.0"
+gem "rmagick", "~> 2.13.1"
 
 # Gems used only for assets and not required
 # in production environments by default.
