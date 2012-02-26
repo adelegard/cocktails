@@ -5,7 +5,7 @@
 	.page-header
 		%h2= @recipe.title
 	.well.span2.pull-right.wsnw
-		-if @recipe_user.starred
+		-if @recipe_user != nil && @recipe_user.starred
 			%i.icon-minus
 			%a{:href => "/favorite?recipe_id=#{@recipe.id}"} Remove from Favorites
 		-else
@@ -22,13 +22,14 @@
 		%a{:href => "#"} Email
 		%hr
 		=render :partial => '/widgets/facebook', :locals => {:href => "http://www.blahcocktails.com/recipe/#{@recipe.id}"}
-		%br
-		=render :partial => '/widgets/twitter'
+		.social
+			=render :partial => '/widgets/twitter'
 	=render :partial => '/recipes/rating_links'
 	%br
-	Current Rating: 
-	=@recipe_user.rating
-	%br
+	-if @recipe_user != nil && @recipe_user.rating
+		Current Rating: 
+		=@recipe_user.rating
+		%br
 	%br
 	-if @ingredients.size > 0
 		%h3 Ingredients
@@ -50,5 +51,5 @@
 		.serve_in
 			%b Serve in:
 			= @recipe.glass
-%br
+%hr
 =render :partial => 'widgets/disqus'

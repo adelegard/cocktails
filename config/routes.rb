@@ -9,6 +9,7 @@ Cocktails::Application.routes.draw do
 	match '/favorite' => 'recipe_users#favorite'
 	match '/all_rated' => 'recipe_users#all_rated'
 	match '/favorites' => 'recipe_users#favorites'
+	match '/profile' => 'recipe_users#profile'
 
 	match '/uploadphoto/:id' => 'recipe_users#uploadphoto'
 	#match '/uploadphoto/:id'

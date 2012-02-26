@@ -1,4 +1,4 @@
--if @recipe_user.rating != nil
+-if @recipe_user != nil && @recipe_user.rating != nil
 	.rating-box.rating.value-title.my{:class => "stars#{@recipe_user.rating}", :title => "#{@recipe_user.rating}"}
 		%span
 			Rated

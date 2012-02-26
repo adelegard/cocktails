@@ -18,6 +18,11 @@ body {
 	margin-top: 0px;
 }
 
+.container-fluid {
+	padding-left: 120px;
+	padding-right: 120px;
+}
+
 form {
 	margin-bottom: 0px;
 }
@@ -27,13 +32,17 @@ form {
 	background-color: white;
 }
 
+.social {
+	margin-top: 5px;
+}
+
 .recipe-actions.btn-group.open .dropdown-menu {
 	left: auto;
 	right: 0;
 }
 
 /* Food Network Stars */
-.rating-box{float:left;width:170px;height:30px;background: #fff url(http://images.foodnetwork.com/webfood/fn20/imgs/stars_lg.gif) no-repeat 0 -330px;}
+.rating-box{float:left;width:170px;height:30px;background: #fff asset-url("stars_lg.gif", image) no-repeat 0 -330px;}
 .rating-box span, .recipe-citrus #fn-e .rating-box span{float:left;text-indent:-9999em;overflow:hidden;}
 .rating-box.stars1{background-position:0 -30px;}
 .rating-box.stars2{background-position:0 -60px;}
@@ -47,7 +56,7 @@ form {
 .rating-box.my.stars4{background-position:0 -450px;}
 .rating-box.my.stars5{background-position:0 -480px;}
 
-.rating-box.sm{float:left;width:130px;height:16px;background:url(http://images.foodnetwork.com/webfood/fn20/imgs/stars_sm.gif) no-repeat 0 -273px;}
+.rating-box.sm{float:left;width:130px;height:16px;background:asset-url("stars_sm.gif", image) no-repeat 0 -273px;}
 .rating-box.sm.stars0-5{background-position:0 -96px;}
 .rating-box.sm.stars1{background-position:0 -16px;}
 .rating-box.sm.stars1-5{background-position:0 -112px;}

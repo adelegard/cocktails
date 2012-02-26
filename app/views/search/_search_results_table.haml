@@ -6,10 +6,19 @@
           %th.tal= "Title"
           %th.tal= "Rating avg"
           %th.tal= "Rating count"
+          %th.tal= "Favorite"
       %tbody
         -@recipes.each do |recipe|
+          -if @recipe_users != nil
+            - @recipe_user = @recipe_users.detect {|ru| ru.recipe_id == recipe.id }
+          - @the_recipe = recipe
           %tr
             %td.tal.recipe_title= link_to(recipe.title, recipe)
-            %td.tal.search_link= recipe.rating_avg
+            %td.tal.search_link
+              =render :partial => 'recipes/rating_links_small'
             %td.tal.search_link= recipe.rating_count
+            - if @recipe_user != nil && @recipe_user.starred = true
+              %td.tal.search_link yup
+            - else
+              %td.tal.search_link
   = will_paginate @recipes
