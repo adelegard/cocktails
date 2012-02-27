@@ -3,6 +3,16 @@ class RecipesController < ApplicationController
 
   def index
     @recipes = Recipe.paginate(:order => "rating_count DESC, rating_avg DESC", :page => params[:page], :per_page => params[:per_page])
+
+    if user_signed_in?
+      @recipe_users = []
+      @recipes.each do |recipe|
+        recipe_user = RecipeUser.where(:recipe_id => recipe.id, :user_id => current_user.id).first
+        if recipe_user != nil
+          @recipe_users << recipe_user
+        end
+      end
+    end
   end
 
   def show

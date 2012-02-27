@@ -1,55 +1,83 @@
 -@pageTitle = "Recipe - #{@recipe.title}"
 
 .cb
-#recipe
-	.page-header
-		%h2= @recipe.title
-	.well.span2.pull-right.wsnw
-		-if @recipe_user != nil && @recipe_user.starred
-			%i.icon-minus
-			%a{:href => "/favorite?recipe_id=#{@recipe.id}"} Remove from Favorites
-		-else
-			%i.icon-plus
-			%a{:href => "/favorite?recipe_id=#{@recipe.id}"} Add to Favorites
+#fullPageView.dn
+	%a.close_circle{:href => "javascript:void(0);"}
+	.header
+		.title
+			%h1= @recipe.title
+	.content
+		.ingredients-container
+			.ingredients
+				%h2 Ingredients
+				-if @ingredients.size > 0
+					%ul
+					- @ingredients.each do |ingredient|
+						%li.ingredient
+							= ingredient[:amount]
+							= ingredient[:ingredient]
+		.directions-container
+			.directions
+				%h2 Directions
+				%p= @recipe.directions
+.page-header
+	%h2= @recipe.title
+%ul.nav.nav-tabs
+	%li.active
+		%a{:href => "#recipe", "data-toggle" => "tab"} Recipe
+	%li
+		%a{:href => "#comments", "data-toggle" => "tab"} Comments
+.tab-content
+	.tab-pane.fade.in.active#recipe
+		.well.span2.pull-right.wsnw
+			-if @recipe_user != nil && @recipe_user.starred
+				%i.icon-minus
+				%a{:href => "/favorite?recipe_id=#{@recipe.id}"} Remove from Favorites
+			-else
+				%i.icon-plus
+				%a{:href => "/favorite?recipe_id=#{@recipe.id}"} Add to Favorites
+			%br
+			%i.icon-list-alt
+			%a.showFullPageView{:href => "#"} Full Page View
+			%br
+			%i.icon-picture
+			%a{:href => "/uploadphoto/#{@recipe.id}"} Add Photo
+			%br
+			%i.icon-print
+			%a{:href => "#"} Print
+			%br
+			%i.icon-envelope
+			%a{:href => "#"} Email
+			%hr
+			=render :partial => '/widgets/facebook', :locals => {:href => "http://www.blahcocktails.com/recipe/#{@recipe.id}"}
+			.social
+				=render :partial => '/widgets/twitter'
+		=render :partial => '/recipes/rating_links'
 		%br
-		%i.icon-picture
-		%a{:href => "/uploadphoto/#{@recipe.id}"} Add Photo
+		-if @recipe_user != nil && @recipe_user.rating
+			Current Rating: 
+			=@recipe_user.rating
+			%br
 		%br
-		%i.icon-print
-		%a{:href => "#"} Print
+		-if @ingredients.size > 0
+			%h3 Ingredients
+			.ingredients
+				- @ingredients.each do |ingredient|
+					.ingredient
+						= ingredient[:amount]
+						= ingredient[:ingredient]
 		%br
-		%i.icon-envelope
-		%a{:href => "#"} Email
-		%hr
-		=render :partial => '/widgets/facebook', :locals => {:href => "http://www.blahcocktails.com/recipe/#{@recipe.id}"}
-		.social
-			=render :partial => '/widgets/twitter'
-	=render :partial => '/recipes/rating_links'
-	%br
-	-if @recipe_user != nil && @recipe_user.rating
-		Current Rating: 
-		=@recipe_user.rating
+		.directions
+			%h3 Directions:
+			= @recipe.directions
 		%br
-	%br
-	-if @ingredients.size > 0
-		%h3 Ingredients
-		.ingredients
-			- @ingredients.each do |ingredient|
-				.ingredient
-					= ingredient[:amount]
-					= ingredient[:ingredient]
-	%br
-	.directions
-		%h3 Directions:
-		= @recipe.directions
-	%br
-	-if @recipe.alcohol != ""
-		.alcohol_percent
-			%b Alcohol Percent:
-			= @recipe.alcohol
-	-if @recipe.glass != ""
-		.serve_in
-			%b Serve in:
-			= @recipe.glass
-%hr
-=render :partial => 'widgets/disqus'
+		-if @recipe.alcohol != ""
+			.alcohol_percent
+				%b Alcohol Percent:
+				= @recipe.alcohol
+		-if @recipe.glass != ""
+			.serve_in
+				%b Serve in:
+				= @recipe.glass
+	.tab-pane.fade#comments
+		=render :partial => 'widgets/disqus'

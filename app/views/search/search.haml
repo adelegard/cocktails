@@ -1,3 +1,7 @@
--@pageTitle = "Lyrics - Search Results"
+-@pageTitle = "Cocktail Recipes - Search Results"
+
+-if @title
+	%h2= @title
+	%br
 
 = render :partial => '/search/search_results_table'

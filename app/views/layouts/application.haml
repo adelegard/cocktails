@@ -50,9 +50,7 @@
                                         %li
                                             %a{:href => "/favorites"} Favorites
                                         %li
-                                            %a{:href => "/all_rated"} Rated
-                                        %li
-                                            %a{:href => "#"} Something else here
+                                            %a{:href => "/rated"} Rated
                                         %li.divider
                                         %li
                                             = link_to "Sign out", destroy_user_session_path, :method => :delete
@@ -83,17 +81,23 @@
                                 %a{:href => "/search?sidebar_link=champagne"} Champagne
                             %li.nav-header Ingredients
                             %li
-                                %a{:href => "#"} Link
+                                %label.checkbox
+                                    %input{:type => "checkbox"} All
                             %li
-                                %a{:href => "#"} Link
+                                %label.checkbox
+                                    %input{:type => "checkbox"} Water
                             %li
-                                %a{:href => "#"} Link
+                                %label.checkbox
+                                    %input{:type => "checkbox"} Milk
                             %li
-                                %a{:href => "#"} Link
+                                %label.checkbox
+                                    %input{:type => "checkbox"} Ice
                             %li
-                                %a{:href => "#"} Link
+                                %label.checkbox
+                                    %input{:type => "checkbox"} Vanilla
                             %li
-                                %a{:href => "#"} Link
+                                %label.checkbox
+                                    %input{:type => "checkbox"} Sugar
                             %li.nav-header Sidebar
                             %li
                                 %a{:href => "#"} Link

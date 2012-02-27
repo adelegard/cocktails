@@ -1,15 +1,12 @@
 class RecipeUsersController < ApplicationController
 	before_filter :authenticate_user!
 
-  def all_rated
-    @user_recipes = RecipeUser.where(:user_id => current_user.id)
-    @recipes = Recipe.find(@user_recipes.collect{|user_recipe| user_recipe.recipe_id})
-    Recipe.paginate(:conditions => ['id IN ?', "%#{@user_recipes.collect{|user_recipe| user_recipe.recipe_id}}%"], :order => "rating_count DESC, rating_avg DESC", :page => params[:page], :per_page => params[:per_page])
-    render 'search/search'
-  end
-
-  def favorites
-    @recipes = Recipe.joins('JOIN recipe_users ru ON ru.recipe_id = recipes.id WHERE ru.starred = 1').paginate(:order => "rating_count DESC, rating_avg DESC", :page => params[:page], :per_page => params[:per_page])
+  def rated
+    @recipes = Recipe.joins("JOIN recipe_users ru ON ru.recipe_id = recipes.id")
+                      .where('ru.rating is not null AND ru.user_id = ?', current_user.id)
+                      .paginate(:order => "rating_count DESC, rating_avg DESC",
+                                :page => params[:page],
+                                :per_page => params[:per_page])
 
     @recipe_users = []
     @recipes.each do |recipe|
@@ -18,7 +15,28 @@ class RecipeUsersController < ApplicationController
         @recipe_users << recipe_user
       end
     end
-    render 'recipes/favorites'
+
+    @title = "My Rated Recipes"
+    render 'search/search'
+  end
+
+  def favorites
+    @recipes = Recipe.joins('JOIN recipe_users ru ON ru.recipe_id = recipes.id')
+                      .where('ru.starred = 1 AND ru.user_id = ?', current_user.id)
+                      .paginate(:order => "rating_count DESC, rating_avg DESC",
+                                :page => params[:page],
+                                :per_page => params[:per_page])
+
+    @recipe_users = []
+    @recipes.each do |recipe|
+      recipe_user = RecipeUser.where(:recipe_id => recipe.id, :user_id => current_user.id).first
+      if recipe_user != nil
+        @recipe_users << recipe_user
+      end
+    end
+
+    @title = "My Favorite Cocktails"
+    render 'search/search'
   end
 
   def rate
