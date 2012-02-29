@@ -39,6 +39,8 @@
                             %input.search-query.span3{:placeholder => "Search", :type => "text", :name => "q", :value => @q}
                             %input.btn{:type => "submit", :value => "Search"}
                         %ul.nav.pull-right
+                            %li
+                                = link_to 'Add Recipe', new_recipe_path
                             - if user_signed_in?
                                 %li.dropdown
                                     %a.dropdown-toggle{"data-toggle" => "dropdown", :href => "#"}
@@ -55,30 +57,31 @@
                                         %li
                                             = link_to "Sign out", destroy_user_session_path, :method => :delete
                             - else
-                                %p.navbar-text
-                                    = link_to "Sign up", new_user_registration_path
-                                    or 
-                                    = link_to "Sign in", new_user_session_path
+                                %li
+                                    %p.navbar-text
+                                        = link_to "Sign up", new_user_registration_path
+                                        or 
+                                        = link_to "Sign in", new_user_session_path
         .container-fluid
             .row-fluid
                 .span3
                     .well.sidebar-nav
                         %ul.nav.nav-list
                             %li.nav-header Spirit
-                            %li{:class => (@sidebar_link == 'all' || @sidebar_link == nil ? 'active' : nil)}
+                            %li{:class => (@q == "" ? 'active' : nil)}
                                 %a{:href => "/search?q="} All
-                            %li{:class => (@sidebar_link == 'vodka' ? 'active' : nil)}
-                                %a{:href => "/search?sidebar_link=vodka"} Vodka
-                            %li{:class => (@sidebar_link == 'rum' ? 'active' : nil)}
-                                %a{:href => "/search?sidebar_link=rum"} Rum
-                            %li{:class => (@sidebar_link == 'gin' ? 'active' : nil)}
-                                %a{:href => "/search?sidebar_link=gin"} Gin
-                            %li{:class => (@sidebar_link == 'tequila' ? 'active' : nil)}
-                                %a{:href => "/search?sidebar_link=tequila"} Tequila
-                            %li{:class => (@sidebar_link == 'whiskey' ? 'active' : nil)}
-                                %a{:href => "/search?sidebar_link=whiskey"} Whiskey
-                            %li{:class => (@sidebar_link == 'champagne' ? 'active' : nil)}
-                                %a{:href => "/search?sidebar_link=champagne"} Champagne
+                            %li{:class => (@q == 'vodka' ? 'active' : nil)}
+                                %a{:href => "/search?q=vodka"} Vodka
+                            %li{:class => (@q == 'rum' ? 'active' : nil)}
+                                %a{:href => "/search?q=rum"} Rum
+                            %li{:class => (@q == 'gin' ? 'active' : nil)}
+                                %a{:href => "/search?q=gin"} Gin
+                            %li{:class => (@q == 'tequila' ? 'active' : nil)}
+                                %a{:href => "/search?q=tequila"} Tequila
+                            %li{:class => (@q == 'whiskey' ? 'active' : nil)}
+                                %a{:href => "/search?q=whiskey"} Whiskey
+                            %li{:class => (@q == 'champagne' ? 'active' : nil)}
+                                %a{:href => "/search?q=champagne"} Champagne
                             %li.nav-header Ingredients
                             %li
                                 %label.checkbox
@@ -98,13 +101,6 @@
                             %li
                                 %label.checkbox
                                     %input{:type => "checkbox"} Sugar
-                            %li.nav-header Sidebar
-                            %li
-                                %a{:href => "#"} Link
-                            %li
-                                %a{:href => "#"} Link
-                            %li
-                                %a{:href => "#"} Link
                 .span9
                     %p.notice.dn= notice
                     %p.alert.dn= alert

@@ -1,17 +1,30 @@
+require 'rubygems'
+require 'aws/s3'
+
 class RecipesController < ApplicationController
+
   before_filter :authenticate_user!, :except => [:show, :index]
 
   def index
-    @recipes = Recipe.paginate(:order => "rating_count DESC, rating_avg DESC", :page => params[:page], :per_page => params[:per_page])
+    @q = params[:q]
+    orderBy = params[:sort] != nil ? params[:sort] : "rating_count"
+    orderBy += params[:direction] != nil ? " " + params[:direction].to_s : " DESC"
+    @recipes = Recipe.paginate(:conditions => ['title LIKE ?', "%#{@q}%"],
+                               :order => orderBy,
+                               :page => params[:page], :per_page => params[:per_page])
 
     if user_signed_in?
       @recipe_users = []
-      @recipes.each do |recipe|
+    end
+    @total_ratings = 0
+    @recipes.each do |recipe|
+      if user_signed_in?
         recipe_user = RecipeUser.where(:recipe_id => recipe.id, :user_id => current_user.id).first
         if recipe_user != nil
           @recipe_users << recipe_user
         end
       end
+      @total_ratings += recipe.rating_count != nil ? recipe.rating_count : 0
     end
   end
 
@@ -26,8 +39,8 @@ class RecipesController < ApplicationController
       @ingredients << {:ingredient => ingredient.ingredient, :order => recipe_ingredient.order, :amount => recipe_ingredient.amount}
     end
 
-    if user_signed_in? == true
-      @recipe_user = RecipeUser.find_or_initialize_by_recipe_id_and_user_id(@recipe.id, current_user.id)
+    if user_signed_in?
+      @recipe_user = RecipeUser.where(:recipe_id => @recipe.id, :user_id => current_user.id).first_or_create
     end
 
     render 'recipes/show'
@@ -43,8 +56,7 @@ class RecipesController < ApplicationController
   end
 
   def create
-    @recipe = Recipe.new(params[:recipe])
-    @recipe.save
+    @recipe = Recipe.create(params[:recipe])
 
     respond_to do |format|
       if @recipe.save
@@ -55,27 +67,6 @@ class RecipesController < ApplicationController
         format.json { render json: @recipe.errors, status: :unprocessable_entity }
       end
     end
-  end
-
-  def update
-    @recipe = Recipe.where(:id => params[:id]).first
-debugger
-    @recipe.filename = params[:recipe][:photo].original_filename
-    @recipe.content_type = params[:recipe][:photo].content_type
-    @recipe.save
-
-    recipe_ingredients = RecipeIngredient.where(:recipe_id => params[:id])
-    @ingredients = []
-    recipe_ingredients.each do |recipe_ingredient|
-      ingredient = Ingredient.where(:id => recipe_ingredient.ingredient_id).first
-      @ingredients << {:ingredient => ingredient.ingredient, :order => recipe_ingredient.order, :amount => recipe_ingredient.amount}
-    end
-
-    if user_signed_in? == true
-      @recipe_user = RecipeUser.find_or_initialize_by_recipe_id_and_user_id(@recipe.id, current_user.id)
-    end
-
-    render 'recipes/show'
   end
 
   def rate

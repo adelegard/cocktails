@@ -44,6 +44,38 @@ form {
 	margin-top: 5px;
 }
 
+.popularity {
+	height: 20px;
+	background-color: #08C;
+	border-radius: 2px;
+}
+
+.favorite-container {
+	margin-bottom: 1px;
+}
+
+.favorite,
+.no-favorite {
+	width: 19px;
+	height: 19px;
+	float: left;
+	margin-left: -1px;
+}
+.favorite {
+	background: transparent asset-url("star-lit.png", image) no-repeat center left;
+
+	&:hover {
+		background: transparent asset-url("star-lit-hover.png", image) no-repeat center left;
+	}
+}
+.no-favorite {
+	background: transparent asset-url("star.png", image) no-repeat center left;
+
+	&:hover {
+		background: transparent asset-url("star-hover.png", image) no-repeat center left;
+	}
+}
+
 .notFavorite {
 	opacity: 0.5;
 }

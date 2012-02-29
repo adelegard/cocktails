@@ -3,10 +3,26 @@
     %table.table.table-striped
       %thead
         %tr
-          %th.tal= "Title"
-          %th.tal= "Rating"
-          %th.tal= "Rating Count"
-          %th.tal= "Favorite"
+          %th.tal
+            = sortable "title", "Title"
+            .asc.dn
+            .desc.dn
+          %th.tal
+            = sortable "rating_avg", "Rating"
+            .asc.dn
+            .desc.dn
+          %th.tal
+            = sortable "rating_count", "Popularity"
+            .asc.dn
+            .desc.dn
+          - if user_signed_in?
+            %th.tal
+              = sortable "Favorite"
+              .asc.dn
+              .desc.dn
+          - else
+            %th.tal
+              %a{:href => "#"} Favorite
       %tbody
         -@recipes.each do |recipe|
           -if @recipe_users != nil
@@ -16,12 +32,20 @@
             %td.tal= link_to(recipe.title, recipe)
             %td.tal
               =render :partial => 'recipes/rating_links_small'
-            %td.tal= recipe.rating_count
+            %td.tal
+              - puts "recipe count: " + recipe.rating_count.to_s
+              - puts "total: " + @total_ratings.to_s
+              - percent = ((recipe.rating_count.to_f/@total_ratings)).to_f.round(3)*100*3
+              - puts "percent: " + percent.to_s
+              - percent = percent.nan? ? 4 : percent
+              - percent = percent > 100 ? 100 : percent
+              - percent = percent < 4 ? 4 : percent
+              .popularity{:style => "width:#{percent}%"}
+            //%td.tal= recipe.rating_count
             %td
-              %a{:href => "/favorite?recipe_id=#{recipe.id}"}
-                -if @recipe_user != nil && @recipe_user.starred
-                  Yup
-                -else
-                  .notFavorite
-                    Nope
+              -if @recipe_user != nil && @recipe_user.starred
+                -favoriteClass = "favorite"
+              -else
+                -favoriteClass = "no-favorite"
+              %a{:href => "/favorite?recipe_id=#{recipe.id}", :class => "#{favoriteClass}"}
   = will_paginate @recipes

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120225170957) do
+ActiveRecord::Schema.define(:version => 20120228022531) do
 
   create_table "ingredients", :force => true do |t|
     t.string   "ingredient"
@@ -32,9 +32,13 @@ ActiveRecord::Schema.define(:version => 20120225170957) do
     t.integer  "recipe_id"
     t.integer  "user_id"
     t.boolean  "starred"
-    t.decimal  "rating",     :precision => 10, :scale => 0
-    t.datetime "created_at",                                :null => false
-    t.datetime "updated_at",                                :null => false
+    t.decimal  "rating",             :precision => 10, :scale => 0
+    t.datetime "created_at",                                        :null => false
+    t.datetime "updated_at",                                        :null => false
+    t.string   "photo_file_name"
+    t.string   "photo_content_type"
+    t.integer  "photo_file_size"
+    t.datetime "photo_updated_at"
   end
 
   create_table "recipes", :force => true do |t|
@@ -42,14 +46,10 @@ ActiveRecord::Schema.define(:version => 20120225170957) do
     t.text     "directions"
     t.string   "glass"
     t.string   "alcohol"
-    t.datetime "created_at",                                        :null => false
-    t.datetime "updated_at",                                        :null => false
-    t.decimal  "rating_avg",         :precision => 10, :scale => 0
+    t.datetime "created_at",                                  :null => false
+    t.datetime "updated_at",                                  :null => false
+    t.decimal  "rating_avg",   :precision => 10, :scale => 0
     t.integer  "rating_count"
-    t.string   "photo_file_name"
-    t.string   "photo_content_type"
-    t.integer  "photo_file_size"
-    t.datetime "photo_updated_at"
   end
 
   create_table "users", :force => true do |t|

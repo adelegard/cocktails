@@ -1,0 +1,80 @@
+@mixin user-select($select) {
+  -webkit-user-select: $select;
+   -khtml-user-select: $select;
+     -moz-user-select: $select;
+       -o-user-select: $select;
+          user-select: $select;
+}
+@mixin border-radius($radius) {
+  -webkit-border-radius: $radius;
+     -moz-border-radius: $radius;
+          border-radius: $radius;
+}
+@mixin box-shadow($value) {
+  -webkit-box-shadow: $value;
+     -moz-box-shadow: $value;
+          box-shadow: $value;
+}
+@mixin linear-gradient($x-start, $y-start, $x-end, $y-end, $from, $to) {
+  background-color: $to;
+  background: -webkit-gradient(linear, $x-start $y-start, $x-end $y-end, from($from), to($to)) repeat scroll 0 0 transparent;
+  background: -webkit-linear-gradient($x-start $y-start, $from, $to) repeat scroll 0 0 transparent;
+     background: -moz-linear-gradient($x-start $y-start, $from, $to) repeat scroll 0 0 transparent;
+      background: -ms-linear-gradient($x-start $y-start, $from, $to) repeat scroll 0 0 transparent;
+       background: -o-linear-gradient($x-start $y-start, $from, $to) repeat scroll 0 0 transparent;
+}
+@mixin animation($name, $duration, $timing-function, $iteration-count) {
+  -webkit-animation-name: $name;
+     -moz-animation-name: $name;
+          animation-name: $name;
+  -webkit-animation-duration: $duration;
+     -moz-animation-duration: $duration;
+          animation-duration: $duration;
+  -webkit-animation-timing-function: $timing-function;
+     -moz-animation-timing-function: $timing-function;
+          animation-timing-function: $timing-function;
+  -webkit-animation-iteration-count: $iteration-count;
+     -moz-animation-iteration-count: $iteration-count;
+          animation-iteration-count: $iteration-count;
+}
+@mixin transition($property, $duration, $timing-function) {
+  -webkit-transition: $property $duration $timing-function;
+     -moz-transition: $property $duration $timing-function;
+       -o-transition: $property $duration $timing-function;
+          transition: $property $duration $timing-function;
+}
+@mixin transform($value) {
+  -webkit-transform: scale($value);
+     -moz-transform: scale($value);
+          transform: scale($value);
+}
+
+// Arrows
+@mixin arrow-up($size, $color) {
+  width: 0;
+  height: 0;
+  border-left: $size solid transparent;
+  border-right: $size solid transparent;
+  border-bottom: $size solid $color;
+}
+@mixin arrow-down($size, $color) {
+  width: 0;
+  height: 0;
+  border-left: $size solid transparent;
+  border-right: $size solid transparent;
+  border-top: $size solid $color;
+}
+@mixin arrow-right($size, $color) {
+  width: 0;
+  height: 0;
+  border-top: $size solid transparent;
+  border-bottom: $size solid transparent;
+  border-left: $size solid $color;
+}
+@mixin arrow-left($size, $color) {
+  width: 0;
+  height: 0;
+  border-top: $size solid transparent;
+  border-bottom: $size solid transparent; 
+  border-right: $size solid $color;
+}

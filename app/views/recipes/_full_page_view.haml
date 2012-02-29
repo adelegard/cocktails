@@ -1,0 +1,30 @@
+#fullPageView.dn
+	%a.close_circle{:href => "javascript:void(0);"}
+	.header
+		.title
+			%h1= @recipe.title
+			//- if @recipe_user != nil && @recipe_user.photo.url != nil
+			//	= image_tag @recipe_user.photo.url
+	.content
+		.ingredients-container
+			.ingredients
+				%h2 Ingredients
+				-if @ingredients.size > 0
+					%ul
+					- @ingredients.each do |ingredient|
+						%li.ingredient
+							= ingredient[:amount]
+							= ingredient[:ingredient]
+		.directions-container
+			.directions
+				%h2 Directions
+				%p= @recipe.directions
+				%br
+				-if @recipe.alcohol != ""
+					.alcohol_percent
+						%h2 Alcohol Percent
+						%p= @recipe.alcohol
+				-if @recipe.glass != ""
+					.serve_in
+						%h2 Serve in
+						%p= @recipe.glass

@@ -1,14 +1,31 @@
 %h2 New Recipe
 %br
 =form_for @recipe, :html => { :multipart => true} do |f|
-	%div
-		= f.label :title
-		= f.text_field :title
-	%div
-		= f.label :photo, 'Choose a photo:'
-		= f.file_field :photo
-	%div
-		= f.label :directions
-		= f.text_field :directions
-
-	= f.submit 'Create Recipe'
+	%fieldset
+		.control-group
+			= f.label :title, :class => "control-label"
+			.controls
+				= f.text_field :title, :class => "input-xlarge"
+		//.control-group
+		//	= f.label :photo, 'Choose a photo:', :class => "control-label"
+		//	.controls
+		//		= f.file_field :photo
+		.control-group
+			= f.label :ingredient, :class => "control-label"
+			.controls
+				%input{:type => "text", :style => "width:18px;"}
+				%select.chzn-select{"data-placeholder" => "Choose an amount...", :style => "width:50px;"}
+					%option oz
+					%option shot
+					%option tbsp
+				%select.chzn-select{"data-placeholder" => "Choose an ingredient...", :style => "width:100px;"}
+					%option vodka
+					%option rum
+					%option tequila
+		.control-group
+			= f.label :directions, :class => "control-label"
+			.controls
+				= f.text_area(:directions, :cols => 10, :rows => 5, :class => "input-xlarge")
+		.control-group
+			.controls
+				= f.submit 'Create Recipe', :class => "btn btn-primary"
