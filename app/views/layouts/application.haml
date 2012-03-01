@@ -8,6 +8,8 @@
         %title Cocktails | Cocktails.com
         = stylesheet_link_tag "application"
         = javascript_include_tag "application"
+        %link(href='http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css' rel='stylesheet' type='text/css')
+        %script(src='http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js')
         %script{:src => "https://apis.google.com/js/plusone.js", :type => "text/javascript"}
     %body
         #fb-root
@@ -48,7 +50,9 @@
                                         %b.caret
                                     %ul.dropdown-menu
                                         %li
-                                            %a{:href => "/profile"} Profile
+                                            = link_to "Profile", edit_user_registration_path
+                                        %li
+                                            %a{:href => "/cabinet"} Liquor Cabinet
                                         %li
                                             %a{:href => "/favorites"} Favorites
                                         %li

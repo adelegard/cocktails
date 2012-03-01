@@ -1,8 +1,8 @@
-class RecipeUsersController < ApplicationController
+class UsersController < ApplicationController
 	before_filter :authenticate_user!
 
   def profile
-
-    render 'recipes/show'
+    render 'users/profile'
   end
+
 end

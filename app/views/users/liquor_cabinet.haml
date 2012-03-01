@@ -1,0 +1,15 @@
+-@pageTitle = "My Favotite Cocktails"
+
+%h2 My Liquor Cabinet
+
+%br
+%input#cabinet_ingredient_search.ingridients_ac{:type => "text"}
+%button#add_cabinet_ingredient.btn.btn-success Add
+
+%br
+%form.form-horizontal{:id => "liquor_cabinet_form",:action => "/cabinet/save", :method => :post}
+	%table#my_ingredients
+		%thead
+			%tr
+				%th.tal My Liquor
+		%tbody

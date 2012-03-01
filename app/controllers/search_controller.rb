@@ -24,4 +24,28 @@ class SearchController < ApplicationController
       @total_ratings += recipe.rating_count != nil ? recipe.rating_count : 0
     end
   end
+
+  def autocomplete_ingredients
+    ingredients = Ingredient.where('ingredient LIKE ?', "%#{params[:q]}%").limit(5)
+    names = ingredients.collect{|i| i.ingredient}
+    respond_to do |format|
+      format.js {render_json names.to_json}
+    end
+  end
+
+  def render_json(json, options={})
+    callback, variable = params[:callback], params[:variable]
+    response = begin
+      if callback && variable
+        "var #{variable} = #{json};\n#{callback}(#{variable});"
+      elsif variable
+        "var #{variable} = #{json};"
+      elsif callback
+        "#{callback}(#{json});"
+      else
+        json
+      end
+    end
+    render({:content_type => :js, :text => response}.merge(options))
+  end
 end

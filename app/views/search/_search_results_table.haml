@@ -33,15 +33,11 @@
             %td.tal
               =render :partial => 'recipes/rating_links_small'
             %td.tal
-              - puts "recipe count: " + recipe.rating_count.to_s
-              - puts "total: " + @total_ratings.to_s
-              - percent = ((recipe.rating_count.to_f/@total_ratings)).to_f.round(3)*100*3
-              - puts "percent: " + percent.to_s
+              - percent = ((recipe.rating_count.to_f/@total_ratings)).to_f.round(3)*100*3 #ignoring for now the fact that this is SUPER gross and should be in the controller
               - percent = percent.nan? ? 4 : percent
               - percent = percent > 100 ? 100 : percent
               - percent = percent < 4 ? 4 : percent
               .popularity{:style => "width:#{percent}%"}
-            //%td.tal= recipe.rating_count
             %td
               -if @recipe_user != nil && @recipe_user.starred
                 -favoriteClass = "favorite"

@@ -33,11 +33,13 @@ class RecipeUsersController < ApplicationController
                                 :per_page => params[:per_page])
 
     @recipe_users = []
+    @total_ratings = 0
     @recipes.each do |recipe|
       recipe_user = RecipeUser.where(:recipe_id => recipe.id, :user_id => current_user.id).first
       if recipe_user != nil
         @recipe_users << recipe_user
       end
+      @total_ratings += recipe.rating_count
     end
 
     @title = "My Rated Recipes"
