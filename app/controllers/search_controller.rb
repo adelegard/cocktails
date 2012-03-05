@@ -26,7 +26,7 @@ class SearchController < ApplicationController
   end
 
   def autocomplete_recipes
-    recipes = Recipe.where('title LIKE ?', "%#{params[:q]}%").limit(5)
+    recipes = Recipe.where('title LIKE ?', "%#{params[:q]}%").order("rating_count DESC").limit(5)
     names = recipes.collect{|i| i.title}
     respond_to do |format|
       format.js {render_json names.to_json}
