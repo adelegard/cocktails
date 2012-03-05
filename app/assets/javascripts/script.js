@@ -30,7 +30,7 @@ $(document).ready(function() {
 		e.preventDefault();
 		var href = $(e.currentTarget).attr("href");
 		$.ajax({
-		  url: e.target.href,
+		  url: href,
 		  success: function(){
 		  	$(e.currentTarget).closest(".favorite-links").find(".favorite-container").show();
 			$(e.currentTarget).closest(".favorite-links").find(".unfavorite-container").hide();
