@@ -13,3 +13,8 @@
 			%tr
 				%th.tal My Liquor
 		%tbody
+			-@ingredients.each do |ingredient|
+				%tr
+					%td
+						%l.icon-remove
+						.lc_ingredient.dib= ingredient.ingredient

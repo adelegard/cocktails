@@ -50,25 +50,29 @@ form {
 	border-radius: 2px;
 }
 
-.favorite-container {
+.favorite-links {
 	margin-bottom: 1px;
 }
 
 .favorite,
-.no-favorite {
+.unfavorite {
 	width: 19px;
 	height: 19px;
 	float: left;
 	margin-left: -1px;
+
+	span {
+		margin-left: 19px;
+	}
 }
-.favorite {
+.unfavorite {
 	background: transparent asset-url("star-lit.png", image) no-repeat center left;
 
 	&:hover {
 		background: transparent asset-url("star-lit-hover.png", image) no-repeat center left;
 	}
 }
-.no-favorite {
+.favorite {
 	background: transparent asset-url("star.png", image) no-repeat center left;
 
 	&:hover {

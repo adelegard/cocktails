@@ -21,19 +21,19 @@ $(document).ready(function() {
 		$.ajax({
 		  url: href,
 		  success: function(){
-			$(e.currentTarget).removeClass("favorite");
-			$(e.currentTarget).addClass("no-favorite");
+		  	$(e.currentTarget).closest(".favorite-links").find(".favorite-container").hide();
+			$(e.currentTarget).closest(".favorite-links").find(".unfavorite-container").show();
 		  }
 		});
 	});
-	$(document).on("click", ".no-favorite", function(e) {
+	$(document).on("click", ".unfavorite", function(e) {
 		e.preventDefault();
 		var href = $(e.currentTarget).attr("href");
 		$.ajax({
 		  url: e.target.href,
 		  success: function(){
-			$(e.currentTarget).removeClass("no-favorite");
-			$(e.currentTarget).addClass("favorite");
+		  	$(e.currentTarget).closest(".favorite-links").find(".favorite-container").show();
+			$(e.currentTarget).closest(".favorite-links").find(".unfavorite-container").hide();
 		  }
 		});
 	});
@@ -53,25 +53,6 @@ $(document).ready(function() {
     minLength: 2,
     delay: 300
   });
-
-  $('#cabinet_ingredient_search').keydown(function(e) {
-  	if (e.which == 13) {
-  		addToLiquorCabinetForm($(this).val());
-  	}
-  });
-
-  $('#add_cabinet_ingredient').click(function(e) {
-	addToLiquorCabinetForm($(this).val());
-  });
-
-  function addToLiquorCabinetForm(val) {
-	var exists = $('table#my_ingredients input[name="ingredients[\''+ val +'\']"]:hidden').length;
-	if (exists > 0) return;
-
-	var input = "<input type=\"hidden\" name=\"ingredients['"+ val +"']\"/>";
-	var row = "<tr><td>" + input + val + "</td></tr>";
-	$("#my_ingredients tbody").append(row);  	
-  }
 
   function getAutoCompleteIngredientsParams(term) {
     params = {};

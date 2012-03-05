@@ -21,8 +21,7 @@ from
 users
 %br
 %br
-%a{:href => "/rate?recipe_id=#{@recipe.id}&rating=1"} 1
-%a{:href => "/rate?recipe_id=#{@recipe.id}&rating=2"} 2
-%a{:href => "/rate?recipe_id=#{@recipe.id}&rating=3"} 3
-%a{:href => "/rate?recipe_id=#{@recipe.id}&rating=4"} 4
-%a{:href => "/rate?recipe_id=#{@recipe.id}&rating=5"} 5
+-(1..5).to_a.each do |index|
+	%form.dib{:action => "/recipes/#{@recipe.id}/rate", :method => :post}
+		%input{:type => "hidden", :name => "rating", :value => index}
+		%input{:type => "submit", :value => index}

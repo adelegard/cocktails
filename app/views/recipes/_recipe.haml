@@ -1,14 +1,5 @@
 .well.span2.pull-right.wsnw
-	-if @recipe_user != nil && @recipe_user.starred
-		-no_favorite_class = "dn"
-	-else
-		-favorite_class = "dn"
-	.favorite-container{:class => "#{favorite_class}"}
-		%i.favorite
-		%a{:href => "/favorite?recipe_id=#{@recipe.id}"} Remove from Favorites
-	.favorite-container{:class => "#{no_favorite_class}"}
-		%i.no-favorite
-		%a{:href => "/favorite?recipe_id=#{@recipe.id}"} Add to Favorites
+	=render :partial => '/recipes/favorite', :locals => {:recipe_id => @recipe.id, :include_text => true}
 	%div
 		%i.icon-list-alt
 		%a.showFullPageView{:href => "#"} Full Page View

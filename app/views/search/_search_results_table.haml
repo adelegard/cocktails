@@ -39,9 +39,5 @@
               - percent = percent < 4 ? 4 : percent
               .popularity{:style => "width:#{percent}%"}
             %td
-              -if @recipe_user != nil && @recipe_user.starred
-                -favoriteClass = "favorite"
-              -else
-                -favoriteClass = "no-favorite"
-              %a{:href => "/favorite?recipe_id=#{recipe.id}", :class => "#{favoriteClass}"}
+              =render :partial => '/recipes/favorite', :locals => {:recipe_id => recipe.id, :include_text => false}
   = will_paginate @recipes

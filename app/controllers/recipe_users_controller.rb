@@ -68,7 +68,7 @@ class RecipeUsersController < ApplicationController
   end
 
   def rate
-    @recipe = Recipe.where(:id => params[:recipe_id]).first
+    @recipe = Recipe.where(:id => params[:id]).first
     @recipe_user = RecipeUser.find_or_initialize_by_recipe_id_and_user_id(@recipe.id, current_user.id)
     @recipe_user.rating = params[:rating]
     @recipe_user.save
@@ -80,13 +80,28 @@ class RecipeUsersController < ApplicationController
       @ingredients << {:ingredient => ingredient.ingredient, :order => recipe_ingredient.order, :amount => recipe_ingredient.amount}
     end
 
-    render 'recipes/show'
+    respond_to do |format|
+      format.html { redirect_to(@recipe) }
+      format.js   { render :nothing => true }
+    end
   end
 
   def favorite
-    @recipe = Recipe.where(:id => params[:recipe_id]).first
+    @recipe = Recipe.where(:id => params[:id]).first
     @recipe_user = RecipeUser.find_or_initialize_by_recipe_id_and_user_id(@recipe.id, current_user.id)
-    @recipe_user.starred = @recipe_user.starred == false || @recipe_user.starred == nil ? true : false
+    @recipe_user.starred = true
+    @recipe_user.save
+
+    respond_to do |format|
+      format.html { redirect_to(@recipe) }
+      format.js   { render :nothing => true }
+    end
+  end
+
+  def unfavorite
+    @recipe = Recipe.where(:id => params[:id]).first
+    @recipe_user = RecipeUser.find_or_initialize_by_recipe_id_and_user_id(@recipe.id, current_user.id)
+    @recipe_user.starred = false
     @recipe_user.save
 
     respond_to do |format|

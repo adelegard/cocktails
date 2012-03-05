@@ -41,25 +41,22 @@
                             %input.search-query.span3{:placeholder => "Search", :type => "text", :name => "q", :value => @q}
                             %input.btn{:type => "submit", :value => "Search"}
                         %ul.nav.pull-right
-                            %li
-                                = link_to 'Add Recipe', new_recipe_path
+                            %li= link_to 'Add Recipe', new_recipe_path
                             - if user_signed_in?
                                 %li.dropdown
                                     %a.dropdown-toggle{"data-toggle" => "dropdown", :href => "#"}
                                         = current_user.email
                                         %b.caret
                                     %ul.dropdown-menu
-                                        %li
-                                            = link_to "Profile", edit_user_registration_path
+                                        %li= link_to "Profile", edit_user_registration_path
                                         %li
                                             %a{:href => "/cabinet"} Liquor Cabinet
                                         %li
-                                            %a{:href => "/favorites"} Favorites
+                                            %a{:href => "/recipes/favorites"} Favorites
                                         %li
                                             %a{:href => "/rated"} Rated
                                         %li.divider
-                                        %li
-                                            = link_to "Sign out", destroy_user_session_path, :method => :delete
+                                        %li= link_to "Sign out", destroy_user_session_path, :method => :delete
                             - else
                                 %li
                                     %p.navbar-text
