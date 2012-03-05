@@ -38,6 +38,23 @@ $(document).ready(function() {
 		});
 	});
 
+
+  $('input.recipe_ac').autocomplete({
+    source: function(request, response) {
+      var params = getAutoCompleteRecipeParams(request.term);
+      $.ajax({
+        url: params['url'],
+        dataType: "jsonp",
+        data: params['data'],
+        success: function(data) {
+          response(data);
+        }
+      });
+    },
+    minLength: 2,
+    delay: 300
+  });
+
   $('input.ingridients_ac').autocomplete({
     source: function(request, response) {
       var params = getAutoCompleteIngredientsParams(request.term);
@@ -53,6 +70,15 @@ $(document).ready(function() {
     minLength: 2,
     delay: 300
   });
+
+  function getAutoCompleteRecipeParams(term) {
+    params = {};
+    params['url'] = '/search/autocomplete_recipes';
+    dataHash = {}
+    dataHash.q = term
+    params['data'] = dataHash;
+    return params;
+  }
 
   function getAutoCompleteIngredientsParams(term) {
     params = {};

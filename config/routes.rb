@@ -26,5 +26,6 @@ Cocktails::Application.routes.draw do
 	#match '/uploadphoto/:id'
 
 	match '/search' => 'search#search'
+	match '/search/autocomplete_recipes' => 'search#autocomplete_recipes'
 	match '/search/autocomplete_ingredients' => 'search#autocomplete_ingredients'
 end

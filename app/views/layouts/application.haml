@@ -38,7 +38,7 @@
                             %li
                                 %a{:href => "#contact"} Contact
                         %form.navbar-search{:action => "/search", :method => :get}
-                            %input.search-query.span3{:placeholder => "Search", :type => "text", :name => "q", :value => @q}
+                            %input.recipe_ac.search-query.span3{:placeholder => "Search", :type => "text", :name => "q", :value => @q}
                             %input.btn{:type => "submit", :value => "Search"}
                         %ul.nav.pull-right
                             %li= link_to 'Add Recipe', new_recipe_path
@@ -65,7 +65,7 @@
                                         = link_to "Sign in", new_user_session_path
         .container-fluid
             .row-fluid
-                .span3
+                .span2
                     .well.sidebar-nav
                         %ul.nav.nav-list
                             %li.nav-header Spirit
@@ -102,7 +102,7 @@
                             %li
                                 %label.checkbox
                                     %input{:type => "checkbox"} Sugar
-                .span9
+                .span10
                     %p.notice.dn= notice
                     %p.alert.dn= alert
                     = yield

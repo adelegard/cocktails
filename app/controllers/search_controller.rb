@@ -25,6 +25,14 @@ class SearchController < ApplicationController
     end
   end
 
+  def autocomplete_recipes
+    recipes = Recipe.where('title LIKE ?', "%#{params[:q]}%").limit(5)
+    names = recipes.collect{|i| i.title}
+    respond_to do |format|
+      format.js {render_json names.to_json}
+    end
+  end
+
   def autocomplete_ingredients
     ingredients = Ingredient.where('ingredient LIKE ?', "%#{params[:q]}%").limit(5)
     names = ingredients.collect{|i| i.ingredient}
