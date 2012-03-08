@@ -2,20 +2,20 @@ $(document).ready(function() {
   $('#cabinet_ingredient_search').keydown(function(e) {
   	if (e.which == 13) {
 	  	var val = $(this).val();
-	  	var inCabinet = checkLiquorCabinet(val);
-	  	if (inCabinet === false) {
-			addToLiquorCabinet(val);
-	  	}
+		addToLiquorCabinet(val);
   	}
   });
 
   $('#add_cabinet_ingredient').click(function() {
   	var val = $("#cabinet_ingredient_search").val();
-  	var inCabinet = checkLiquorCabinet(val);
-  	if (inCabinet === false) {
-		addToLiquorCabinet(val);
-  	}
+	addToLiquorCabinet(val);
   });
+
+  function canAddToLiquorCabinet(val) {
+  	if (val === "") return false;
+  	if (checkLiquorCabinet(val) === false) return true;
+  	return false;
+  }
 
   function checkLiquorCabinet(val) {
   	var returnVal = false;
@@ -29,6 +29,7 @@ $(document).ready(function() {
   }
 
   function addToLiquorCabinet(val) {
+	if (canAddToLiquorCabinet(val) === false) return;
 	$.ajax({
 	  url: '/cabinet/add',
 	  data: {q: val},
