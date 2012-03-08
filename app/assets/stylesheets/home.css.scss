@@ -80,10 +80,6 @@ form {
 	}
 }
 
-.notFavorite {
-	opacity: 0.5;
-}
-
 #fullPageView {
 	position: absolute;
 	height: 100%;
@@ -157,9 +153,27 @@ form {
 	}
 }
 
-.recipe-actions.btn-group.open .dropdown-menu {
-	left: auto;
-	right: 0;
+.hero-unit {
+	padding: 0px;
+	.carousel {
+		.btn {
+			opacity: 0.8;
+		}
+		img {
+			width: 945px;
+			height: 500px;
+		}
+	}
+}
+
+.cocktail-fall {
+	background: asset-url("cocktails/fall_945.jpg", image) no-repeat 0 0;
+}
+.cocktail-glasses {
+	background: asset-url("cocktails/glasses_945.jpg", image) no-repeat 0 0;
+}
+.cocktail-green {
+	background: asset-url("cocktails/green_945.jpg", image) no-repeat 0 0;
 }
 
 /* Food Network Stars */

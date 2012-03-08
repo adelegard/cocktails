@@ -6,11 +6,7 @@ class RecipesController < ApplicationController
   before_filter :authenticate_user!, :except => [:show, :index]
 
   def index
-    @q = params[:q]
-    orderBy = params[:sort] != nil ? params[:sort] : "rating_count"
-    orderBy += params[:direction] != nil ? " " + params[:direction].to_s : " DESC"
-    @recipes = Recipe.paginate(:conditions => ['title LIKE ?', "%#{@q}%"],
-                               :order => orderBy,
+    @recipes = Recipe.paginate(:order => "rating_count DESC",
                                :page => params[:page], :per_page => params[:per_page])
 
     if user_signed_in?

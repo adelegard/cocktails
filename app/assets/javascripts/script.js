@@ -1,6 +1,10 @@
 $(document).ready(function() {
 	$(".chzn-select").chosen();
 
+  $('.carousel').carousel({
+    interval: 10000
+  });
+
 	$.ajaxSetup({
 		'beforeSend': function(xhr) {
 			xhr.setRequestHeader('Accept','text/javascript')
