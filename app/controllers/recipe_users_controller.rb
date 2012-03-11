@@ -67,6 +67,39 @@ class RecipeUsersController < ApplicationController
     render 'search/search'
   end
 
+  def liquor_cabinet
+    orderBy = params[:sort] != nil ? params[:sort] : "rating_count"
+    orderBy += params[:direction] != nil ? " " + params[:direction].to_s : " DESC"
+
+    #this doesn't work... but it's close
+    @recipes = Recipe.paginate(:conditions => ["select r.id
+                                  from recipes r
+                                  join recipe_ingredients ri ON r.id = ri.recipe_id
+                                  join recipe_ingredients ri2 on r.id = ri2.recipe_id
+                                  join ingredients i ON ri.ingredient_id = i.id
+                                  where i.id IN (select ingredient_id
+                                                 from liquor_cabinets
+                                                 where user_id = ?)
+                                  group by r.id
+                                  having count(distinct ri.ingredient_id) = count(distinct ri2.ingredient_id)", "%#{current_user.id}%"],
+                                  :order => orderBy,
+                                  :page => params[:page], :per_page => params[:per_page])
+    #debugger
+
+    @recipe_users = []
+    @total_ratings = 0
+    @recipes.each do |recipe|
+      recipe_user = RecipeUser.where(:recipe_id => recipe.id, :user_id => current_user.id).first
+      if recipe_user != nil
+        @recipe_users << recipe_user
+      end
+      @total_ratings += recipe.rating_count
+    end
+
+    @title = "Cocktails I Can Make!"
+    render 'search/search'
+  end
+
   def rate
     @recipe = Recipe.where(:id => params[:id]).first
     @recipe_user = RecipeUser.find_or_initialize_by_recipe_id_and_user_id(@recipe.id, current_user.id)
