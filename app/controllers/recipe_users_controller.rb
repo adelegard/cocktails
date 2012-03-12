@@ -71,8 +71,8 @@ class RecipeUsersController < ApplicationController
     orderBy = params[:sort] != nil ? params[:sort] : "rating_count"
     orderBy += params[:direction] != nil ? " " + params[:direction].to_s : " DESC"
 
-    #this doesn't work... but it's close
-    @recipes = Recipe.paginate(:conditions => ["select r.id
+    #wow this is slow... hopefully thinking sphinx will fix it
+    @recipes = Recipe.paginate_by_sql(["select r.*
                                   from recipes r
                                   join recipe_ingredients ri ON r.id = ri.recipe_id
                                   join recipe_ingredients ri2 on r.id = ri2.recipe_id
@@ -81,11 +81,9 @@ class RecipeUsersController < ApplicationController
                                                  from liquor_cabinets
                                                  where user_id = ?)
                                   group by r.id
-                                  having count(distinct ri.ingredient_id) = count(distinct ri2.ingredient_id)", "%#{current_user.id}%"],
+                                  having count(distinct ri.ingredient_id) = count(distinct ri2.ingredient_id)", current_user.id],
                                   :order => orderBy,
                                   :page => params[:page], :per_page => params[:per_page])
-    #debugger
-
     @recipe_users = []
     @total_ratings = 0
     @recipes.each do |recipe|
@@ -93,7 +91,9 @@ class RecipeUsersController < ApplicationController
       if recipe_user != nil
         @recipe_users << recipe_user
       end
-      @total_ratings += recipe.rating_count
+      if recipe.rating_count != nil
+        @total_ratings += recipe.rating_count
+      end
     end
 
     @title = "Cocktails I Can Make!"
