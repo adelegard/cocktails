@@ -80,6 +80,42 @@ form {
 	}
 }
 
+ul.recipe_ingredients {
+	list-style-type: none;
+	margin: 0;
+}
+
+.ingredients_heading,
+.recipe_ingredients .ingredient.not_in_liquor_cabinet,
+.recipe_ingredients .ingredient.in_liquor_cabinet {
+	margin-bottom: 8px;
+}
+.recipe_ingredients .ingredient.not_in_liquor_cabinet > span,
+.recipe_ingredients .ingredient.in_liquor_cabinet > span {
+	padding: 3px;
+	border-radius: 3px;
+
+	&:hover {
+		cursor: pointer;
+	}
+}
+.recipe_ingredients .ingredient.not_in_liquor_cabinet > span {
+	background-color: lightSalmon;
+
+	&:hover {
+		//background-color: lightgreen;
+		border: 2px solid lightgreen;
+	}
+}
+.recipe_ingredients .ingredient.in_liquor_cabinet > span {
+	background-color: lightgreen;
+
+	&:hover {
+		//background-color: lightSalmon;
+		border: 2px solid lightSalmon;
+	}
+}
+
 #fullPageView {
 	position: absolute;
 	height: 100%;

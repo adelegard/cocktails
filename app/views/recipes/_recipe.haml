@@ -23,12 +23,23 @@
 	%br
 %br
 -if @ingredients.size > 0
-	%h3 Ingredients
-	.ingredients
+	%h3.ingredients_heading Ingredients
+	%ul.recipe_ingredients
 		- @ingredients.each do |ingredient|
-			.ingredient
-				= ingredient[:amount]
-				= ingredient[:ingredient]
+			-if ingredient[:in_liquor_cabinet]
+				-ingredient_icon = "icon-ok"
+				-ingredient_class = "in_liquor_cabinet"
+				-ingredient_tt = "Click to Remove from Liquor Cabinet"
+			-elsif ingredient[:in_liquor_cabinet] != nil
+				-ingredient_icon = "icon-remove"
+				-ingredient_class = "not_in_liquor_cabinet"
+				-ingredient_tt = "Click to Add to Liquor Cabinet"
+			%li.ingredient{:class => "#{ingredient_class}"}
+				-if ingredient_icon != nil
+					%i{:class => "#{ingredient_icon}"}
+				%span.full_ingredient
+					%span{:title => "#{ingredient_tt}"}= ingredient[:amount]
+					%span.the_ingredient= ingredient[:ingredient]
 %br
 .directions
 	%h3 Directions

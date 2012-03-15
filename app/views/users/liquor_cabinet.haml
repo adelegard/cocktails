@@ -9,9 +9,6 @@
 %br
 %form.form-horizontal{:id => "liquor_cabinet_form",:action => "/cabinet/save", :method => :post}
 	%table#my_ingredients
-		%thead
-			%tr
-				%th.tal My Liquor
 		%tbody
 			-@ingredients.each do |ingredient|
 				%tr

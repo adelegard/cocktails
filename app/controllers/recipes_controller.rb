@@ -28,15 +28,22 @@ class RecipesController < ApplicationController
     params.delete(:id) unless params[:id].to_i > 0
     @recipe = Recipe.where(:id => params[:id]).first
 
-    recipe_ingredients = RecipeIngredient.where(:recipe_id => params[:id])
-    @ingredients = []
-    recipe_ingredients.each do |recipe_ingredient|
-      ingredient = Ingredient.where(:id => recipe_ingredient.ingredient_id).first
-      @ingredients << {:ingredient => ingredient.ingredient, :order => recipe_ingredient.order, :amount => recipe_ingredient.amount}
+    liquor_cabinet_ingredients = []
+    if user_signed_in?
+      @recipe_user = RecipeUser.where(:recipe_id => params[:id], :user_id => current_user.id).first_or_create
+      liquor_cabinet_ingredients = LiquorCabinet.where(:user_id => current_user.id).collect{|ingredient| ingredient.ingredient_id}
     end
 
-    if user_signed_in?
-      @recipe_user = RecipeUser.where(:recipe_id => @recipe.id, :user_id => current_user.id).first_or_create
+    @ingredients = []
+    recipe_ingredients = RecipeIngredient.where(:recipe_id => params[:id])
+    recipe_ingredients.each do |recipe_ingredient|
+      ingredient = Ingredient.where(:id => recipe_ingredient.ingredient_id).first
+      if user_signed_in?
+        in_liquor_cabinet = liquor_cabinet_ingredients.include?(recipe_ingredient.ingredient_id)
+      else
+        in_liquor_cabinet = nil
+      end
+      @ingredients << {:ingredient => ingredient.ingredient, :order => recipe_ingredient.order, :amount => recipe_ingredient.amount, :in_liquor_cabinet => in_liquor_cabinet}
     end
 
     render 'recipes/show'
