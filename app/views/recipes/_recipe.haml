@@ -37,8 +37,8 @@
 			%li.ingredient{:class => "#{ingredient_class}"}
 				-if ingredient_icon != nil
 					%i{:class => "#{ingredient_icon}"}
-				%span.full_ingredient
-					%span{:title => "#{ingredient_tt}"}= ingredient[:amount]
+				%span.full_ingredient{:title => "#{ingredient_tt}", :rel => "tooltip", "data-placement" => "right"}
+					%span= ingredient[:amount]
 					%span.the_ingredient= ingredient[:ingredient]
 %br
 .directions

@@ -3,7 +3,7 @@ Cocktails::Application.routes.draw do
 
 	match '/recipes/favorites' => 'recipe_users#favorites'
 	match '/recipes/rated' => 'recipe_users#rated'
-	match '/recipes/liquor_cabinet' => 'recipe_users#liquor_cabinet'
+	match '/recipes/liquor_cabinet' => 'recipe_users#liquor_cabinet_recipes'
 
 	resources :recipes
 	resources :recipe_users

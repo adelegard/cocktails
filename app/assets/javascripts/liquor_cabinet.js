@@ -62,19 +62,4 @@ $(document).ready(function() {
 	  }
 	});
   }
-
-  // Recipe functions
-  $("ul.recipe_ingredients .full_ingredient").click(function() {
-  	var li_ingredient = $(this).closest("li.ingredient");
-  	var val = li_ingredient.find(".the_ingredient").html();
-  	if (li_ingredient.hasClass("in_liquor_cabinet")) {
-	  	removeFromLiquorCabinet(val);
-  	} else {
-		addToLiquorCabinet(val);
-  	}
-	li_ingredient.toggleClass("in_liquor_cabinet");
-	li_ingredient.toggleClass("not_in_liquor_cabinet");
-	li_ingredient.find("i").toggleClass("icon-remove");
-	li_ingredient.find("i").toggleClass("icon-ok");
-  });
 });

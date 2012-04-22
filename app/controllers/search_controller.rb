@@ -6,9 +6,7 @@ class SearchController < ApplicationController
     @q = params[:q]
     orderBy = params[:sort] != nil ? params[:sort] : "rating_count"
     orderBy += params[:direction] != nil ? " " + params[:direction].to_s : " DESC"
-    @recipes = Recipe.paginate(:conditions => ['title LIKE ?', "%#{@q}%"],
-                               :order => orderBy,
-                               :page => params[:page], :per_page => params[:per_page])
+    @recipes = Recipe.search(params)
 
     if user_signed_in?
       @recipe_users = []

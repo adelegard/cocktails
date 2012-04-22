@@ -5,6 +5,17 @@ $(document).ready(function() {
     interval: 10000
   });
 
+  $("[rel='tooltip']").each(function() {
+    addTooltipToElement($(this));
+  });
+
+  function addTooltipToElement(elem) {
+    elem.tooltip({
+      delay: { show: 1000, hide: 50 },
+      placement: elem.attr("data-placement") != undefined ? elem.attr("data-placement") : "top"
+    });
+  }
+
 	$.ajaxSetup({
 		'beforeSend': function(xhr) {
 			xhr.setRequestHeader('Accept','text/javascript')
@@ -26,7 +37,7 @@ $(document).ready(function() {
 		  url: href,
 		  success: function(){
 		  	$(e.currentTarget).closest(".favorite-links").find(".favorite-container").hide();
-			$(e.currentTarget).closest(".favorite-links").find(".unfavorite-container").show();
+			  $(e.currentTarget).closest(".favorite-links").find(".unfavorite-container").show();
 		  }
 		});
 	});
@@ -37,7 +48,7 @@ $(document).ready(function() {
 		  url: href,
 		  success: function(){
 		  	$(e.currentTarget).closest(".favorite-links").find(".favorite-container").show();
-			$(e.currentTarget).closest(".favorite-links").find(".unfavorite-container").hide();
+			  $(e.currentTarget).closest(".favorite-links").find(".unfavorite-container").hide();
 		  }
 		});
 	});

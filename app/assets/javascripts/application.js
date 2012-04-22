@@ -14,4 +14,5 @@
 //= require jquery_ujs
 //= require bootstrap
 //= require chosen-jquery
+//= require liquor_cabinet
 //= require_tree .

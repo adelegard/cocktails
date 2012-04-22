@@ -10,17 +10,8 @@ class RecipesController < ApplicationController
                                :page => params[:page], :per_page => params[:per_page])
 
     if user_signed_in?
-      @recipe_users = []
-    end
-    @total_ratings = 0
-    @recipes.each do |recipe|
-      if user_signed_in?
-        recipe_user = RecipeUser.where(:recipe_id => recipe.id, :user_id => current_user.id).first
-        if recipe_user != nil
-          @recipe_users << recipe_user
-        end
-      end
-      @total_ratings += recipe.rating_count != nil ? recipe.rating_count : 0
+      @recipe_users = RecipeUser.getRecipeUsers(@recipes, current_user.id)
+      @total_ratings = RecipeUser.getTotalRatings(@recipes, current_user.id)
     end
   end
 
@@ -34,17 +25,7 @@ class RecipesController < ApplicationController
       liquor_cabinet_ingredients = LiquorCabinet.where(:user_id => current_user.id).collect{|ingredient| ingredient.ingredient_id}
     end
 
-    @ingredients = []
-    recipe_ingredients = RecipeIngredient.where(:recipe_id => params[:id])
-    recipe_ingredients.each do |recipe_ingredient|
-      ingredient = Ingredient.where(:id => recipe_ingredient.ingredient_id).first
-      if user_signed_in?
-        in_liquor_cabinet = liquor_cabinet_ingredients.include?(recipe_ingredient.ingredient_id)
-      else
-        in_liquor_cabinet = nil
-      end
-      @ingredients << {:ingredient => ingredient.ingredient, :order => recipe_ingredient.order, :amount => recipe_ingredient.amount, :in_liquor_cabinet => in_liquor_cabinet}
-    end
+    @ingredients = Ingredient.getIngredients(params[:id], user_signed_in?, liquor_cabinet_ingredients)
 
     render 'recipes/show'
   end
@@ -70,24 +51,6 @@ class RecipesController < ApplicationController
         format.json { render json: @recipe.errors, status: :unprocessable_entity }
       end
     end
-  end
-
-  def rate
-    @recipe = Recipe.where(:id => params[:recipe_id]).first
-    recipe_user = RecipeUser.find_or_init(:recipe_id => params[:recipe_id], :user_id => current_user.id)
-    recipe_user.rating = params[:rating]
-    recipe_user.save
-
-    render 'recipes/show'
-  end
-
-  def star
-    @recipe = Recipe.where(:id => params[:id]).first
-    recipe_user = RecipeUser.find_or_init(:recipe_id => params[:id], :user_id => current_user.id)
-    recipe_user.starred = recipe_user.starred == false ? true : false
-    recipe_user.save
-
-    render 'recipes/show'
   end
 
 end
