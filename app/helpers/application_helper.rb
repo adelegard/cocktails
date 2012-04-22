@@ -15,6 +15,7 @@ module ApplicationHelper
 	end
 	
 	def default_spirits
+	  # this should be CACHED!!! ...really it shouldn't even be here.
 	  ['Vodka', 'Rum', 'Gin', 'Tequilla', 'Whiskey', 'Champagne']
 	end
 end
