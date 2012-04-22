@@ -13,4 +13,8 @@ module ApplicationHelper
 	def sort_direction
 		%w[asc desc].include?(params[:direction]) ? params[:direction] : "desc"
 	end
+	
+	def default_spirits
+	  ['Vodka', 'Rum', 'Gin', 'Tequilla', 'Whiskey', 'Champagne']
+	end
 end
