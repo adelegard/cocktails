@@ -66,24 +66,18 @@
         .container-fluid
             .row-fluid
                 .span2
-                    .well.sidebar-nav
+                    .well.sidebar-nav.search
                         %ul.nav.nav-list
                             %li.nav-header Spirit
-                            %li{:class => (@q == "" ? 'active' : nil)}
-                                %a{:href => "/search?q="} All
-                            %li{:class => (@q == 'vodka' ? 'active' : nil)}
-                                %a{:href => "/search?q=vodka"} Vodka
-                            %li{:class => (@q == 'rum' ? 'active' : nil)}
-                                %a{:href => "/search?q=rum"} Rum
-                            %li{:class => (@q == 'gin' ? 'active' : nil)}
-                                %a{:href => "/search?q=gin"} Gin
-                            %li{:class => (@q == 'tequila' ? 'active' : nil)}
-                                %a{:href => "/search?q=tequila"} Tequila
-                            %li{:class => (@q == 'whiskey' ? 'active' : nil)}
-                                %a{:href => "/search?q=whiskey"} Whiskey
-                            %li{:class => (@q == 'champagne' ? 'active' : nil)}
-                                %a{:href => "/search?q=champagne"} Champagne
+                            %li
+                                %a{:href => "/search"} All
+                            
+                            - default_spirits.each do |s|
+                                %li{:class => (@spirit && @spirit.include?(s.downcase) ? 'active' : nil)}
+                                    %a{:href => "/search?spirit=#{s.downcase}"}= s
+                                    
                             %li.nav-header Ingredients
+                            %a{:href => "#"}Reset
                             %li
                                 %label.checkbox
                                     %input{:type => "checkbox"} All

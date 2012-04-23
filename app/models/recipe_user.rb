@@ -75,7 +75,9 @@ class RecipeUser < ActiveRecord::Base
 		def getTotalRatings(recipes, user_id)
 		    total_ratings = 0
 		    recipes.each do |recipe|
-		      total_ratings += recipe.rating_count
+		      if recipe.rating_count != nil
+		        total_ratings += recipe.rating_count
+		      end
 		    end
 		    return total_ratings
 		end

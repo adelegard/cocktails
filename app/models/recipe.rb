@@ -1,8 +1,8 @@
 class Recipe < ActiveRecord::Base
-  has_many :recipe_ingredients
-  has_many :recipe_users
-  has_many :ingredients, :through => :recipe_ingredients
-  has_many :users, :through => :recipe_users
+	has_many :recipe_ingredients
+	has_many :recipe_users
+	has_many :ingredients, :through => :recipe_ingredients
+	has_many :users, :through => :recipe_users
 
   self.per_page = 12
 
@@ -28,7 +28,7 @@ class Recipe < ActiveRecord::Base
                                  :page => params[:page], :per_page => params[:per_page])
     end
 
-    def search(params)
+    def searchDb(params)
       orderBy = params[:sort] != nil ? params[:sort] : "rating_count"
       orderBy += params[:direction] != nil ? " " + params[:direction].to_s : " DESC"
       return Recipe.paginate(:conditions => ['title LIKE ?', "%#{@q}%"],
