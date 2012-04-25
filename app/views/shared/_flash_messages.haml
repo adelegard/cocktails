@@ -1,0 +1,5 @@
+-flash.each do |key, value|
+	.fade.in{:class => flash_class(key)}
+		%a.close{:href => "#", "data-dismiss" => "alert"}×
+		%strong= flash_strong(key)
+		=value

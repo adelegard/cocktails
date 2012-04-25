@@ -1,4 +1,21 @@
 module ApplicationHelper
+	def flash_class(level)
+		case level
+			when :notice then "alert alert-info"
+			when :success then "alert alert-success"
+			when :error then "alert alert-error"
+			when :alert then "alert alert-error"
+		end
+	end
+	def flash_strong(level)
+		case level
+			when :notice then "Heads up!"
+			when :success then "Well done!"
+			when :error then "Oh snap!"
+			when :alert then "Oh snap!"
+		end
+	end
+
 	def sortable(column, title = nil)
 		title ||= column.titleize
 		css_class = column == sort_column ? "current #{sort_direction}" : nil

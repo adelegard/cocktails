@@ -212,6 +212,21 @@ Devise.setup do |config|
   # up on your models and hooks.
   # config.omniauth :github, 'APP_ID', 'APP_SECRET', :scope => 'user,public_repo'
 
+  #facebook
+  require "omniauth-facebook"
+  config.omniauth :facebook, "225584237548089", "e654b1e3343399bb8db2f165682f3d17"
+
+  #openid
+  require 'openid/store/filesystem'
+  config.omniauth :open_id, :store => OpenID::Store::Filesystem.new('/tmp'), :require => 'omniauth-openid'
+
+  #google
+  config.omniauth :open_id, :store => OpenID::Store::Filesystem.new('/tmp'), :name => 'google', :identifier => 'https://www.google.com/accounts/o8/id', :require => 'omniauth-openid'
+
+  #twitter
+  require "omniauth-twitter"
+  config.omniauth :twitter, 'PoAkEEQ0jRmizHsD4eqDtw', 'KWGVdQ8Q2GSA1cxA4KlpH7OEykJczlFaKjtpdtwQ'
+
   # ==> Warden configuration
   # If you want to use other strategies, that are not supported by Devise, or
   # change the failure app, you can configure them inside the config.warden block.

@@ -97,6 +97,5 @@
                                 %label.checkbox
                                     %input{:type => "checkbox"} Sugar
                 .span10
-                    %p.notice.dn= notice
-                    %p.alert.dn= alert
+                    =render :partial => "shared/flash_messages", :locals => {:flash => flash}
                     = yield

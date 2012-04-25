@@ -1,5 +1,5 @@
 Cocktails::Application.routes.draw do
-	devise_for :users, :path_names => { :sign_up => "register" }
+	devise_for :users, :path_names => { :sign_up => "register" }, :controllers => { :omniauth_callbacks => "users/omniauth_callbacks" }
 
 	match '/recipes/favorites' => 'recipe_users#favorites'
 	match '/recipes/rated' => 'recipe_users#rated'

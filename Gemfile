@@ -2,11 +2,16 @@ source 'https://rubygems.org'
 
 gem 'rails', '3.2.1'
 
+gem 'thin'
+
 gem 'mysql2'
 gem 'nokogiri'
-gem "bootstrap-sass", "~> 2.0.1"
+gem "bootstrap-sass"
 gem 'will_paginate'
 gem "devise", "~> 2.0.4"
+gem "omniauth-facebook"
+gem 'omniauth-openid'
+gem 'omniauth-twitter'
 gem "haml-rails"
 gem 'bootstrap-will_paginate'
 gem "aws-sdk", "~> 1.3.5"
