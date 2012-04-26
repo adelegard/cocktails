@@ -5,7 +5,11 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
     @user = User.find_for_facebook_oauth(request.env["omniauth.auth"], current_user)
 
     if @user.persisted?
-      flash[:success] = I18n.t "devise.omniauth_callbacks.success", :kind => "Facebook"
+      if @user.nickname
+        flash[:success] = I18n.t "devise.omniauth_callbacks.success_nickname", :kind => "Facebook", :nickname => @user.nickname
+      else
+        flash[:success] = I18n.t "devise.omniauth_callbacks.success", :kind => "Facebook"
+      end
       sign_in_and_redirect @user, :event => :authentication
     else
       session["devise.facebook_data"] = request.env["omniauth.auth"]
@@ -17,7 +21,11 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
     @user = User.find_for_twitter_oauth(env['omniauth.auth'])
 
     if @user.persisted?
-      flash[:success] = I18n.t 'devise.omniauth_callbacks.success', kind: 'Twitter'
+      if @user.nickname
+        flash[:success] = I18n.t "devise.omniauth_callbacks.success_nickname", :kind => "Twitter", :nickname => @user.nickname
+      else
+        flash[:success] = I18n.t "devise.omniauth_callbacks.success", :kind => "Twitter"
+      end
       @user.remember_me = true
       sign_in_and_redirect @user, :event => :authentication
     else
@@ -43,7 +51,11 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
     @user = User.find_for_open_id(request.env["omniauth.auth"], current_user)
 
     if @user.persisted?
-      flash[:success] = I18n.t "devise.omniauth_callbacks.success", :kind => "Google"
+      if @user.nickname
+        flash[:success] = I18n.t "devise.omniauth_callbacks.success_nickname", :kind => "Google", :nickname => @user.nickname
+      else
+        flash[:success] = I18n.t "devise.omniauth_callbacks.success", :kind => "Google"
+      end
       sign_in_and_redirect @user, :event => :authentication
     else
       session["devise.google_data"] = request.env["omniauth.auth"]

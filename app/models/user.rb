@@ -15,18 +15,34 @@ class User < ActiveRecord::Base
     def find_for_facebook_oauth(access_token, signed_in_resource=nil)
       data = access_token.extra.raw_info
       if user = self.find_by_email(data.email)
+        if user.nickname == nil || user.name == nil
+          user.nickname = data["first_name"] if data["first_name"]
+          user.name = data["name"] if data["name"]
+          user.save
+        end
         user
-      else # Create a user with a stub password. 
-        self.create!(:email => data.email, :password => Devise.friendly_token[0,20]) 
+      else
+        user = User.new(:email => data.email, :password => Devise.friendly_token[0,20])
+        user.nickname = data["first_name"] if data["first_name"]
+        user.name = data["name"] if data["name"]
+        user.save
       end
     end
 
   	def find_for_open_id(access_token, signed_in_resource=nil)
   	  data = access_token.info
   	  if user = User.where(:email => data["email"]).first
-  	    user
+        if user.nickname == nil || user.name == nil
+          user.nickname = data["first_name"] if data["first_name"]
+          user.name = data["name"] if data["name"]
+          user.save
+        end
+        user
   	  else
-  	    User.create!(:email => data["email"], :password => Devise.friendly_token[0,20])
+        user = User.new(:email => data["email"], :password => Devise.friendly_token[0,20])
+        user.nickname = data["first_name"] if data["first_name"]
+        user.name = data["name"] if data["name"]
+        user.save
   	  end
   	end
 
@@ -35,7 +51,7 @@ class User < ActiveRecord::Base
       if authentication && authentication.user
         authentication.user
       else
-        user = User.new(:nickname => omniauth['nickname'], :name => omniauth['name'])
+        User.new(:nickname => omniauth['nickname'], :name => omniauth['name'])
       end
     end
 
@@ -47,4 +63,5 @@ class User < ActiveRecord::Base
       end
     end
   end
+
 end

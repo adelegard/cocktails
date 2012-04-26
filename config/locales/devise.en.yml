@@ -50,7 +50,8 @@ en:
       unlocked: 'Your account has been unlocked successfully. Please sign in to continue.'
       send_paranoid_instructions: 'If your account exists, you will receive an email with instructions about how to unlock it in a few minutes.'
     omniauth_callbacks:
-      success: 'Successfully signed in with your %{kind} account.'
+      success: 'You have successfully signed in with your %{kind} account.'
+      success_nickname: 'Welcome %{nickname}! You have successfully signed in with your %{kind} account.'
       failure: 'Could not sign in with your %{kind} account because "%{reason}".'
     mailer:
       confirmation_instructions:
