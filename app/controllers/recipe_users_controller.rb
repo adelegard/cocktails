@@ -14,7 +14,7 @@ class RecipeUsersController < ApplicationController
   def rated
     @recipes = RecipeUser.getRatedRecipesByUserId(params, current_user.id)
     @recipe_users = RecipeUser.getRecipeUsers(@recipes, current_user.id)
-    @total_ratings = RecipeUser.getTotalRatings(@recipes, current_user.id)
+    @total_ratings = RecipeUser.getTotalRatings(@recipes)
 
     @title = "My Rated Recipes"
     render 'search/search'
@@ -23,7 +23,7 @@ class RecipeUsersController < ApplicationController
   def favorites
     @recipes = RecipeUser.getFavoriteRecipesByUserId(params, current_user.id)
     @recipe_users = RecipeUser.getRecipeUsers(@recipes, current_user.id)
-    @total_ratings = RecipeUser.getTotalRatings(@recipes, current_user.id)
+    @total_ratings = RecipeUser.getTotalRatings(@recipes)
 
     @title = "My Favorite Cocktails"
     render 'search/search'
@@ -32,7 +32,7 @@ class RecipeUsersController < ApplicationController
   def liquor_cabinet_recipes
     @recipes = LiquorCabinet.getAvailableRecipes(params, current_user.id)
     @recipe_users = RecipeUser.getRecipeUsers(@recipes, current_user.id)
-    @total_ratings = RecipeUser.getTotalRatings(@recipes, current_user.id)
+    @total_ratings = RecipeUser.getTotalRatings(@recipes)
 
     @title = "Cocktails I Can Make!"
     render 'search/search'

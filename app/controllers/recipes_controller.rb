@@ -8,10 +8,9 @@ class RecipesController < ApplicationController
   def index
     @recipes = Recipe.paginate(:order => "rating_count DESC",
                                :page => params[:page], :per_page => params[:per_page])
-
+    @total_ratings = RecipeUser.getTotalRatings(@recipes)
     if user_signed_in?
       @recipe_users = RecipeUser.getRecipeUsers(@recipes, current_user.id)
-      @total_ratings = RecipeUser.getTotalRatings(@recipes, current_user.id)
     end
   end
 

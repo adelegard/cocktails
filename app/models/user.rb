@@ -1,13 +1,14 @@
 class User < ActiveRecord::Base
   has_many :recipe_users
   has_many :recipe, :through => :recipe_users
+  has_many :authentications
   # Include default devise modules. Others available are:
   # :token_authenticatable, :encryptable, :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable, :omniauthable
 
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :email, :password, :password_confirmation, :remember_me
+  attr_accessible :email, :nickname, :name, :password, :password_confirmation, :remember_me
 
   class << self
 
@@ -34,11 +35,7 @@ class User < ActiveRecord::Base
       if authentication && authentication.user
         authentication.user
       else
-        user = User.create!(:nickname => omniauth['nickname'], 
-                              :name => omniauth['name'])
-        user.authentications.create!(:provider => omniauth['provider'], :uuid => omniauth['uid'])
-        user.save
-        user
+        user = User.new(:nickname => omniauth['nickname'], :name => omniauth['name'])
       end
     end
 
