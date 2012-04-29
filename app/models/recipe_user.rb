@@ -24,10 +24,10 @@ class RecipeUser < ActiveRecord::Base
 		    recipe_user.save
 		end
 
-		def rate(recipe_id, user_id)
+		def rate(recipe_id, user_id, rating)
 		    recipe = Recipe.where(:id => recipe_id).first
 		    recipe_user = RecipeUser.find_or_initialize_by_recipe_id_and_user_id(recipe.id, user_id)
-		    recipe_user.rating = params[:rating]
+		    recipe_user.rating = rating
 		    recipe_user.save
 		end
 

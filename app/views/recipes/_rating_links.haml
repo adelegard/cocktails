@@ -1,27 +1,11 @@
--if @recipe_user != nil && @recipe_user.rating != nil
-	.rating-box.rating.value-title.my{:class => "stars#{@recipe_user.rating}", :title => "#{@recipe_user.rating}"}
-		%span
-			Rated
-			=@recipe.rating_avg
-			stars out of 5
--else
-	.rating-box.rating.value-title{:class => "stars#{@recipe.rating_avg}", :title => "#{@recipe.rating_avg}"}
-		%span
-			Rated
-			=@recipe.rating_avg
-			stars out of 5
-%br
-%br
-Ratings: 
-=@recipe.rating_avg
-="/"
-5
-from
-=@recipe.rating_count
-users
-%br
-%br
--(1..5).to_a.each do |index|
-	%form.dib{:action => "/recipes/#{@recipe.id}/rate", :method => :post}
-		%input{:type => "hidden", :name => "rating", :value => index}
-		%input{:type => "submit", :value => index}
+.dib
+	-if @recipe_user != nil && @recipe_user.rating != nil
+		.raty_star_rated{"data-rating" => @recipe_user.rating}
+	-else
+		.pr.stars
+			.pa.raty_star_not_rated{"data-rating" => @recipe.rating_avg}
+			.pa.dn.raty_star_rated{"data-rating" => @recipe.rating_avg}
+.dib
+	.recipe_rating_count
+		="(#{@recipe.rating_count})"
+%input#recipe_id{:type => "hidden", :value => @recipe.id}

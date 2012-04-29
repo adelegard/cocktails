@@ -22,38 +22,6 @@ $(document).ready(function() {
 		}
 	});
 
-	$("a.showFullPageView").click(function() {
-		$("#fullPageView").fadeIn("slow");
-	});
-
-	$("#fullPageView a.close_circle").click(function() {
-		$("#fullPageView").fadeOut("slow");
-	});
-
-	$(document).on("click", ".favorite", function(e) {
-		e.preventDefault();
-		var href = $(e.currentTarget).attr("href");
-		$.ajax({
-		  url: href,
-		  success: function(){
-		  	$(e.currentTarget).closest(".favorite-links").find(".favorite-container").hide();
-			  $(e.currentTarget).closest(".favorite-links").find(".unfavorite-container").show();
-		  }
-		});
-	});
-	$(document).on("click", ".unfavorite", function(e) {
-		e.preventDefault();
-		var href = $(e.currentTarget).attr("href");
-		$.ajax({
-		  url: href,
-		  success: function(){
-		  	$(e.currentTarget).closest(".favorite-links").find(".favorite-container").show();
-			  $(e.currentTarget).closest(".favorite-links").find(".unfavorite-container").hide();
-		  }
-		});
-	});
-
-
   $('input.recipe_ac').autocomplete({
     source: function(request, response) {
       var params = getAutoCompleteRecipeParams(request.term);

@@ -207,58 +207,6 @@ ul.recipe_ingredients {
 	background: asset-url("cocktails/green_992.jpg", image) no-repeat 0 0;
 }
 
-/* Food Network Stars */
-.rating-box{float:left;width:170px;height:30px;background: #fff asset-url("stars_lg.gif", image) no-repeat 0 -330px;}
-.rating-box span, .recipe-citrus #fn-e .rating-box span{float:left;text-indent:-9999em;overflow:hidden;}
-.rating-box.stars1{background-position:0 -30px;}
-.rating-box.stars2{background-position:0 -60px;}
-.rating-box.stars3{background-position:0 -90px;}
-.rating-box.stars4{background-position:0 -120px;}
-.rating-box.stars5{background-position:0 -150px;}
-
-.rating-box.my.stars1{background-position:0 -360px;}
-.rating-box.my.stars2{background-position:0 -390px;}
-.rating-box.my.stars3{background-position:0 -420px;}
-.rating-box.my.stars4{background-position:0 -450px;}
-.rating-box.my.stars5{background-position:0 -480px;}
-
-.rating-box.sm{float:left;width:130px;height:16px;background:asset-url("stars_sm.gif", image) no-repeat 0 -273px;}
-.rating-box.sm.stars0-5{background-position:0 -96px;}
-.rating-box.sm.stars1{background-position:0 -16px;}
-.rating-box.sm.stars1-5{background-position:0 -112px;}
-.rating-box.sm.stars2{background-position:0 -32px;}
-.rating-box.sm.stars2-5{background-position:0 -128px;}
-.rating-box.sm.stars3{background-position:0 -48px;}
-.rating-box.sm.stars3-5{background-position:0 -144px;}
-.rating-box.sm.stars4{background-position:0 -64px;}
-.rating-box.sm.stars4-5{background-position:0 -160px;}
-.rating-box.sm.stars5{background-position:0 -80px;}
-/* end food network */
-
-/* star rating */
-.rating-list{
-	border:1px solid #efefef;
-	-moz-border-radius:6px;
-	-webkit-border-radius:6px;
-	border-radius:6px;
-	padding:3px 3px 1px 4px;
-	width:198px;
-	height:13px;
-	font-size:11px;
-	text-align:left;
-}
-.rating-list:hover{
-	-moz-box-shadow:0 1px 5px rgba(0, 0, 0, 0.5);
-	-webkit-box-shadow:0 1px 5px rgba(0, 0, 0, 0.5);
-}
-.rating-list .rating-stars a{
-	width:14px;
-}
-.rating-list .rating-rating{
-	margin:-1px 0 0 143px;
-	width:40px;
-	font-size:11px;
-}
-.rating-list .rating-cancel{
-	margin:-1px 0 0 185px;
+.recipe_rating_count {
+	font-size: 16px;
 }

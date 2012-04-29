@@ -39,7 +39,7 @@ class RecipeUsersController < ApplicationController
   end
 
   def rate
-    RecipeUser.rate(params[:id], current_user.id)
+    RecipeUser.rate(params[:recipe_id], current_user.id, params[:rating])
 
     respond_to do |format|
       format.js   { render :nothing => true }

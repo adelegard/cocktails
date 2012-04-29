@@ -17,10 +17,6 @@
 		=render :partial => '/widgets/twitter'
 =render :partial => '/recipes/rating_links'
 %br
--if @recipe_user != nil && @recipe_user.rating
-	Current Rating: 
-	=@recipe_user.rating
-	%br
 %br
 -if @ingredients.size > 0
 	%h3.ingredients_heading Ingredients

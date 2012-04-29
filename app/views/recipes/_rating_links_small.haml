@@ -1,10 +1,4 @@
 -if @recipe_user != nil && @recipe_user.rating != nil
-	.rating-box.rating.value-title.my.sm{:class => "stars#{@recipe_user.rating}", :title => "#{@recipe_user.rating}"}
-		%span
-			=@recipe_user.rating
-			out of 5
+    .raty_small_star_rated{"data-rating" => @recipe_user.rating}
 -else
-	.rating-box.rating.value-title.sm{:class => "stars#{@the_recipe.rating_avg}", :title => "#{@the_recipe.rating_avg}"}
-		%span
-			=@the_recipe.rating_avg
-			out of 5
+    .raty_small_star_not_rated{"data-rating" => @the_recipe.rating_avg}
