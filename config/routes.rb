@@ -3,6 +3,9 @@ Cocktails::Application.routes.draw do
 				:controllers => { :omniauth_callbacks => "users/omniauth_callbacks", 
 								  :registrations => 'users/registration' }
 
+    match '/about' => 'about#about'
+    match '/contact' => 'contact#contact'
+
 	match '/recipes/favorites' => 'recipe_users#favorites'
 	match '/recipes/rated' => 'recipe_users#rated'
 	match '/recipes/liquor_cabinet' => 'recipe_users#liquor_cabinet_recipes'
@@ -30,4 +33,8 @@ Cocktails::Application.routes.draw do
 	match '/search' => 'search#search'
 	match '/search/autocomplete_recipes' => 'search#autocomplete_recipes'
 	match '/search/autocomplete_ingredients' => 'search#autocomplete_ingredients'
+
+	unless Rails.application.config.consider_all_requests_local
+		match '*not_found', to: 'errors#error_404'
+	end
 end

@@ -2,8 +2,18 @@ class Ingredient < ActiveRecord::Base
 	has_many :recipe_ingredients
 	has_many :recipe, :through => :recipe_ingredients
 
+	define_index do
+		# fields
+		indexes ingredient, :sortable => true
+
+		# attributes
+		has :id, :as => :ingredient_id
+		has created_at
+		has updated_at
+	end
+
   	class << self
-		def search(term)
+		def searchDb(term)
 			return Ingredient.where(:conditions => ['ingredient LIKE ?', "%#{term}%"])
 		end
 

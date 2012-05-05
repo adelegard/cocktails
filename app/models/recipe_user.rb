@@ -81,5 +81,20 @@ class RecipeUser < ActiveRecord::Base
 		    end
 		    return total_ratings
 		end
+
+		def getUserData(recipe_id)
+			recipe_users = RecipeUser.where(:recipe_id => recipe_id)
+
+			num_starred = 0
+			ratings = []
+			recipe_users.each do |recipe_user|
+				if recipe_user.starred != nil
+					num_starred = num_starred + 1
+				end
+				ratings << recipe_user.rating if recipe_user.rating
+			end
+			avg = ratings.inject{ |sum, el| sum + el }.to_f / ratings.size
+			return {:num_starred => num_starred, :num_rated => ratings.size, :avg_rating => avg}
+		end
 	end
 end

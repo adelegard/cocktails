@@ -42,7 +42,11 @@ class SearchController < ApplicationController
   end
 
   def autocomplete_recipes
-    recipes = Recipe.where('title LIKE ?', "#{params[:q]}%").order("rating_count DESC").limit(5)
+    term = "^" + params[:q] + "*"
+    recipes = Recipe.search term,
+      :match_mode => :extended,
+      :ignore_errors => true,
+      :order => "@relevance DESC"
     names = recipes.collect{|i| i.title}
     respond_to do |format|
       format.js {render_json names.to_json}
@@ -50,7 +54,11 @@ class SearchController < ApplicationController
   end
 
   def autocomplete_ingredients
-    ingredients = Ingredient.where('ingredient LIKE ?', "#{params[:q]}%").limit(5)
+    term = "^" + params[:q] + "*"
+    ingredients = Ingredient.search term,
+      :match_mode => :extended,
+      :ignore_errors => true,
+      :order => "@relevance DESC"
     names = ingredients.collect{|i| i.ingredient}
     respond_to do |format|
       format.js {render_json names.to_json}

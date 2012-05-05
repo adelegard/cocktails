@@ -23,8 +23,12 @@ class RecipesController < ApplicationController
       @recipe_user = RecipeUser.where(:recipe_id => params[:id], :user_id => current_user.id).first_or_create
       liquor_cabinet_ingredients = LiquorCabinet.where(:user_id => current_user.id).collect{|ingredient| ingredient.ingredient_id}
     end
-
     @ingredients = Ingredient.getIngredients(params[:id], user_signed_in?, liquor_cabinet_ingredients)
+
+    user_data = RecipeUser.getUserData(params[:id])
+    @num_starred = user_data[:num_starred]
+    @num_rated = user_data[:num_rated]
+    @avg_rating = user_data[:avg_rating]
 
     render 'recipes/show'
   end

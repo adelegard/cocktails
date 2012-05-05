@@ -57,6 +57,19 @@ $(document).ready(function() {
     delay: 300
   });
 
+  $("select.chzn-select.ingridients_ac").ajaxChosen({
+      method: 'GET',
+      url: '/search/autocomplete_ingredients',
+      dataType: 'json',
+      jsonTermKey: 'q'
+  }, function (data) {
+      var terms = {};
+      $.each(data, function (i, val) {
+          terms[i] = val;
+      });
+      return terms;
+  });
+
   function getAutoCompleteRecipeParams(term) {
     params = {};
     params['url'] = '/search/autocomplete_recipes';

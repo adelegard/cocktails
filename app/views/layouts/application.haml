@@ -31,12 +31,12 @@
                     %a.brand{:href => "/"} Cocktail Recipes
                     .nav-collapse
                         %ul.nav
-                            %li.active
-                                %a{:href => "#"} Home
-                            %li
-                                %a{:href => "#about"} About
-                            %li
-                                %a{:href => "#contact"} Contact
+                            %li{:class => request.fullpath == '/' ? "active" : ""}
+                                %a{:href => "/"} Home
+                            %li{:class => request.fullpath == '/about' ? "active" : ""}
+                                %a{:href => "/about"} About
+                            %li{:class => request.fullpath == '/contact' ? "active" : ""}
+                                %a{:href => "/contact"} Contact
                         %form.navbar-search{:action => "/search", :method => :get}
                             %input.recipe_ac.search-query.span3{:placeholder => "Search", :type => "text", :name => "q", :value => @q}
                             %input.btn{:type => "submit", :value => "Search"}

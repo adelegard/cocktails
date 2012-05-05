@@ -18,7 +18,7 @@
 					%option oz
 					%option shot
 					%option tbsp
-				%select.chzn-select{"data-placeholder" => "Choose an ingredient...", :style => "width:100px;"}
+				%select.chzn-select.ingridients_ac{"data-placeholder" => "Choose an ingredient...", :style => "width:200px;"}
 					%option vodka
 					%option rum
 					%option tequila
@@ -29,3 +29,4 @@
 		.control-group
 			.controls
 				= f.submit 'Create Recipe', :class => "btn btn-primary"
+//%input#cabinet_ingredient_search.ingridients_ac{:type => "text"}

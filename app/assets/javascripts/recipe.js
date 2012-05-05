@@ -13,14 +13,18 @@ $(function() {
     var size = attr.smallStars ? 18 : 30;
     var read_only = attr.smallStars ? true : false;
     var starOffImg = attr.smallStars ? 'stars_sm_single_off.gif' : 'stars_lg_single_off.gif';
+    var starHalfImg = attr.smallStars ? 'stars_sm_half.gif' : 'stars_lg_half.gif'
     var starOnImg = attr.smallStars ? 'stars_sm_single.gif' : 'stars_lg_single.gif';
     if (typeof attr.isRated !== 'undefined' && attr.isRated) {
+      starHalfImg = attr.smallStars ? 'stars_sm_half_orange.gif' : 'stars_lg_half_orange.gif'
       starOnImg = attr.smallStars ? 'stars_sm_single_orange.gif' : 'stars_lg_single_orange.gif';
     }
     return {
       size:      size,
+      half:      true,
       readOnly:  read_only,
       starOff:   starOffImg,
+      starHalf:  starHalfImg,
       starOn:    starOnImg,
       path:      "/assets/raty",
       hintList:  ['Terrible', 'Not Great', 'Ok', 'Good', 'Amazing'],

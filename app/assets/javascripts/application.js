@@ -12,9 +12,7 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require jquery.raty.min
 //= require bootstrap
+//= require ajax-chosen.min
 //= require chosen-jquery
-//= require recipe
-//= require liquor_cabinet
 //= require_tree .

@@ -3,9 +3,9 @@
 		.raty_star_rated{"data-rating" => @recipe_user.rating}
 	-else
 		.pr.stars
-			.pa.raty_star_not_rated{"data-rating" => @recipe.rating_avg}
-			.pa.dn.raty_star_rated{"data-rating" => @recipe.rating_avg}
+			.pa.raty_star_not_rated{"data-rating" => @avg_rating}
+			.pa.dn.raty_star_rated{"data-rating" => @avg_rating}
 .dib
 	.recipe_rating_count
-		="(#{@recipe.rating_count})"
+		="(#{@num_rated})"
 %input#recipe_id{:type => "hidden", :value => @recipe.id}
