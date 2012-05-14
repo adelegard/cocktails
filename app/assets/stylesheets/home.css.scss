@@ -1,38 +1,6 @@
-// Place all the styles related to the home controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
 
-body {
-	padding-top: 60px;
-}
-
-.well {
-	background-color: white;
-
-	hr_blah {
-		border-top: 1px solid #bbb
-	}
-}
-
-.navbar input {
-	margin-top: 5px;
-}
-
-.sidebar-nav label {
-	color: #08C;
-}
-
-.navbar-search {
-	margin-top: 0px;
-}
-
-.container-fluid {
-	padding-left: 120px;
-	padding-right: 120px;
-}
-
-form {
-	margin-bottom: 0px;
+.new_recipe_directions {
+	margin-bottom: 1px;
 }
 
 .social {
@@ -180,19 +148,6 @@ ul.recipe_ingredients {
 					font-size: 20px;
 				}
 			}
-		}
-	}
-}
-
-.hero-unit {
-	padding: 0px;
-	.carousel {
-		.btn {
-			opacity: 0.8;
-		}
-		img {
-			width: 992px;
-			height: 500px;
 		}
 	}
 }

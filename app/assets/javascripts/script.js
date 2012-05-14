@@ -1,20 +1,25 @@
 $(document).ready(function() {
 	$(".chzn-select").chosen();
+  $('#new_recipe_directions').NobleCount('#characters_remaining', 
+                                {max_chars:2000, on_negative: 'go_red'});
 
-  $('.carousel').carousel({
-    interval: 10000
-  });
 
-  $("[rel='tooltip']").each(function() {
-    addTooltipToElement($(this));
-  });
+  var ajaxChosenParams = {
+    method: 'GET',
+    url: '/search/autocomplete_ingredients',
+    dataType: 'json',
+    jsonTermKey: 'q'
+  };
 
-  function addTooltipToElement(elem) {
-    elem.tooltip({
-      delay: { show: 1000, hide: 50 },
-      placement: elem.attr("data-placement") != undefined ? elem.attr("data-placement") : "top"
+  var ajaxChosenSuccessCallback = function(data) {
+    var terms = {};
+    $.each(data, function (i, val) {
+        terms[i] = val;
     });
-  }
+    return terms;
+  };
+
+  setupAjaxChosen();
 
 	$.ajaxSetup({
 		'beforeSend': function(xhr) {
@@ -57,18 +62,39 @@ $(document).ready(function() {
     delay: 300
   });
 
-  $("select.chzn-select.ingridients_ac").ajaxChosen({
-      method: 'GET',
-      url: '/search/autocomplete_ingredients',
-      dataType: 'json',
-      jsonTermKey: 'q'
-  }, function (data) {
-      var terms = {};
-      $.each(data, function (i, val) {
-          terms[i] = val;
-      });
-      return terms;
+  $(document).on("click", ".new_recipe_ingredient_add", function() {
+    var new_ingredient = $(".new_recipe_ingredient").first().clone();
+    var num = $(".the_ingredients .ingredient").length;
+
+    setNewIngredientName("input", new_ingredient, num);
+    setNewIngredientName("select.amt", new_ingredient, num);
+    setNewIngredientName("select.ingridients_ac", new_ingredient, num);
+
+    new_ingredient.removeClass("dn new_recipe_ingredient");
+    new_ingredient.find("select").addClass("chzn-select");
+    new_ingredient.appendTo(".the_ingredients");
+    $(".chzn-select").chosen();
+    setupAjaxChosen();
+    return false;
   });
+
+  function setNewIngredientName(selector, new_ingredient, num) {
+    var the_title = new_ingredient.find(selector);
+    var input_name = the_title.attr("name");
+    input_name = input_name.replace("0", num);
+    the_title.attr("name", input_name);
+  }
+
+  $(document).on("click", ".remove_new_ingredient", function() {
+    var ingredients = $(".the_ingredients .ingredient");
+    if (ingredients.length <= 1) return false;
+    $(this).closest(".ingredient").remove();
+  });
+
+  function setupAjaxChosen() {
+    $("select.chzn-select.ingridients_ac").ajaxChosen(ajaxChosenParams, 
+                                                      ajaxChosenSuccessCallback);
+  }
 
   function getAutoCompleteRecipeParams(term) {
     params = {};

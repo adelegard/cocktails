@@ -59,9 +59,10 @@ class SearchController < ApplicationController
       :match_mode => :extended,
       :ignore_errors => true,
       :order => "@relevance DESC"
-    names = ingredients.collect{|i| i.ingredient}
+    names_and_ids = Hash.new {|h, k| h[k] = []}
+    ingredients.each{|i| names_and_ids[i.id] = i.ingredient}
     respond_to do |format|
-      format.js {render_json names.to_json}
+      format.js {render_json names_and_ids.to_json}
     end
   end
 

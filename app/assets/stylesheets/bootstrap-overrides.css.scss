@@ -1,0 +1,48 @@
+body {
+    padding-top: 60px;
+}
+
+form {
+    margin-bottom: 0px;
+}
+
+.well {
+    background-color: white;
+
+    hr_blah {
+        border-top: 1px solid #bbb
+    }
+}
+
+.container-fluid {
+    padding-left: 120px;
+    padding-right: 120px;
+}
+
+.navbar input {
+    margin-top: 5px;
+}
+
+.sidebar-nav label {
+    color: #08C;
+}
+
+.navbar-search {
+    margin-top: 0px;
+}
+
+.hero-unit {
+    padding: 0px;
+    .carousel {
+        .btn {
+            opacity: 0.8;
+        }
+        img {
+            width: 992px;
+            height: 500px;
+        }
+    }
+    p {
+        color: #ddd;
+    }
+}

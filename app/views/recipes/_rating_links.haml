@@ -1,11 +1,16 @@
+-is_rated = false
 .dib
-	-if @recipe_user != nil && @recipe_user.rating != nil
-		.raty_star_rated{"data-rating" => @recipe_user.rating}
-	-else
-		.pr.stars
-			.pa.raty_star_not_rated{"data-rating" => @avg_rating}
-			.pa.dn.raty_star_rated{"data-rating" => @avg_rating}
-.dib
-	.recipe_rating_count
-		="(#{@num_rated})"
-%input#recipe_id{:type => "hidden", :value => @recipe.id}
+    -if @recipe_user != nil && @recipe_user.rating != nil
+        -is_rated = true
+        .raty_star_rated{"data-rating" => @recipe_user.rating}
+    -else
+        .stars
+            .raty_star_not_rated{"data-rating" => @avg_rating}
+            .dn.raty_star_rated{"data-rating" => @avg_rating}
+.recipe_rating_count.dib
+    %span= "("
+    %span#recipe_rating_count_num= @num_rated
+    %span= ")"
+    %input#recipe_id{:type => "hidden", :value => @recipe.id}
+    %span#rating_thanks.dn Thanks for the rating! :)
+%input#recipe_is_rated{:type => "hidden", :value => "#{is_rated}"}

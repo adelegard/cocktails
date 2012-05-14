@@ -13,6 +13,7 @@
 //= require jquery
 //= require jquery_ujs
 //= require bootstrap
+//= require jquery.NobleCount.min
 //= require ajax-chosen.min
 //= require chosen-jquery
 //= require_tree .

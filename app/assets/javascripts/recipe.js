@@ -57,8 +57,22 @@ $(function() {
       success: function(data) {
         $(".stars").unbind("mouseenter");
         $(".stars").unbind("mouseleave");
+
+        $("#rating_thanks").show();
+        $("#rating_thanks").effect("highlight", {}, 3000);
+        var is_rated = $("#recipe_is_rated");
+        if (is_rated.val() === "true") {
+          return false;
+        }
+
+        is_rated.val("true");
         $(".raty_star_not_rated").hide();
         $(".raty_star_rated").show();
+        var count = $("#recipe_rating_count_num").html();
+        count = parseInt(count);
+        count = count+1;
+        $("#recipe_rating_count_num").html(count);
+        $(".recipe_rating_count").effect("highlight", {}, 3000);
       }
     });
   }

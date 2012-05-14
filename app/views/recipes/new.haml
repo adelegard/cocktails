@@ -1,32 +1,35 @@
 %h2 New Recipe
 %br
 =form_for @recipe, :html => { :multipart => true} do |f|
-	%fieldset
+	%fieldset.new_recipe_ingredients
+		%h4 Title
+		%br
 		.control-group
-			= f.label :title, :class => "control-label"
 			.controls
-				= f.text_field :title, :class => "input-xlarge"
-		//.control-group
-		//	= f.label :photo, 'Choose a photo:', :class => "control-label"
-		//	.controls
-		//		= f.file_field :photo
+				= f.text_field :title, :class => "input-xlarge", :placeholder => "Enter recipe title..."
 		.control-group
-			= f.label :ingredient, :class => "control-label"
+			= f.label :photo, 'Choose a photo:', :class => "control-label"
 			.controls
-				%input{:type => "text", :style => "width:18px;"}
-				%select.chzn-select{"data-placeholder" => "Choose an amount...", :style => "width:50px;"}
-					%option oz
-					%option shot
-					%option tbsp
-				%select.chzn-select.ingridients_ac{"data-placeholder" => "Choose an ingredient...", :style => "width:200px;"}
-					%option vodka
-					%option rum
-					%option tequila
+				= f.file_field :photo
+		.the_ingredients
+			%h4 Ingredients
+			.control-group.ingredient
+				.controls
+					=render :partial => '/recipes/new_ingredient', :locals => {:select_class => "chzn-select"}
 		.control-group
-			= f.label :directions, :class => "control-label"
 			.controls
-				= f.text_area(:directions, :cols => 10, :rows => 5, :class => "input-xlarge span6")
+				%button.btn.btn-success.new_recipe_ingredient_add Add Ingredient
+		.control-group
+			%h4 Directions
+			%br
+			.controls
+				= f.text_area(:directions, :id => "new_recipe_directions", :cols => 10, :rows => 5, :class => "input-xlarge span6 new_recipe_directions", :placeholder => "Enter any required instructions for this recipe...")
+				.char_remaining
+					%span#characters_remaining
+					%span characters remaining
 		.control-group
 			.controls
 				= f.submit 'Create Recipe', :class => "btn btn-primary"
-//%input#cabinet_ingredient_search.ingridients_ac{:type => "text"}
+.dn.control-group.ingredient.new_recipe_ingredient
+	.controls
+		=render :partial => '/recipes/new_ingredient', :locals => {:select_class => ""}

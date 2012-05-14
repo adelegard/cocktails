@@ -1,0 +1,10 @@
+%a.icon-remove.remove_new_ingredient{:href => "javascript:void(0);"}
+%input{:type => "text", :style => "width:18px;", :value => 1, :name => "recipe[ing][0][val]"}
+%select.amt{:class => "#{select_class}", "data-placeholder" => "Choose an amount...", :style => "width:100px;", :name => "recipe[ing][0][amt]"}
+    %option oz
+    %option shot
+    %option tbsp
+%select.ingridients_ac{:class => "#{select_class}", "data-placeholder" => "Choose an ingredient...", :style => "width:200px;", :name => "recipe[ing][0][liquor]"}
+    %option{:value => "1000"} vodka
+    %option{:value => "1001"} rum
+    %option{:value => "1002"} tequila

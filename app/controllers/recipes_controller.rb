@@ -43,7 +43,15 @@ class RecipesController < ApplicationController
   end
 
   def create
-    @recipe = Recipe.create(params[:recipe])
+    @recipe = Recipe.create(:title => params[:recipe][:title], :directions => params[:recipe][:directions])
+
+    order = 1
+    params[:recipe][:ing].each do |key, val|
+      ingredient = Ingredient.where(:id => val[:liquor]).first
+      RecipeIngredient.create(:recipe_id => @recipe.id, :ingredient_id => ingredient.id, 
+                           :order => order, :amount => "#{val[:val]} #{val[:amt]}")
+      order = order + 1
+    end
 
     respond_to do |format|
       if @recipe.save
