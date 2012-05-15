@@ -30,12 +30,22 @@
 				-ingredient_icon = "icon-remove"
 				-ingredient_class = "not_in_liquor_cabinet"
 				-ingredient_tt = "Click to Add to Liquor Cabinet"
-			%li.ingredient{:class => "#{ingredient_class}"}
-				-if ingredient_icon != nil
-					%i{:class => "#{ingredient_icon}"}
-				%span.full_ingredient{:title => "#{ingredient_tt}", :rel => "tooltip", "data-placement" => "right"}
-					%span= ingredient[:amount]
-					%span.the_ingredient= ingredient[:ingredient]
+			-if ingredient_icon != nil
+				%i.dib{:class => "#{ingredient_icon}"}
+			%li.dib.dropdown.ingredient{:class => "#{ingredient_class}"}
+				%a.dropdown-toggle{"data-toggle" => "dropdown", :href => "#"}
+					%span.full_ingredient
+						%span= ingredient[:amount]
+						%span.the_ingredient= ingredient[:ingredient]
+						%b.caret
+				%ul.dropdown-menu
+					%li
+						%input.the_ingredient{:type => "hidden", :value => "#{ingredient[:ingredient]}"}
+						%a.add_to_liquor_cabinet{:href => "#"} Add to my Liquor Cabinet
+					%li.divider
+					%li
+						%a{:href => "/search?spirit=#{ingredient[:ingredient]}"} Search for this ingredient
+			%br
 %br
 .directions
 	%h3 Directions

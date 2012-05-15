@@ -53,30 +53,37 @@ ul.recipe_ingredients {
 .recipe_ingredients .ingredient.in_liquor_cabinet {
 	margin-bottom: 8px;
 }
-.recipe_ingredients .ingredient.not_in_liquor_cabinet > span,
-.recipe_ingredients .ingredient.in_liquor_cabinet > span {
+.recipe_ingredients .ingredient.not_in_liquor_cabinet a,
+.recipe_ingredients .ingredient.in_liquor_cabinet a {
+	text-decoration: none;
+}
+.recipe_ingredients .ingredient.not_in_liquor_cabinet a > span,
+.recipe_ingredients .ingredient.in_liquor_cabinet a > span {
 	padding: 3px 4px;
 	border-radius: 3px;
+	color: white;
 
 	&:hover {
 		cursor: pointer;
 	}
 }
-.recipe_ingredients .ingredient.not_in_liquor_cabinet > span {
-	background-color: lightSalmon;
-
+.recipe_ingredients .ingredient.not_in_liquor_cabinet a > span {
+	background-color: #EE5F5B;
 	&:hover {
-		//background-color: lightgreen;
-		border: 2px solid lightgreen;
+		background-color: #bd362f;
 	}
 }
-.recipe_ingredients .ingredient.in_liquor_cabinet > span {
-	background-color: lightgreen;
-
+.recipe_ingredients .ingredient.in_liquor_cabinet a > span {
+	background-color: #62C462;
 	&:hover {
-		//background-color: lightSalmon;
-		border: 2px solid lightSalmon;
+		background-color: #51a351;
 	}
+}
+
+.recipe_ingredients .dropdown.open .dropdown-toggle {
+    color: inherit;
+    background: inherit;
+    background: inherit;
 }
 
 #fullPageView {

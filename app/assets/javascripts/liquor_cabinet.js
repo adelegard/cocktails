@@ -2,6 +2,7 @@ $(document).ready(function() {
   $('#cabinet_ingredient_search').keydown(function(e) {
   	if (e.which == 13) {
 	  	var val = $(this).val();
+        if (canAddToLiquorCabinet(val) === false) return;
 		addToLiquorCabinet(val, function() {
 			var row = "<tr><td><i class='icon-remove'></i><div class='lc_ingredient dib'>" + val + "</div></td></tr>";
 			$("#my_ingredients tbody").append(row);
@@ -11,10 +12,35 @@ $(document).ready(function() {
 
   $('#add_cabinet_ingredient').click(function() {
   	var val = $("#cabinet_ingredient_search").val();
+    if (canAddToLiquorCabinet(val) === false) return;
 	addToLiquorCabinet(val, function() {
 		var row = "<tr><td><i class='icon-remove'></i><div class='lc_ingredient dib'>" + val + "</div></td></tr>";
 		$("#my_ingredients tbody").append(row);
 	});
+  });
+
+  $(".recipe_ingredients .add_to_liquor_cabinet").click(function() {
+    var val = $(this).prev("input").val();
+    addToLiquorCabinet(val);
+  });
+
+
+  $(".recipe_ingredients .add_to_liquor_cabinet").click(function() {
+    var val = $(this).prev("input").val();
+    var li_ingredient = $(this).closest("li.ingredient");
+    var new_title;
+    if (li_ingredient.hasClass("in_liquor_cabinet")) {
+        removeFromLiquorCabinet(val);
+        new_title = "Click to Add to Liquor Cabinet";
+    } else {
+        addToLiquorCabinet(val);
+        new_title = "Click to Remove from Liquor Cabinet";
+    }
+    $(this).attr("title", new_title);
+    li_ingredient.toggleClass("in_liquor_cabinet");
+    li_ingredient.toggleClass("not_in_liquor_cabinet");
+    li_ingredient.prev("i").toggleClass("icon-remove");
+    li_ingredient.prev("i").toggleClass("icon-ok");
   });
 
   function canAddToLiquorCabinet(val) {
@@ -35,7 +61,6 @@ $(document).ready(function() {
   }
 
   function addToLiquorCabinet(val, callback) {
-	if (canAddToLiquorCabinet(val) === false) return;
 	$.ajax({
 	  url: '/cabinet/add',
 	  data: {q: val},
