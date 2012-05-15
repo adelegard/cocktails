@@ -25,18 +25,18 @@ $(document).ready(function() {
   });
 
 
-  $(".recipe_ingredients .add_to_liquor_cabinet").click(function() {
+  $(".recipe_ingredients .toggle_in_lc").click(function() {
     var val = $(this).prev("input").val();
     var li_ingredient = $(this).closest("li.ingredient");
-    var new_title;
+    var new_msg;
     if (li_ingredient.hasClass("in_liquor_cabinet")) {
         removeFromLiquorCabinet(val);
-        new_title = "Click to Add to Liquor Cabinet";
+        new_msg = $(this).find("input.lc_add_message").val();
     } else {
         addToLiquorCabinet(val);
-        new_title = "Click to Remove from Liquor Cabinet";
+        new_msg = $(this).find("input.lc_remove_message").val();
     }
-    $(this).attr("title", new_title);
+    $(this).text(new_msg);
     li_ingredient.toggleClass("in_liquor_cabinet");
     li_ingredient.toggleClass("not_in_liquor_cabinet");
     li_ingredient.prev("i").toggleClass("icon-remove");

@@ -21,15 +21,19 @@
 -if @ingredients.size > 0
 	%h3.ingredients_heading Ingredients
 	%ul.recipe_ingredients
+		-remove_message = "Remove from Liquor Cabinet"
+		%input{:type => "hidden", :class => "lc_remove_message", :value => "#{remove_message}"}
+		-add_message = "Add to Liquor Cabinet"
+		%input{:type => "hidden", :class => "lc_add_message", :value => "#{add_message}"}
 		- @ingredients.each do |ingredient|
 			-if ingredient[:in_liquor_cabinet]
 				-ingredient_icon = "icon-ok"
 				-ingredient_class = "in_liquor_cabinet"
-				-ingredient_tt = "Click to Remove from Liquor Cabinet"
+				-lc_message = remove_message
 			-elsif ingredient[:in_liquor_cabinet] != nil
 				-ingredient_icon = "icon-remove"
 				-ingredient_class = "not_in_liquor_cabinet"
-				-ingredient_tt = "Click to Add to Liquor Cabinet"
+				-lc_message = add_message
 			-if ingredient_icon != nil
 				%i.dib{:class => "#{ingredient_icon}"}
 			%li.dib.dropdown.ingredient{:class => "#{ingredient_class}"}
@@ -41,7 +45,7 @@
 				%ul.dropdown-menu
 					%li
 						%input.the_ingredient{:type => "hidden", :value => "#{ingredient[:ingredient]}"}
-						%a.add_to_liquor_cabinet{:href => "#"} Add to my Liquor Cabinet
+						%a.toggle_in_lc{:href => "#"}= lc_message
 					%li.divider
 					%li
 						%a{:href => "/search?spirit=#{ingredient[:ingredient]}"} Search for this ingredient
