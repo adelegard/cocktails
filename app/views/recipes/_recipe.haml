@@ -43,10 +43,11 @@
 						%span.the_ingredient= ingredient[:ingredient]
 						%b.caret
 				%ul.dropdown-menu
-					%li
-						%input.the_ingredient{:type => "hidden", :value => "#{ingredient[:ingredient]}"}
-						%a.toggle_in_lc{:href => "#"}= lc_message
-					%li.divider
+					-if user_signed_in?
+						%li
+							%input.the_ingredient{:type => "hidden", :value => "#{ingredient[:ingredient]}"}
+							%a.toggle_in_lc{:href => "#"}= lc_message
+						%li.divider
 					%li
 						%a{:href => "/search?spirit=#{ingredient[:ingredient]}"} Search for this ingredient
 			%br

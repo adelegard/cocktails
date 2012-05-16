@@ -31,10 +31,10 @@ $(document).ready(function() {
     var new_msg;
     if (li_ingredient.hasClass("in_liquor_cabinet")) {
         removeFromLiquorCabinet(val);
-        new_msg = $(this).find("input.lc_add_message").val();
+        new_msg = $(this).closest(".recipe_ingredients").find("input.lc_add_message").val();
     } else {
         addToLiquorCabinet(val);
-        new_msg = $(this).find("input.lc_remove_message").val();
+        new_msg = $(this).closest(".recipe_ingredients").find("input.lc_remove_message").val();
     }
     $(this).text(new_msg);
     li_ingredient.toggleClass("in_liquor_cabinet");

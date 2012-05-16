@@ -48,7 +48,7 @@ class LiquorCabinet < ActiveRecord::Base
 	                                                 from liquor_cabinets
 	                                                 where user_id = ?)
 	                                  group by r.id
-	                                  having count(distinct ri.ingredient_id) = count(distinct ri2.ingredient_id)", current_user.id],
+	                                  having count(distinct ri.ingredient_id) = count(distinct ri2.ingredient_id)", user_id],
 	                                  :order => orderBy,
 	                                  :page => params[:page], :per_page => params[:per_page])
     end
