@@ -35,4 +35,9 @@ module ApplicationHelper
 	  # this should be CACHED!!! ...really it shouldn't even be here.
 	  ['Vodka', 'Rum', 'Gin', 'Tequilla', 'Whiskey', 'Champagne']
 	end
+
+	def default_ingredients
+	  # this should be CACHED!!! ...really it shouldn't even be here.
+	  ['All', 'Water', 'Milk', 'Ice', 'Vanilla', 'Sugar']
+	end
 end

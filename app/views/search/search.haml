@@ -1,7 +1,12 @@
 -@pageTitle = "Cocktail Recipes - Search Results"
 
 -if @title
-	%h2= @title
-	%br
+    %h2= @title
+    %br
+
+-if @searched_ingredients
+    Need to search for these things. Just showing the default of ALL for now
+    %br
+    "#{@searched_ingredients}"
 
 = render :partial => '/search/search_results_table'

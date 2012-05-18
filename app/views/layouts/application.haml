@@ -77,25 +77,30 @@
                                     %a{:href => "/search?spirit=#{s.downcase}"}= s
                                     
                             %li.nav-header Ingredients
-                            %a{:href => "#"}Reset
                             %li
-                                %label.checkbox
-                                    %input{:type => "checkbox"} All
-                            %li
-                                %label.checkbox
-                                    %input{:type => "checkbox"} Water
-                            %li
-                                %label.checkbox
-                                    %input{:type => "checkbox"} Milk
-                            %li
-                                %label.checkbox
-                                    %input{:type => "checkbox"} Ice
-                            %li
-                                %label.checkbox
-                                    %input{:type => "checkbox"} Vanilla
-                            %li
-                                %label.checkbox
-                                    %input{:type => "checkbox"} Sugar
+                                %input.add_ingredient.ingridients_ac{:type => "text", :placeholder => "Add Ingredient"}
+                            %a.reset{:href => "javascript:void(0);"}Reset
+                            %input{:type => "hidden", :name => "ingredients[]"}
+                            %form{:id => "sidebar_indgredients_form", :action => "/search", :method => :get}
+                                -if @searched_ingredients != nil
+                                    -@searched_ingredients.each do |i|
+                                        %input{:type => "hidden", :name => "ingredients[]", :value => i}
+                            - default_ingredients.each do |i|
+                                %li.to_copy
+                                    %label.checkbox
+                                        -if @searched_ingredients != nil && @searched_ingredients.include?(i)
+                                            -checked = true
+                                        -else
+                                            -checked = false
+                                        %input{:type => "checkbox", :checked => checked}
+                                        %span= i
+                            -if @searched_ingredients != nil
+                                -@searched_ingredients.each do |i|
+                                    -if !default_ingredients.include?(i)
+                                        %li
+                                            %label.checkbox
+                                                %input{:type => "checkbox", :checked => "checked"}
+                                                %span= i
                 .span10
                     =render :partial => "shared/flash_messages", :locals => {:flash => flash}
                     = yield

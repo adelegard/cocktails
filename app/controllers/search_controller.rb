@@ -13,6 +13,15 @@ class SearchController < ApplicationController
     
     params[:direction] ||= "DESC"
     ingredient = params[:spirit].blank? ? [] : Ingredient.find_by_ingredient(params[:spirit])
+
+    if params[:ingredients] != nil
+      @searched_ingredients = params[:ingredients]
+      if (@searched_ingredients.kind_of?(Array) == false)
+        temp_array = []
+        temp_array << @searched_ingredients
+        @searched_ingredients = temp_array
+      end
+    end
     
     if @q.blank?  #return all recipes
       params[:sort] ||= "rating_count"
@@ -54,16 +63,33 @@ class SearchController < ApplicationController
   end
 
   def autocomplete_ingredients
-    term = "^" + params[:q] + "*"
-    ingredients = Ingredient.search term,
-      :match_mode => :extended,
-      :ignore_errors => true,
-      :order => "@relevance DESC"
+    ingredients = search_ingredients(params)
     names_and_ids = Hash.new {|h, k| h[k] = []}
     ingredients.each{|i| names_and_ids[i.id] = i.ingredient}
     respond_to do |format|
       format.js {render_json names_and_ids.to_json}
     end
+  end
+
+  def autocomplete_ingredients_titles
+    ingredients = search_ingredients(params)
+    names_and_ids = Hash.new {|h, k| h[k] = []}
+    names = ingredients.collect{|i| i.ingredient}
+    respond_to do |format|
+      format.js {render_json names.to_json}
+    end
+  end
+
+  private
+
+  def search_ingredients(params)
+    term = "^" + params[:q] + "*"
+    per_page = params[:per_page] ? params[:per_page] : 10
+    return Ingredient.search term,
+      :match_mode => :extended,
+      :ignore_errors => true,
+      :per_page => per_page,
+      :order => "@relevance DESC"
   end
 
   def render_json(json, options={})

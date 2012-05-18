@@ -1,22 +1,22 @@
 $(document).ready(function() {
+
   $('#cabinet_ingredient_search').keydown(function(e) {
-  	if (e.which == 13) {
-	  	var val = $(this).val();
-        if (canAddToLiquorCabinet(val) === false) return;
-		addToLiquorCabinet(val, function() {
+    if (e.which !== 13) return false;
+    var val = $(this).val();
+    if (canAddToLiquorCabinet(val) === false) return false;
+    addToLiquorCabinet(val, function() {
 			var row = "<tr><td><i class='icon-remove'></i><div class='lc_ingredient dib'>" + val + "</div></td></tr>";
 			$("#my_ingredients tbody").append(row);
 		});
-  	}
   });
 
   $('#add_cabinet_ingredient').click(function() {
-  	var val = $("#cabinet_ingredient_search").val();
-    if (canAddToLiquorCabinet(val) === false) return;
-	addToLiquorCabinet(val, function() {
-		var row = "<tr><td><i class='icon-remove'></i><div class='lc_ingredient dib'>" + val + "</div></td></tr>";
-		$("#my_ingredients tbody").append(row);
-	});
+    var val = $("#cabinet_ingredient_search").val();
+    if (canAddToLiquorCabinet(val) === false) return false;
+    addToLiquorCabinet(val, function() {
+  		var row = "<tr><td><i class='icon-remove'></i><div class='lc_ingredient dib'>" + val + "</div></td></tr>";
+  		$("#my_ingredients tbody").append(row);
+  	});
   });
 
   $(".recipe_ingredients .add_to_liquor_cabinet").click(function() {
@@ -51,40 +51,40 @@ $(document).ready(function() {
 
   function checkLiquorCabinet(val) {
   	var returnVal = false;
-	$("#my_ingredients tbody tr td .lc_ingredient").each(function() {
-		if (this.innerHTML === val) {
-			returnVal = true;
-			return returnVal;
-		}
-	});
-	return returnVal;
+  	$("#my_ingredients tbody tr td .lc_ingredient").each(function() {
+  		if (this.innerHTML === val) {
+  			returnVal = true;
+  			return returnVal;
+  		}
+  	});
+  	return returnVal;
   }
 
   function addToLiquorCabinet(val, callback) {
-	$.ajax({
-	  url: '/cabinet/add',
-	  data: {q: val},
-	  success: function(data) {
-	  	if (callback != undefined) callback();
-	  }
-	});
+  	$.ajax({
+  	  url: '/cabinet/add',
+  	  data: {q: val},
+  	  success: function(data) {
+  	  	if (callback != undefined) callback();
+  	  }
+  	});
   }
 
   $(document).on("click", "#my_ingredients tbody tr td .icon-remove", function(e) {
-	var therow = $(e.currentTarget).closest("tr");
-  	var val = therow.find(".lc_ingredient").html();
+    var therow = $(e.currentTarget).closest("tr");
+    var val = therow.find(".lc_ingredient").html();
   	removeFromLiquorCabinet(val, function() {
   		$(therow).empty().remove();
   	});
   });
 
   function removeFromLiquorCabinet(val, callback) {
-	$.ajax({
-	  url: '/cabinet/remove',
-	  data: {q: val},
-	  success: function(data) {
-	  	if (callback != undefined) callback();
-	  }
-	});
+  	$.ajax({
+  	  url: '/cabinet/remove',
+  	  data: {q: val},
+  	  success: function(data) {
+  	  	if (callback != undefined) callback();
+  	  }
+  	});
   }
 });

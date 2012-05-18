@@ -33,6 +33,7 @@ Cocktails::Application.routes.draw do
 	match '/search' => 'search#search'
 	match '/search/autocomplete_recipes' => 'search#autocomplete_recipes'
 	match '/search/autocomplete_ingredients' => 'search#autocomplete_ingredients'
+	match '/search/autocomplete_ingredients_titles' => 'search#autocomplete_ingredients_titles'
 
 	unless Rails.application.config.consider_all_requests_local
 		match '*not_found', to: 'errors#error_404'

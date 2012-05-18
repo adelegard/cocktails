@@ -62,6 +62,60 @@ $(document).ready(function() {
     delay: 300
   });
 
+  $('.sidebar-nav.search a.reset').click(function() {
+    $(this).siblings("li").find("input[type='checkbox']").attr("checked", false);
+    var the_form = $("#sidebar_indgredients_form");
+    the_form.find("input[type='hidden']").remove();
+    the_form.submit();
+  });
+
+  $(document).on('.sidebar-nav.search li input[type="checkbox"]').change(function(e) {
+    var the_form = $("#sidebar_indgredients_form");
+    var the_checkbox = $(e.target);
+    var val = the_checkbox.next("span").html();
+    if(the_checkbox.is(":checked")) {
+      var new_input = the_form.prev("input[type='hidden']").first().clone();
+      new_input.val(val);
+      the_form.append(new_input);
+    } else {
+      the_form.find("input[value='"+val+"']").remove();
+    }
+    the_form.submit();
+  });
+
+  $('.sidebar-nav.search input.add_ingredient').keydown(function(e) {
+    if (e.which !== 13) return; //enter
+    var val = $(this).val();
+    if (!canAddToIngredientSidebar(val)) return false;
+    var new_li = $("li.to_copy").first().clone();
+    new_li.find("span").html(val);
+    new_li.find("input:checkbox").attr("checked", true);
+    $(this).closest("ul").append(new_li);
+
+    var the_form = $("#sidebar_indgredients_form");
+    var new_input = the_form.prev("input[type='hidden']").first().clone();
+    new_input.val(val);
+    the_form.append(new_input);
+    the_form.submit();
+  });
+
+  function canAddToIngredientSidebar(val) {
+    if (val === "") return false;
+    if (checkSidebar(val) === false) return true;
+    return false;
+  }
+
+  function checkSidebar(val) {
+    var returnVal = false;
+    $(".sidebar-nav.search ul li span").each(function() {
+      if (this.innerHTML === val) {
+        returnVal = true;
+        return returnVal;
+      }
+    });
+    return returnVal;
+  }
+
   $(document).on("click", ".new_recipe_ingredient_add", function() {
     var new_ingredient = $(".new_recipe_ingredient").first().clone();
     var num = $(".the_ingredients .ingredient").length;
@@ -107,7 +161,7 @@ $(document).ready(function() {
 
   function getAutoCompleteIngredientsParams(term) {
     params = {};
-    params['url'] = '/search/autocomplete_ingredients';
+    params['url'] = '/search/autocomplete_ingredients_titles';
     dataHash = {}
     dataHash.q = term
     params['data'] = dataHash;
