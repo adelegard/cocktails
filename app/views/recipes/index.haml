@@ -27,35 +27,13 @@
     %a.left.carousel-control{"data-slide" => "prev", :href => "#myCarousel"} ‹
     %a.right.carousel-control{"data-slide" => "next", :href => "#myCarousel"} ›
 .row-fluid
-  .span4
-    %h2 Heading
-    %p Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.
-    %p
-      %a.btn{:href => "#"} View details »
-  .span4
-    %h2 Heading
-    %p Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.
-    %p
-      %a.btn{:href => "#"} View details »
-  .span4
-    %h2 Heading
-    %p Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.
-    %p
-      %a.btn{:href => "#"} View details »
-.row-fluid
-  .span4
-    %h2 Heading
-    %p Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.
-    %p
-      %a.btn{:href => "#"} View details »
-  .span4
-    %h2 Heading
-    %p Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.
-    %p
-      %a.btn{:href => "#"} View details »
-  .span4
-    %h2 Heading
-    %p Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.
-    %p
-      %a.btn{:href => "#"} View details »
-//= render :partial => '/search/search_results_table'
+  %ul.nav.nav-tabs
+    %li.active
+      %a{:href => "#popular", "data-toggle" => "tab"} Popular
+    %li
+      %a{:href => "#new", "data-toggle" => "tab"} New
+  .tab-content
+    .tab-pane.fade.in.active#popular
+      //=render :partial => 'recipes/popular'
+    .tab-pane.fade#new
+      //=render :partial => 'widgets/new'

@@ -122,7 +122,7 @@ $(document).ready(function() {
 
     setNewIngredientName("input", new_ingredient, num);
     setNewIngredientName("select.amt", new_ingredient, num);
-    setNewIngredientName("select.ingridients_ac", new_ingredient, num);
+    //setNewIngredientName("select.ingridients_ac", new_ingredient, num);
 
     new_ingredient.removeClass("dn new_recipe_ingredient");
     new_ingredient.find("select").addClass("chzn-select");
