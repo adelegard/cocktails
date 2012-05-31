@@ -38,19 +38,22 @@ class LiquorCabinet < ActiveRecord::Base
 	    orderBy = params[:sort] != nil ? params[:sort] : "rating_count"
 	    orderBy += params[:direction] != nil ? " " + params[:direction].to_s : " DESC"
 
-	    #wow this is slow... hopefully thinking sphinx will fix it
-	    return Recipe.paginate_by_sql(["select r.*
-	                                  from recipes r
-	                                  join recipe_ingredients ri ON r.id = ri.recipe_id
-	                                  join recipe_ingredients ri2 on r.id = ri2.recipe_id
-	                                  join ingredients i ON ri.ingredient_id = i.id
-	                                  where i.id IN (select ingredient_id
-	                                                 from liquor_cabinets
-	                                                 where user_id = ?)
-	                                  group by r.id
-	                                  having count(distinct ri.ingredient_id) = count(distinct ri2.ingredient_id)", user_id],
-	                                  :order => orderBy,
-	                                  :page => params[:page], :per_page => params[:per_page])
+        return Recipe.paginate_by_sql(["SELECT r.*
+                                        FROM recipes r
+                                        JOIN (
+                                            SELECT recipe_id, count(*) as num_of_ingredients 
+                                            FROM recipe_ingredients
+                                            GROUP BY recipe_id
+                                        ) x ON x.recipe_id = r.id, ( 
+                                            SELECT ri.recipe_id, count(*) as num_of_ingredients 
+                                            FROM recipe_ingredients ri
+                                            JOIN liquor_cabinets lc ON ri.ingredient_id = lc.ingredient_id 
+                                            WHERE lc.user_id = ?
+                                            GROUP BY recipe_id
+                                        ) y 
+                                        WHERE x.recipe_id = y.recipe_id AND x.num_of_ingredients = y.num_of_ingredients", user_id],
+                                        :order => orderBy,
+                                        :page => params[:page], :per_page => params[:per_page])
     end
   end
 end

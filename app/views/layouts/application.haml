@@ -38,7 +38,7 @@
                             %li{:class => request.fullpath == '/contact' ? "active" : ""}
                                 %a{:href => "/contact"} Contact
                         %form.navbar-search{:action => "/search", :method => :get}
-                            %input.recipe_ac.search-query.span3{:placeholder => "Search", :type => "text", :name => "q", :value => @q}
+                            %input.recipe_ac.search-query.span3{:placeholder => "Search for a cocktail", :type => "text", :name => "q", :value => @q}
                             %input.btn{:type => "submit", :value => "Search"}
                         %ul.nav.pull-right
                             %li= link_to 'Add Recipe', new_recipe_path

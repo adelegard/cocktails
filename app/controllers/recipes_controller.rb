@@ -14,6 +14,22 @@ class RecipesController < ApplicationController
     end
   end
 
+  def new_recipes
+    @recipes = Recipe.getNewRecipes
+    @total_ratings = RecipeUser.getTotalRatings(@recipes)
+    if user_signed_in?
+      @recipe_users = RecipeUser.getRecipeUsers(@recipes, current_user.id)
+    end
+  end
+
+  def popular
+    @recipes = Recipe.getPopularRecipes
+    @total_ratings = RecipeUser.getTotalRatings(@recipes)
+    if user_signed_in?
+      @recipe_users = RecipeUser.getRecipeUsers(@recipes, current_user.id)
+    end
+  end
+
   def show
     params.delete(:id) unless params[:id].to_i > 0
     @recipe = Recipe.where(:id => params[:id]).first

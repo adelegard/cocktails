@@ -10,6 +10,9 @@ Cocktails::Application.routes.draw do
 	match '/recipes/rated' => 'recipe_users#rated'
 	match '/recipes/liquor_cabinet' => 'recipe_users#liquor_cabinet_recipes'
 
+	match '/recipes/popular' => 'recipes#popular'
+	match '/recipes/new_recipes' => 'recipes#new_recipes'
+
 	resources :recipes
 	resources :recipe_users
 

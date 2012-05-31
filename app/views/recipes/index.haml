@@ -1,39 +1,42 @@
 -@pageTitle = "Cocktails"
 
-.hero-unit
-  #myCarousel.carousel.slide
-    .carousel-inner
-      .item.active
-        %a{:href => "/recipes/6405"}
-          %img.cocktail-green{:alt => ""}
-            .carousel-caption
-              %h4 Green Demon Cocktail
-              %a.btn.btn-primary.btn-large.fr{:href => "/recipes/7946"} View Recipe »
-              %p Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.
-      .item
-        %a{:href => "/recipes/7946"}
-          %img.cocktail-fall{:alt => ""}
-            .carousel-caption
-              %h4 Fall Spice Cordial Cocktail
-              %a.btn.btn-primary.btn-large.fr{:href => "/recipes/6405"} View Recipe »
-              %p Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.
-      .item
-        %a{:href => "/recipes/7946"}
-          %img.cocktail-glasses{:alt => ""}
-            .carousel-caption
-              %h4 Some Other Cocktails
-              %a.btn.btn-primary.btn-large.fr{:href => "/recipes/7946"} View Recipe »
-              %p Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.
-    %a.left.carousel-control{"data-slide" => "prev", :href => "#myCarousel"} ‹
-    %a.right.carousel-control{"data-slide" => "next", :href => "#myCarousel"} ›
 .row-fluid
   %ul.nav.nav-tabs
     %li.active
+      %a{:href => "#featured", "data-toggle" => "tab"} Featured
+    %li
       %a{:href => "#popular", "data-toggle" => "tab"} Popular
     %li
       %a{:href => "#new", "data-toggle" => "tab"} New
   .tab-content
-    .tab-pane.fade.in.active#popular
-      //=render :partial => 'recipes/popular'
+    .tab-pane.fade.in.active#featured
+      .hero-unit
+        #myCarousel.carousel.slide
+          .carousel-inner
+            .item.active
+              %a{:href => "/recipes/7946"}
+                %img.cocktail-green{:alt => ""}
+                  .carousel-caption
+                    %h4 Green Demon Cocktail
+                    %a.btn.btn-primary.btn-large.fr{:href => "/recipes/7946"} View Recipe »
+                    %p Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.
+            .item
+              %a{:href => "/recipes/6405"}
+                %img.cocktail-fall{:alt => ""}
+                  .carousel-caption
+                    %h4 Fall Spice Cordial Cocktail
+                    %a.btn.btn-primary.btn-large.fr{:href => "/recipes/6405"} View Recipe »
+                    %p Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.
+            .item
+              %a{:href => "/recipes/7946"}
+                %img.cocktail-glasses{:alt => ""}
+                  .carousel-caption
+                    %h4 Some Other Cocktails
+                    %a.btn.btn-primary.btn-large.fr{:href => "/recipes/7946"} View Recipe »
+                    %p Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.
+          %a.left.carousel-control{"data-slide" => "prev", :href => "#myCarousel"} ‹
+          %a.right.carousel-control{"data-slide" => "next", :href => "#myCarousel"} ›
+    .tab-pane.fade.in#popular
+      =render :partial => 'recipes/popular'
     .tab-pane.fade#new
-      //=render :partial => 'widgets/new'
+      =render :partial => 'recipes/new_recipes'

@@ -1,5 +1,9 @@
 $(document).ready(function() {
 
+  $('#view_makeable_recipes').click(function() {
+    $(this).button('loading'); //this isn't working.. wtf: http://twitter.github.com/bootstrap/javascript.html#buttons
+  });
+
   $('#cabinet_ingredient_search').keydown(function(e) {
     if (e.which !== 13) return false;
     var val = $(this).val();
