@@ -35,25 +35,13 @@ class LiquorCabinet < ActiveRecord::Base
     end
 
     def getAvailableRecipes(params, user_id)
-	    orderBy = params[:sort] != nil ? params[:sort] : "rating_count"
-	    orderBy += params[:direction] != nil ? " " + params[:direction].to_s : " DESC"
-
-        return Recipe.paginate_by_sql(["SELECT r.*
-                                        FROM recipes r
-                                        JOIN (
-                                            SELECT recipe_id, count(*) as num_of_ingredients 
-                                            FROM recipe_ingredients
-                                            GROUP BY recipe_id
-                                        ) x ON x.recipe_id = r.id, ( 
-                                            SELECT ri.recipe_id, count(*) as num_of_ingredients 
-                                            FROM recipe_ingredients ri
-                                            JOIN liquor_cabinets lc ON ri.ingredient_id = lc.ingredient_id 
-                                            WHERE lc.user_id = ?
-                                            GROUP BY recipe_id
-                                        ) y 
-                                        WHERE x.recipe_id = y.recipe_id AND x.num_of_ingredients = y.num_of_ingredients", user_id],
-                                        :order => orderBy,
-                                        :page => params[:page], :per_page => params[:per_page])
+      params[:sort] ||= "rating_count"
+      params[:direction] ||= "DESC"
+      ingredients = LiquorCabinet.where(:user_id => user_id)
+      return Recipe.search(:field_weights => {:ingredients => 10, :directions => 1},
+                           :with_all => {:ingredient_ids => ingredients.collect{|i| i.id}},
+                           :order => "#{params[:sort]} #{params[:direction]}",
+                           :page => params[:page], :per_page => params[:per_page])
     end
   end
 end

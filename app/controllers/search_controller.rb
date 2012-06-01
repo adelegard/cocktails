@@ -3,45 +3,48 @@ class SearchController < ApplicationController
   before_filter :set_default_params, :only => %w(simple_results advanced_results)
 
   def search
-    
-    #@recipe = Recipe.find_by_title(params[:q])
-    #redirect_to @recipe unless @recipe.blank?
-    
     @spirit = params[:spirit]
     @q = params[:q]
     @recipes = []
-    
-    params[:direction] ||= "DESC"
-    ingredient = params[:spirit].blank? ? [] : Ingredient.find_by_ingredient(params[:spirit])
 
-    if params[:ingredients] != nil
-      @searched_ingredients = params[:ingredients]
-      if (@searched_ingredients.kind_of?(Array) == false)
-        temp_array = []
-        temp_array << @searched_ingredients
-        @searched_ingredients = temp_array
-      end
+    @searched_ingredients = params[:ingredients] != nil ? params[:ingredients] : []
+    if @searched_ingredients.kind_of?(Array) == false
+      temp_array = []
+      temp_array << @searched_ingredients
+      @searched_ingredients = temp_array
     end
+
+    ingredients = []
+    @searched_ingredients.each{|i|
+      found_ing = Ingredient.find_by_ingredient(i)
+      ingredients << found_ing if found_ing != nil
+    }
     
-    if @q.blank?  #return all recipes
-      params[:sort] ||= "rating_count"
-      if ingredient.blank?
+    params[:sort] ||= "rating_count"
+    params[:direction] ||= "DESC"
+    spirit_ingredient = Ingredient.find_by_ingredient(params[:spirit]) if !params[:spirit].blank?
+    ingredients << spirit_ingredient if spirit_ingredient != nil
+
+    order = "#{params[:sort]} #{params[:direction]}"
+    with = {:ingredient_ids => ingredients.collect{|i| i.id}}
+
+    if @q.blank?
+      if ingredients.empty?
+        #return all recipes
         @recipes = Recipe.paginate(:order => "#{params[:sort]} #{params[:direction]}",
-                                :page => params[:page], :per_page => params[:per_page])
+                                   :page => params[:page], :per_page => params[:per_page])
       else
-        @recipes = ingredient.recipe.page(params[:page]).order("#{params[:sort]} #{params[:direction]}")
-        # @recipes = Recipe.paginate(:order => "#{params[:sort]} #{params[:direction]}",
-                                # :page => params[:page], :per_page => params[:per_page])
-      end
-    else
-      with = ingredient.blank? ? nil : {:ingredient_ids => ingredient.id}
-      order = params[:sort].blank? ? nil : "#{params[:sort]} #{params[:direction]}"
-      
-      @recipes = Recipe.search("#{@q}",
-                                 :field_weights => {:title => 20, :ingredients => 10, :directions => 1},
-                                 :with => with,
+        @recipes = Recipe.search(:field_weights => {:ingredients => 10, :directions => 1},
+                                 :with_all => with,
                                  :order => order,
                                  :page => params[:page], :per_page => params[:per_page])
+      end
+    else
+      @recipes = Recipe.search("#{@q}",
+                                :field_weights => {:title => 20, :ingredients => 10, :directions => 1},
+                                :with_all => with,
+                                :order => order,
+                                :page => params[:page], :per_page => params[:per_page])
     end
 
     @total_ratings = RecipeUser.getTotalRatings(@recipes)
@@ -52,9 +55,11 @@ class SearchController < ApplicationController
 
   def autocomplete_recipes
     term = "^" + params[:q] + "*"
+    per_page = params[:per_page] ? params[:per_page] : 10
     recipes = Recipe.search term,
       :match_mode => :extended,
       :ignore_errors => true,
+      :per_page => per_page,
       :order => "@relevance DESC"
     names = recipes.collect{|i| i.title}
     respond_to do |format|

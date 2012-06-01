@@ -40,4 +40,6 @@
               .popularity{:style => "width:#{percent}%"}
             %td
               =render :partial => '/recipes/favorite', :locals => {:recipe_id => recipe.id, :include_text => false}
-  = will_paginate @recipes
+    = will_paginate @recipes
+  -else
+    %h2 No results found!

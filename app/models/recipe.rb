@@ -7,18 +7,13 @@ class Recipe < ActiveRecord::Base
   self.per_page = 12
 
   define_index do
-    # fields
     indexes title, :sortable => true
-    indexes directions
-    indexes glass, :sortable => true
     indexes alcohol, :sortable => true
-    indexes rating_avg, :sortable => true
-    indexes rating_count, :sortable => true
+    indexes directions
+    indexes ingredients(:ingredient), :as => :ingredient, :sortable => true
 
-    # attributes
-    has :id, :as => :recipe_id
-    has created_at
-    has updated_at
+    has updated_at, created_at, rating_avg, rating_count
+    has ingredients(:id), :as => :ingredient_ids
   end
 
   class << self

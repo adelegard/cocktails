@@ -62,6 +62,10 @@ $(document).ready(function() {
     delay: 300
   });
 
+  $('.spirit_link').click(function() {
+    $(this).closest("form").submit();
+  });
+
   $('.sidebar-nav.search a.reset').click(function() {
     $(this).siblings("li").find("input[type='checkbox']").attr("checked", false);
     var the_form = $("#sidebar_indgredients_form");

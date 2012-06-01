@@ -67,14 +67,19 @@
             .row-fluid
                 .span2
                     .well.sidebar-nav.search
-                        %ul.nav.nav-list
+                        %ul.nav.nav-list.spirits
                             %li.nav-header Spirit
                             %li
                                 %a{:href => "/search"} All
                             
                             - default_spirits.each do |s|
                                 %li{:class => (@spirit && @spirit.include?(s.downcase) ? 'active' : nil)}
-                                    %a{:href => "/search?spirit=#{s.downcase}"}= s
+                                    %form{:action => "/search", :method => :get}
+                                        %input{:type => "hidden", :name => "spirit", :value => "#{s.downcase}"}
+                                        -if @searched_ingredients != nil
+                                            -@searched_ingredients.each do |i|
+                                                %input{:type => "hidden", :name => "ingredients[]", :value => i}
+                                        %a.spirit_link{:href => "/search?spirit=#{s.downcase}"}= s
                                     
                             %li.nav-header Ingredients
                             %li
@@ -82,6 +87,7 @@
                             %a.reset{:href => "javascript:void(0);"}Reset
                             %input{:type => "hidden", :name => "ingredients[]"}
                             %form{:id => "sidebar_indgredients_form", :action => "/search", :method => :get}
+                                %input{:type => "hidden", :name => "spirit", :value => @spirit}
                                 -if @searched_ingredients != nil
                                     -@searched_ingredients.each do |i|
                                         %input{:type => "hidden", :name => "ingredients[]", :value => i}
