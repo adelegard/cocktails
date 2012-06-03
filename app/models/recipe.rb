@@ -19,7 +19,10 @@ class Recipe < ActiveRecord::Base
   class << self
 
     def getNewRecipes
-      return Recipe.paginate(:order => "created_at DESC",
+        params[:direction] ||= "DESC"
+        order = "created_at #{params[:direction]}"
+        return Recipe.search(:field_weights => {:created_at => 10, :title => 1},
+                             :order => order,
                              :page => params[:page], :per_page => params[:per_page])
     end
 

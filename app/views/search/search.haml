@@ -3,9 +3,11 @@
 -if @title
     %h2= @title
     %br
-
--if @searched_ingredients
-    Searched for recipes with ingredients:
-    "#{@searched_ingredients}"
+-if @q
+    %div Searched for recipes with string: "#{@q}"
+-if @spirit
+    %div Searched for recipes with spirit: "#{@spirit}"
+-if !@searched_ingredients.empty?
+    %div Searched for recipes with ingredients: "#{@searched_ingredients}"
 
 = render :partial => '/search/search_results_table'

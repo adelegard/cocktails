@@ -47,6 +47,23 @@ class SearchController < ApplicationController
                                 :page => params[:page], :per_page => params[:per_page])
     end
 
+    if @recipes.size == 1
+      # Then just bring them to the recipe's show page
+      @recipe = @recipes[0]
+      liquor_cabinet_ingredients = []
+      if user_signed_in?
+        @recipe_user = RecipeUser.where(:recipe_id => @recipe.id, :user_id => current_user.id).first_or_create
+        liquor_cabinet_ingredients = LiquorCabinet.where(:user_id => current_user.id).collect{|ingredient| ingredient.ingredient_id}
+      end
+      @ingredients = Ingredient.getIngredients(@recipe.id, user_signed_in?, liquor_cabinet_ingredients)
+
+      user_data = RecipeUser.getUserData(@recipe.id)
+      @num_starred = user_data[:num_starred]
+      @num_rated = user_data[:num_rated]
+      @avg_rating = user_data[:avg_rating]
+      render 'recipes/show'
+    end
+
     @total_ratings = RecipeUser.getTotalRatings(@recipes)
     if user_signed_in?
       @recipe_users = RecipeUser.getRecipeUsers(@recipes, current_user.id)

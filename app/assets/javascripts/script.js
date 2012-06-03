@@ -1,7 +1,39 @@
-$(document).ready(function() {
+$(function() {
 	$(".chzn-select").chosen();
   $('#new_recipe_directions').NobleCount('#characters_remaining', 
                                 {max_chars:2000, on_negative: 'go_red'});
+
+
+  /* set sidebar search checkboxes based on cookied values */
+  var cookie_str = "checkbox [cookie] values: ";
+  var search_cookies = new cookieList("search_ingredient").items();
+  for (var i=0; i < search_cookies.length; i++) {
+    var contains = $('li.checked_ingredient span:contains("' + search_cookies[i] + '")').length > 0;
+    if (!contains) {
+      addSidebarIngredient(search_cookies[i]);
+    }
+    cookie_str = cookie_str + search_cookies[i] + ", ";
+  }
+  $('span.ing_cookie_span').html(cookie_str);
+
+
+  /* I'm not totally sure if this stuff should be stored in cookies...*/
+  var cookie_str = "spirit [cookie] value: ";
+  var spirit_cookie = $.cookie("spirit");
+  var the_spirit = $('li.spirit a:contains("' + spirit_cookie + '")').first();
+  if (!the_spirit.closest("li.spirit").hasClass("active")) {
+    the_spirit.closest("li.spirit").addClass("active");
+  }
+  cookie_str += spirit_cookie;
+  $('span.spirit_cookie_span').html(cookie_str);
+
+  $('li.checked_ingredient span').each(function() {
+    var search_cookies = new cookieList("search_ingredient").items();
+    var val = $(this).text();
+    if($.inArray(val, search_cookies) > -1) {
+      $(this).prev('input').attr('checked', true);
+    }
+  });
 
 
   var ajaxChosenParams = {
@@ -62,26 +94,39 @@ $(document).ready(function() {
     delay: 300
   });
 
-  $('.spirit_link').click(function() {
-    $(this).closest("form").submit();
+  $("li.spirit_reset a").click(function() {
+    $.cookie("spirit", null, { expires: 7, path: '/' });
+  });
+
+  $("li.spirit a").click(function() {
+    $.cookie("spirit", $(this).text(), { expires: 7, path: '/' });
   });
 
   $('.sidebar-nav.search a.reset').click(function() {
+    var search_cookies = new cookieList("search_ingredient");
+    search_cookies.clear();
+
     $(this).siblings("li").find("input[type='checkbox']").attr("checked", false);
     var the_form = $("#sidebar_indgredients_form");
     the_form.find("input[type='hidden']").remove();
     the_form.submit();
   });
 
-  $(document).on('.sidebar-nav.search li input[type="checkbox"]').change(function(e) {
+  $(document).on('.sidebar-nav.search li.checked_ingredient input[type="checkbox"]').change(function(e) {
     var the_form = $("#sidebar_indgredients_form");
     var the_checkbox = $(e.target);
     var val = the_checkbox.next("span").html();
     if(the_checkbox.is(":checked")) {
+
+      var cookie_list = new cookieList("search_ingredient");
+      cookie_list.add(val);
+
       var new_input = the_form.prev("input[type='hidden']").first().clone();
       new_input.val(val);
       the_form.append(new_input);
     } else {
+      var cookie_list = new cookieList("search_ingredient");
+      cookie_list.remove(val);
       the_form.find("input[value='"+val+"']").remove();
     }
     the_form.submit();
@@ -91,17 +136,31 @@ $(document).ready(function() {
     if (e.which !== 13) return; //enter
     var val = $(this).val();
     if (!canAddToIngredientSidebar(val)) return false;
-    var new_li = $("li.to_copy").first().clone();
+
+    var cookie_list = new cookieList("search_ingredient");
+    cookie_list.add(val);
+
+    addSidebarIngredient(val);
+    $("#sidebar_indgredients_form").submit();
+  });
+
+  function addSidebarIngredient(val) {
+    addSidebarIngredientCheckbox(val);
+    addSidebarIngredientToForm(val);
+  }
+
+  function addSidebarIngredientCheckbox(val) {
+    var new_li = $("li.checked_ingredient").first().clone();
     new_li.find("span").html(val);
     new_li.find("input:checkbox").attr("checked", true);
-    $(this).closest("ul").append(new_li);
-
+    $("ul.spirits").append(new_li);
+  }
+  function addSidebarIngredientToForm(val) {
     var the_form = $("#sidebar_indgredients_form");
     var new_input = the_form.prev("input[type='hidden']").first().clone();
     new_input.val(val);
     the_form.append(new_input);
-    the_form.submit();
-  });
+  }
 
   function canAddToIngredientSidebar(val) {
     if (val === "") return false;
