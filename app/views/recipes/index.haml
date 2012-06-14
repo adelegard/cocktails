@@ -37,6 +37,6 @@
           %a.left.carousel-control{"data-slide" => "prev", :href => "#myCarousel"} ‹
           %a.right.carousel-control{"data-slide" => "next", :href => "#myCarousel"} ›
     .tab-pane.fade.in#popular
-      =render :partial => 'recipes/popular'
+      = render :partial => '/search/search_results_table', :locals => {:recipes => @recipes_popular, :recipe_users => @recipe_users_popular, :total_ratings => @total_ratings_popular}
     .tab-pane.fade#new
-      =render :partial => 'recipes/new_recipes'
+      = render :partial => '/search/search_results_table', :locals => {:recipes => @recipes_new, :recipe_users => @recipe_users_new, :total_ratings => @total_ratings_new}

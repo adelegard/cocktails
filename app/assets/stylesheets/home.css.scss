@@ -180,3 +180,56 @@ ul.recipe_ingredients {
 .recipe_rating_count {
 	font-size: 16px;
 }
+
+.vote_container {
+	float: right;
+	margin-right: 50px;
+}
+.vote_column {
+	float: left;
+	width: 99px;
+	border-top: 1px solid #E1E1E1;
+}
+.vote_button {
+	border: solid 1px #E1E1E1;
+	margin-left: -1px;
+	padding-right: 1px;
+	padding-top: 4px;
+	padding-bottom: 4px;
+	border-top: none;
+
+	&:hover {
+		background-color: #eee;
+		cursor: pointer;
+	}
+
+	input {
+		display: inline-block;
+	}
+
+	.vote_percentage {
+		width: auto;
+		text-align: center;
+		padding: 5px 2px;
+		font-size: 150%;
+		font-family: Georgia, Times New Roman, Serif;
+	}
+	.highest.vote_percentage {
+		font-size: 230%;
+		font-weight: bold;
+	}
+
+	.vote_checkbox {
+		padding: 9px 1px 2px 5px;
+
+		&:hover {
+			cursor: pointer;
+		}
+
+		span {
+			font-family: Arial Narrow, Geneva, Tahoma, Arial, Sans-Serif;
+			font-weight: bold;
+			color: red;
+		}
+	}
+}

@@ -108,4 +108,24 @@ $(function() {
     });
   });
 
+  $(document).on({
+      mouseenter: function () {
+        $(this).find("input:checkbox").attr("checked", true);
+      },
+
+      mouseleave: function () {
+        var vote_btn = $(this);
+        if (!vote_btn.hasClass("voted")) vote_btn.find("input:checkbox").removeAttr("checked");
+      }
+  }, ".vote_container .vote_button:not(.voted)");
+
+  $(".vote_container .vote_button").click(function() {
+    var vote_btn = $(this);
+    vote_btn.closest(".vote_container").find(".vote_button").removeClass("voted");
+    vote_btn.closest(".vote_container").find("input:checkbox").removeAttr("checked");
+    vote_btn.find("input:checkbox").attr("checked", true);
+    vote_btn.addClass("voted");
+    return false;
+  });
+
 });

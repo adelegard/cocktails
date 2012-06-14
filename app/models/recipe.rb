@@ -18,11 +18,12 @@ class Recipe < ActiveRecord::Base
 
   class << self
 
-    def getNewRecipes
+    def getNewRecipes(params)
         params[:direction] ||= "DESC"
         order = "created_at #{params[:direction]}"
         return Recipe.search(:field_weights => {:created_at => 10, :title => 1},
                              :order => order,
+                             :with => {:created_at => 1.month.ago..Time.now},
                              :page => params[:page], :per_page => params[:per_page])
     end
 
@@ -34,7 +35,7 @@ class Recipe < ActiveRecord::Base
                                  :page => params[:page], :per_page => params[:per_page])
     end
 
-    def getPopularRecipes
+    def getPopularRecipes(params)
       orderBy = params[:sort] != nil ? params[:sort] : nil
       if orderBy != nil
         orderBy += params[:direction] != nil ? " " + params[:direction].to_s : " DESC"

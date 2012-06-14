@@ -2,4 +2,4 @@
 
 %h2 Newly Added Cocktails
 
-= render :partial => '/search/search_results_table'
+= render :partial => '/search/search_results_table', :locals => {:recipes => @recipes_new, :recipe_users => @recipe_users_new, :total_ratings => @total_ratings_new}

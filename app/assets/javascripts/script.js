@@ -8,24 +8,10 @@ $(function() {
   var cookie_str = "checkbox [cookie] values: ";
   var search_cookies = new cookieList("search_ingredient").items();
   for (var i=0; i < search_cookies.length; i++) {
-    var contains = $('li.checked_ingredient span:contains("' + search_cookies[i] + '")').length > 0;
-    if (!contains) {
-      addSidebarIngredient(search_cookies[i]);
-    }
+    addSidebarIngredient(search_cookies[i]);
     cookie_str = cookie_str + search_cookies[i] + ", ";
   }
   $('span.ing_cookie_span').html(cookie_str);
-
-
-  /* I'm not totally sure if this stuff should be stored in cookies...*/
-  var cookie_str = "spirit [cookie] value: ";
-  var spirit_cookie = $.cookie("spirit");
-  var the_spirit = $('li.spirit a:contains("' + spirit_cookie + '")').first();
-  if (!the_spirit.closest("li.spirit").hasClass("active")) {
-    the_spirit.closest("li.spirit").addClass("active");
-  }
-  cookie_str += spirit_cookie;
-  $('span.spirit_cookie_span').html(cookie_str);
 
   $('li.checked_ingredient span').each(function() {
     var search_cookies = new cookieList("search_ingredient").items();
@@ -34,7 +20,6 @@ $(function() {
       $(this).prev('input').attr('checked', true);
     }
   });
-
 
   var ajaxChosenParams = {
     method: 'GET',
@@ -135,18 +120,19 @@ $(function() {
   $('.sidebar-nav.search input.add_ingredient').keydown(function(e) {
     if (e.which !== 13) return; //enter
     var val = $(this).val();
-    if (!canAddToIngredientSidebar(val)) return false;
+    if (!addSidebarIngredient(val)) return false;
 
     var cookie_list = new cookieList("search_ingredient");
     cookie_list.add(val);
 
-    addSidebarIngredient(val);
     $("#sidebar_indgredients_form").submit();
   });
 
   function addSidebarIngredient(val) {
+    if (!canAddToIngredientSidebar(val)) return false;
     addSidebarIngredientCheckbox(val);
     addSidebarIngredientToForm(val);
+    return true;
   }
 
   function addSidebarIngredientCheckbox(val) {
@@ -169,14 +155,7 @@ $(function() {
   }
 
   function checkSidebar(val) {
-    var returnVal = false;
-    $(".sidebar-nav.search ul li span").each(function() {
-      if (this.innerHTML === val) {
-        returnVal = true;
-        return returnVal;
-      }
-    });
-    return returnVal;
+    return $('li.checked_ingredient span:contains("' + val + '")').length > 0;
   }
 
   $(document).on("click", ".new_recipe_ingredient_add", function() {

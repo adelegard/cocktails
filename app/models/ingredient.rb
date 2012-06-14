@@ -31,5 +31,17 @@ class Ingredient < ActiveRecord::Base
 		    end
 		    return ingredients
 		end
+
+		def getMostUsed(params)
+			return Ingredient.paginate_by_sql(["select i.*
+												from ingredients i
+												join (
+													select ri.ingredient_id as id, count(ri.ingredient_id) as count
+													from recipe_ingredients ri
+													group by ingredient_id
+													order by count desc
+												) innerQuery on innerQuery.id = i.id"],
+			                                    :page => params[:page], :per_page => params[:per_page])
+		end
 	end
 end

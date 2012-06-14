@@ -2,4 +2,4 @@
 
 %h2 Popular Cocktails
 
-= render :partial => '/search/search_results_table'
+= render :partial => '/search/search_results_table', :locals => {:recipes => @recipes_popular, :recipe_users => @recipe_users_popular, :total_ratings => @total_ratings_popular}

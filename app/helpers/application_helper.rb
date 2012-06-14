@@ -30,6 +30,11 @@ module ApplicationHelper
 	def sort_direction
 		%w[asc desc].include?(params[:direction]) ? params[:direction] : "desc"
 	end
+
+	def default_tastes
+	  # this should be CACHED!!! ...really it shouldn't even be here.
+	  ['Tasty', 'Refreshing', 'Gross', 'Perfect', 'Too Strong', 'Too Bitter']
+	end
 	
 	def default_spirits
 	  # this should be CACHED!!! ...really it shouldn't even be here.

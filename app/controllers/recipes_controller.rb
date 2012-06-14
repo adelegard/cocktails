@@ -6,28 +6,18 @@ class RecipesController < ApplicationController
   before_filter :authenticate_user!, :except => [:show, :index]
 
   def index
-    @recipes = Recipe.paginate(:order => "rating_count DESC",
-                               :page => params[:page], :per_page => params[:per_page])
-    @total_ratings = RecipeUser.getTotalRatings(@recipes)
-    if user_signed_in?
-      @recipe_users = RecipeUser.getRecipeUsers(@recipes, current_user.id)
-    end
+    setup_new_recipes
+    setup_popular_recipes
+
+    @most_used = Ingredient.getMostUsed(params)
   end
 
   def new_recipes
-    @recipes = Recipe.getNewRecipes()
-    @total_ratings = RecipeUser.getTotalRatings(@recipes)
-    if user_signed_in?
-      @recipe_users = RecipeUser.getRecipeUsers(@recipes, current_user.id)
-    end
+    setup_new_recipes
   end
 
   def popular
-    @recipes = Recipe.getPopularRecipes
-    @total_ratings = RecipeUser.getTotalRatings(@recipes)
-    if user_signed_in?
-      @recipe_users = RecipeUser.getRecipeUsers(@recipes, current_user.id)
-    end
+    setup_popular_recipes
   end
 
   def show
@@ -77,6 +67,24 @@ class RecipesController < ApplicationController
         format.html { render action: "new" }
         format.json { render json: @recipe.errors, status: :unprocessable_entity }
       end
+    end
+  end
+
+  private
+
+  def setup_popular_recipes
+    @recipes_popular = Recipe.getPopularRecipes(params)
+    @total_ratings_popular = RecipeUser.getTotalRatings(@recipes_popular)
+    if user_signed_in?
+      @recipe_users_popular = RecipeUser.getRecipeUsers(@recipes_popular, current_user.id)
+    end
+  end
+
+  def setup_new_recipes
+    @recipes_new = Recipe.getNewRecipes(params)
+    @total_ratings_new = RecipeUser.getTotalRatings(@recipes_new)
+    if user_signed_in?
+      @recipe_users_new = RecipeUser.getRecipeUsers(@recipes_new, current_user.id)
     end
   end
 

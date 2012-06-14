@@ -4,7 +4,8 @@
     %option oz
     %option shot
     %option tbsp
-%select.ingridients_ac{:class => "#{select_class}", "data-placeholder" => "Choose an ingredient...", :style => "width:200px;", :name => "recipe[ing][0][liquor]"}
-    %option{:value => "1000"} vodka
-    %option{:value => "1001"} rum
-    %option{:value => "1002"} tequila
+//%select.ingridients_ac{:class => "#{select_class}", "data-placeholder" => "Choose an ingredient...", :style => "width:200px;", :name => "recipe[ing][0][liquor]"}
+//    %option{:value => "1000"} vodka
+//    %option{:value => "1001"} rum
+//    %option{:value => "1002"} tequila
+%input.add_ingredient.ingridients_ac{:type => "text", :name => "recipe[ing][0][liquor]", :placeholder => "Add Ingredient"}

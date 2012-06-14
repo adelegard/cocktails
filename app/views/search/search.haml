@@ -7,7 +7,7 @@
     %div Searched for recipes with string: "#{@q}"
 -if @spirit
     %div Searched for recipes with spirit: "#{@spirit}"
--if !@searched_ingredients.empty?
+-if @searched_ingredients != nil && !@searched_ingredients.empty?
     %div Searched for recipes with ingredients: "#{@searched_ingredients}"
 
-= render :partial => '/search/search_results_table'
+= render :partial => '/search/search_results_table', :locals => {:recipes => @recipes, :recipe_users => @recipe_users, :total_ratings => @total_ratings}

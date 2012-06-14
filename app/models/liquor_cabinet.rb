@@ -39,7 +39,7 @@ class LiquorCabinet < ActiveRecord::Base
       params[:direction] ||= "DESC"
       ingredients = LiquorCabinet.where(:user_id => user_id)
       return Recipe.search(:field_weights => {:ingredients => 10, :directions => 1},
-                           :with_all => {:ingredient_ids => ingredients.collect{|i| i.id}},
+                           :with => {:ingredient_ids => ingredients.collect{|i| i.ingredient_id}},
                            :order => "#{params[:sort]} #{params[:direction]}",
                            :page => params[:page], :per_page => params[:per_page])
     end

@@ -1,5 +1,5 @@
 #search_results
-  -if @recipes.length > 0 then
+  -if recipes.length > 0 then
     %table.table.table-striped
       %thead
         %tr
@@ -24,22 +24,22 @@
             %th.tal
               %a{:href => "#"} Favorite
       %tbody
-        -@recipes.each do |recipe|
-          -if @recipe_users != nil
-            - @recipe_user = @recipe_users.detect {|ru| ru.recipe_id == recipe.id }
+        -recipes.each do |recipe|
+          -if recipe_users != nil
+            - @recipe_user = recipe_users.detect {|ru| ru.recipe_id == recipe.id }
           - @the_recipe = recipe
           %tr
             %td.tal= link_to(recipe.title, recipe)
             %td.tal
               =render :partial => 'recipes/rating_links_small'
             %td.tal
-              - percent = ((recipe.rating_count.to_f/@total_ratings)).to_f.round(3)*100*3 #ignoring for now the fact that this is SUPER gross and should be in the controller
+              - percent = ((recipe.rating_count.to_f/total_ratings)).to_f.round(3)*100*3 #ignoring for now the fact that this is SUPER gross and should be in the controller
               - percent = percent.nan? ? 4 : percent
               - percent = percent > 100 ? 100 : percent
               - percent = percent < 4 ? 4 : percent
               .popularity{:style => "width:#{percent}%"}
             %td
               =render :partial => '/recipes/favorite', :locals => {:recipe_id => recipe.id, :include_text => false}
-    = will_paginate @recipes
+    = will_paginate recipes
   -else
     %h2 No results found!
