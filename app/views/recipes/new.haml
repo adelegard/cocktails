@@ -3,7 +3,6 @@
 =form_for @recipe, :html => { :multipart => true} do |f|
 	%fieldset.new_recipe_ingredients
 		%h4 Title
-		%br
 		.control-group
 			.controls
 				= f.text_field :title, :class => "input-xlarge", :placeholder => "Enter recipe title..."
@@ -19,6 +18,16 @@
 		.control-group
 			.controls
 				%button.btn.btn-success.new_recipe_ingredient_add Add Ingredient
+		.control-group
+			%h4 Alcohol Percent
+			.controls
+				= f.text_field :alcohol, :class => "input-xlarge", :size => 2
+		.control-group
+			%h4 Glass
+			.controls
+				%select.chzn-select{"data-placeholder" => "Choose a glass...", :style => "width:200px;", :name => "glass"}
+					%option Beer Mug
+					%option Bucket
 		.control-group
 			%h4 Directions
 			%br

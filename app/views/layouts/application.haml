@@ -77,7 +77,7 @@
                                     =link_to s, {:controller => "search", :action => "search", :spirit => "#{s.downcase}", :ingredients => @searched_ingredients}
                             %li.nav-header Ingredients
                             %li
-                                %input.add_ingredient.ingridients_ac{:type => "text", :placeholder => "Add Ingredient"}
+                                %input.add_ingredient.ingredients_ac{:type => "text", :placeholder => "Add Ingredient"}
                             %a.reset{:href => "javascript:void(0);"}Reset
                             %input{:type => "hidden", :name => "ingredients[]"}
                             %form{:id => "sidebar_indgredients_form", :action => "/search", :method => :get}

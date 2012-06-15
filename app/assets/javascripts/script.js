@@ -63,20 +63,22 @@ $(function() {
     delay: 300
   });
 
-  $('input.ingridients_ac').autocomplete({
-    source: function(request, response) {
-      var params = getAutoCompleteIngredientsParams(request.term);
-      $.ajax({
-        url: params['url'],
-        dataType: "jsonp",
-        data: params['data'],
-        success: function(data) {
-          response(data);
-        }
-      });
-    },
-    minLength: 2,
-    delay: 300
+  $(document).on("focus", "input.ingredients_ac:not(.ui-autocomplete-input)", function (e) {
+    $(this).autocomplete({
+      source: function(request, response) {
+        var params = getAutoCompleteIngredientsParams(request.term);
+        $.ajax({
+          url: params['url'],
+          dataType: "jsonp",
+          data: params['data'],
+          success: function(data) {
+            response(data);
+          }
+        });
+      },
+      minLength: 2,
+      delay: 300
+    });
   });
 
   $("li.spirit_reset a").click(function() {
@@ -97,7 +99,7 @@ $(function() {
     the_form.submit();
   });
 
-  $(document).on('.sidebar-nav.search li.checked_ingredient input[type="checkbox"]').change(function(e) {
+  $(document).on('change', '.sidebar-nav.search li.checked_ingredient input:checkbox', function(e) {
     var the_form = $("#sidebar_indgredients_form");
     var the_checkbox = $(e.target);
     var val = the_checkbox.next("span").html();
@@ -162,9 +164,9 @@ $(function() {
     var new_ingredient = $(".new_recipe_ingredient").first().clone();
     var num = $(".the_ingredients .ingredient").length;
 
-    setNewIngredientName("input", new_ingredient, num);
+    setNewIngredientName("input.val", new_ingredient, num);
     setNewIngredientName("select.amt", new_ingredient, num);
-    //setNewIngredientName("select.ingridients_ac", new_ingredient, num);
+    setNewIngredientName("input.ingredients_ac", new_ingredient, num);
 
     new_ingredient.removeClass("dn new_recipe_ingredient");
     new_ingredient.find("select").addClass("chzn-select");
@@ -188,7 +190,7 @@ $(function() {
   });
 
   function setupAjaxChosen() {
-    $("select.chzn-select.ingridients_ac").ajaxChosen(ajaxChosenParams, 
+    $("select.chzn-select.ingredients_ac").ajaxChosen(ajaxChosenParams, 
                                                       ajaxChosenSuccessCallback);
   }
 

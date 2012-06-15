@@ -49,11 +49,15 @@ class RecipesController < ApplicationController
   end
 
   def create
-    @recipe = Recipe.create(:title => params[:recipe][:title], :directions => params[:recipe][:directions])
+    @recipe = Recipe.create(:title => params[:recipe][:title], 
+                            :directions => params[:recipe][:directions], 
+                            :glass => params[:glass], 
+                            :alcohol => params[:recipe][:alcohol])
 
     order = 1
     params[:recipe][:ing].each do |key, val|
-      ingredient = Ingredient.where(:id => val[:liquor]).first
+      ingredient = Ingredient.where(:ingredient => val[:liquor]).first
+      ingredient = Ingredient.create(:ingredient => val[:liquor]) if ingredient == nil
       RecipeIngredient.create(:recipe_id => @recipe.id, :ingredient_id => ingredient.id, 
                            :order => order, :amount => "#{val[:val]} #{val[:amt]}")
       order = order + 1
