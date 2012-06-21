@@ -8,7 +8,7 @@ gem 'mysql2'
 gem 'nokogiri'
 gem "bootstrap-sass"
 gem 'will_paginate'
-gem "devise", "~> 2.0.4"
+gem "devise"
 gem "omniauth-facebook"
 gem 'omniauth-openid'
 gem 'omniauth-twitter'
@@ -20,6 +20,7 @@ gem "paperclip", "~> 2.7.0"
 gem "rmagick", "~> 2.13.1"
 gem 'chosen-rails'
 gem 'thinking-sphinx', '2.0.10'
+gem "dynamic_form"
 
 # Gems used only for assets and not required
 # in production environments by default.
@@ -44,4 +45,6 @@ group :development, :test do
   gem 'webrat'
   gem 'ruby-debug-base19'
   gem 'ruby-debug19'
+
+  gem 'quiet_assets'
 end

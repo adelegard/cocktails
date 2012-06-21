@@ -17,13 +17,13 @@ class RecipeUser < ActiveRecord::Base
 	class << self
 
 		def update(recipe_user)
-		    recipe_user = RecipeUser.find_or_initialize_by_recipe_id_and_user_id(recipe_user.recipe_id, recipe_user.user_id)
+		    the_recipe_user = RecipeUser.find_or_initialize_by_recipe_id_and_user_id(recipe_user[:recipe_id], recipe_user[:user_id])
 
-		    recipe_user.photo_file_name = recipe_user.photo.original_filename
-		    recipe_user.photo_content_type = recipe_user.photo.content_type
-		    recipe_user.photo_file_size = recipe_user.photo.tempfile.size
-		    recipe_user.photo_updated_at = Time.new
-		    recipe_user.save
+		    the_recipe_user[:photo_file_name] = recipe_user[:photo].original_filename
+		    the_recipe_user[:photo_content_type] = recipe_user[:photo].content_type
+		    the_recipe_user[:photo_file_size] = recipe_user[:photo].tempfile.size
+		    the_recipe_user[:photo_updated_at] = Time.new
+		    the_recipe_user.save
 		end
 
 		def rate(recipe_id, user_id, rating)

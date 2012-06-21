@@ -12,9 +12,8 @@
         = f.password_field :password
     - if devise_mapping.rememberable?
       .control-group
-        .controls
-          = f.label :remember_me, {:class => "checkbox"}
-          = f.check_box :remember_me
+        = f.check_box :remember_me, :class => "fl"
+        = f.label :remember_me, {:class => "checkbox"}
   = f.submit "Sign in", {:class => "btn btn-primary"}
   %br
   %br

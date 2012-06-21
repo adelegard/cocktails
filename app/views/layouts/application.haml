@@ -70,11 +70,11 @@
                         %ul.nav.nav-list.spirits
                             %li.nav-header Spirit
                             %li.spirit_reset
-                                =link_to "All", {:controller => "search", :action => "search", :ingredients => @searched_ingredients}
+                                =link_to "All", {:controller => "/search", :action => "search", :ingredients => @searched_ingredients}
                             
                             - default_spirits.each do |s|
                                 %li.spirit{:class => (@spirit && @spirit.include?(s.downcase) ? 'active' : nil)}
-                                    =link_to s, {:controller => "search", :action => "search", :spirit => "#{s.downcase}", :ingredients => @searched_ingredients}
+                                    =link_to s, {:controller => "/search", :action => "search", :spirit => "#{s.downcase}", :ingredients => @searched_ingredients}
                             %li.nav-header Ingredients
                             %li
                                 %input.add_ingredient.ingredients_ac{:type => "text", :placeholder => "Add Ingredient"}

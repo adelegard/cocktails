@@ -16,6 +16,7 @@
 //= require jquery.NobleCount.min
 //= require jquery.cookie
 //= require jquery_cookie_helper
+//= require jquery.validate
 //= require ajax-chosen.min
 //= require chosen-jquery
 //= require_tree .

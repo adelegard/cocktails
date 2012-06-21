@@ -173,6 +173,7 @@ $(function() {
     new_ingredient.appendTo(".the_ingredients");
     $(".chzn-select").chosen();
     setupAjaxChosen();
+    new_ingredient.find("input.val").focus();
     return false;
   });
 

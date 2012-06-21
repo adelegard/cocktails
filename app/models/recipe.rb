@@ -4,6 +4,10 @@ class Recipe < ActiveRecord::Base
 	has_many :ingredients, :through => :recipe_ingredients
 	has_many :users, :through => :recipe_users
 
+  validates :title, :presence => true, :length => { :in => 4..100 }, :uniqueness => true
+  validates :directions, :presence => true, :length => { :in => 10..2000 }
+  validates_associated :ingredients
+
   self.per_page = 12
 
   define_index do

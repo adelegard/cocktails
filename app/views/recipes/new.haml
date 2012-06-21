@@ -1,36 +1,36 @@
 %h2 New Recipe
 %br
 =form_for @recipe, :html => { :multipart => true} do |f|
+	= f.error_messages
 	%fieldset.new_recipe_ingredients
-		%h4 Title
 		.control-group
+			= f.label :title, :class => "control-label"
 			.controls
-				= f.text_field :title, :class => "input-xlarge", :placeholder => "Enter recipe title..."
+				= f.text_field :title, :class => "input-xlarge recipe_title", :placeholder => "Enter recipe title..."
 		.control-group
 			= f.label :photo, 'Choose a photo:', :class => "control-label"
 			.controls
 				= f.file_field :photo
 		.the_ingredients
-			%h4 Ingredients
 			.control-group.ingredient
+				= f.label :ingredient, :class => "control-label"
 				.controls
 					=render :partial => '/recipes/new_ingredient', :locals => {:select_class => "chzn-select"}
 		.control-group
 			.controls
 				%button.btn.btn-success.new_recipe_ingredient_add Add Ingredient
 		.control-group
-			%h4 Alcohol Percent
+			= f.label :alcohol, :class => "control-label"
 			.controls
-				= f.text_field :alcohol, :class => "input-xlarge", :size => 2
+				= f.text_field :alcohol, :class => "input-small"
 		.control-group
-			%h4 Glass
+			= f.label :glass, :class => "control-label"
 			.controls
 				%select.chzn-select{"data-placeholder" => "Choose a glass...", :style => "width:200px;", :name => "glass"}
 					%option Beer Mug
 					%option Bucket
 		.control-group
-			%h4 Directions
-			%br
+			= f.label :directions, :class => "control-label"
 			.controls
 				= f.text_area(:directions, :id => "new_recipe_directions", :cols => 10, :rows => 5, :class => "input-xlarge span6 new_recipe_directions", :placeholder => "Enter any required instructions for this recipe...")
 				.char_remaining

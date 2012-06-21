@@ -96,7 +96,7 @@ class SearchController < ApplicationController
   def autocomplete_ingredients_titles
     ingredients = search_ingredients(params)
     names_and_ids = Hash.new {|h, k| h[k] = []}
-    names = ingredients.collect{|i| i.ingredient}
+    names = ingredients.collect{|i| i[:ingredient]}
     respond_to do |format|
       format.js {render_json names.to_json}
     end

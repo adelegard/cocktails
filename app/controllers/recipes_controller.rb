@@ -56,8 +56,7 @@ class RecipesController < ApplicationController
 
     order = 1
     params[:recipe][:ing].each do |key, val|
-      ingredient = Ingredient.where(:ingredient => val[:liquor]).first
-      ingredient = Ingredient.create(:ingredient => val[:liquor]) if ingredient == nil
+      ingredient = Ingredient.find_or_create_by_ingredient(val[:liquor])
       RecipeIngredient.create(:recipe_id => @recipe.id, :ingredient_id => ingredient.id, 
                            :order => order, :amount => "#{val[:val]} #{val[:amt]}")
       order = order + 1

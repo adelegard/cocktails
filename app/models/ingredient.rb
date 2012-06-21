@@ -2,6 +2,8 @@ class Ingredient < ActiveRecord::Base
 	has_many :recipe_ingredients
 	has_many :recipe, :through => :recipe_ingredients
 
+	validates :ingredient, :presence => true, :length => { :in => 2..60 }, :uniqueness => true
+
 	define_index do
 		# fields
 		indexes ingredient, :sortable => true
