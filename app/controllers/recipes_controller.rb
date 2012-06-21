@@ -41,6 +41,7 @@ class RecipesController < ApplicationController
 
   def new
     @recipe = Recipe.new
+    @glasses = Recipe.getAllGlasses
 
     respond_to do |format|
       format.html # new.html.erb

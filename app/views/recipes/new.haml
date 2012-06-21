@@ -27,8 +27,8 @@
 			= f.label :glass, :class => "control-label"
 			.controls
 				%select.chzn-select{"data-placeholder" => "Choose a glass...", :style => "width:200px;", :name => "glass"}
-					%option Beer Mug
-					%option Bucket
+					-@glasses.each do |glass|
+						%option= glass
 		.control-group
 			= f.label :directions, :class => "control-label"
 			.controls

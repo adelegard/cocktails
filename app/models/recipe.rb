@@ -58,5 +58,10 @@ class Recipe < ActiveRecord::Base
                                       :order => orderBy,
                                       :page => params[:page], :per_page => params[:per_page])
     end
+
+
+    def getAllGlasses
+      return Recipe.uniq.pluck(:glass).sort
+    end
   end
 end
