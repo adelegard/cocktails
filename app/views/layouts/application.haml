@@ -64,7 +64,7 @@
                                         or 
                                         = link_to "Sign in", new_user_session_path
         .container-fluid
-            .row-fluid
+            .main-content.row-fluid
                 .span2
                     .well.sidebar-nav.search
                         %ul.nav.nav-list.spirits
@@ -103,5 +103,45 @@
                                                 %span= i
                 .span10
                     =render :partial => "shared/flash_messages", :locals => {:flash => flash}
-                    //%span.ing_cookie_span
                     = yield
+    %footer
+        .container
+            #footer_top.row
+                .span4
+                    %h2 Links
+                    .row
+                        .span2
+                            %ul
+                                %li
+                                    %a{:href => "/about"} Our Story
+                                %li
+                                    %a{:href => "/contact"} Get in Touch
+                                %li
+                                    %a{:href => "/testimonials"} Testimonials
+                        .span2
+                            %ul
+                                %li
+                                    %a{:href => "/terms"} Terms & Conditions
+                                %li
+                                    %a{:href => "/copyright"} Copyright Policy
+                                %li
+                                    %a{:href => "/privacy"} Privacy Policy
+                    %br
+                        .row
+                            .span4
+                                %a#twitter_icon{:href => "", :title => "Twitter"}
+                                %a#facebook_icon{:href => "", :title => "Facebook"}
+                                %a#rss_icon{:href => "", :title => "RSS"}
+                .span4.tweets
+                    %h2 Tweets
+                    %p.sub-heading new Post foods logo  at http://bit.ly/wL89kH #corporatecleanup
+                    %p.sub-heading we want a revolution - http://bit.ly/zj6hPG #sethgodin
+                .span4.articles
+                    %h2 Articles
+                    %ul
+                        %li
+                            %a{:href => "http://shawngraham.me/index.php/blog/creating-a-logo-for-your-small-business-that-doesnt-suck"} Creating A Logo That Doesn't Suck
+                            %span.date.right 10/27/11
+                            %br 2 comments
+            #footer_bottom.row
+                .span12 © DragonTree LLC 2012
