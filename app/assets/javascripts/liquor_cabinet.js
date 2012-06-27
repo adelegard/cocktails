@@ -5,9 +5,9 @@ $(document).ready(function() {
   });
 
   $('#cabinet_ingredient_search').keydown(function(e) {
-    if (e.which !== 13) return false;
+    if (e.which !== 13) return;
     var val = $(this).val();
-    if (canAddToLiquorCabinet(val) === false) return false;
+    if (canAddToLiquorCabinet(val) === false) return;
     addToLiquorCabinet(val, function() {
 			var row = "<tr><td><i class='icon-remove'></i><div class='lc_ingredient dib'>" + val + "</div></td></tr>";
 			$("#my_ingredients tbody").append(row);
@@ -16,7 +16,7 @@ $(document).ready(function() {
 
   $('#add_cabinet_ingredient').click(function() {
     var val = $("#cabinet_ingredient_search").val();
-    if (canAddToLiquorCabinet(val) === false) return false;
+    if (canAddToLiquorCabinet(val) === false) return;
     addToLiquorCabinet(val, function() {
   		var row = "<tr><td><i class='icon-remove'></i><div class='lc_ingredient dib'>" + val + "</div></td></tr>";
   		$("#my_ingredients tbody").append(row);
