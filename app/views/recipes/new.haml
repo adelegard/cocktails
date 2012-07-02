@@ -1,6 +1,8 @@
-%h2 New Recipe
-%br
-=form_for @recipe, :html => { :multipart => true} do |f|
+.page-header
+	%h1
+		Post a New Cocktail
+		%small Fill out all fields below
+=form_for @recipe, :html => { :multipart => true, :class => "form-horizontal"} do |f|
 	= f.error_messages
 	%fieldset.new_recipe_ingredients
 		.control-group
@@ -13,7 +15,7 @@
 				= f.file_field :photo
 		.the_ingredients
 			.control-group.ingredient
-				= f.label :ingredient, :class => "control-label"
+				= f.label :ingredients, :class => "control-label"
 				.controls
 					=render :partial => '/recipes/new_ingredient', :locals => {:select_class => "chzn-select"}
 		.control-group

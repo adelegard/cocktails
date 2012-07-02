@@ -1,5 +1,35 @@
 $(function() {
 
+  $('#photo_modal .thumb').click(function(e) {
+    $('#photo_modal .thumb').removeClass("active");
+    $(this).addClass("active");
+
+    $('#main_img').attr('src',$(this).attr('src').replace('tiny','medium'));
+  });
+  $('#photo_modal .close').click(function() {
+    $("#photo_modal").modal('hide');
+  });
+
+  $('#photo_modal').on('show', function(){
+    $(document).on("keyup.photo_key", function(e) {
+      if (e.which == 37) { /* left arrow */
+        var active_thumb = $(".thumbs .thumb.active");
+        if (active_thumb.prev(".thumb").length === 1) {
+          active_thumb.removeClass("active").prev(".thumb").addClass("active").trigger("click");
+        }
+      } else if (e.which == 39) { /* right arrow */
+        var active_thumb = $(".thumbs .thumb.active");
+        if (active_thumb.next(".thumb").length === 1) {
+          active_thumb.removeClass("active").next(".thumb").addClass("active").trigger("click");
+        }
+      }
+    });
+  })
+  $('#photo_modal').on('hide', function(){
+    $(document).off("keyup.photo_key");
+  });
+
+
   /* raty "star" plugin http://www.wbotelhos.com/raty/ */
   /* large stars */
   $('.raty_star_not_rated').raty(getRatyStarOptions({isRated: false, smallStars: false}));

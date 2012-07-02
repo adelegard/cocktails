@@ -14,8 +14,6 @@ gem 'omniauth-openid'
 gem 'omniauth-twitter'
 gem "haml-rails"
 gem 'bootstrap-will_paginate'
-gem "aws-sdk", "~> 1.3.5"
-gem "aws-s3", "~> 0.6.2"
 gem "paperclip", "~> 2.7.0"
 gem "rmagick", "~> 2.13.1"
 gem 'chosen-rails'

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120426022243) do
+ActiveRecord::Schema.define(:version => 20120630151245) do
 
   create_table "authentications", :force => true do |t|
     t.string   "provider"
@@ -43,17 +43,27 @@ ActiveRecord::Schema.define(:version => 20120426022243) do
     t.string   "amount"
   end
 
-  create_table "recipe_users", :force => true do |t|
-    t.integer  "recipe_id"
-    t.integer  "user_id"
-    t.boolean  "starred"
-    t.decimal  "rating",             :precision => 10, :scale => 0
-    t.datetime "created_at",                                        :null => false
-    t.datetime "updated_at",                                        :null => false
+  create_table "recipe_photos", :force => true do |t|
     t.string   "photo_file_name"
     t.string   "photo_content_type"
     t.integer  "photo_file_size"
     t.datetime "photo_updated_at"
+    t.integer  "recipe_id"
+    t.integer  "user_id"
+    t.datetime "created_at",         :null => false
+    t.datetime "updated_at",         :null => false
+  end
+
+  add_index "recipe_photos", ["recipe_id"], :name => "index_recipe_photos_on_recipe_id"
+  add_index "recipe_photos", ["user_id"], :name => "index_recipe_photos_on_user_id"
+
+  create_table "recipe_users", :force => true do |t|
+    t.integer  "recipe_id"
+    t.integer  "user_id"
+    t.boolean  "starred"
+    t.decimal  "rating",     :precision => 10, :scale => 0
+    t.datetime "created_at",                                :null => false
+    t.datetime "updated_at",                                :null => false
   end
 
   create_table "recipes", :force => true do |t|
@@ -61,10 +71,11 @@ ActiveRecord::Schema.define(:version => 20120426022243) do
     t.text     "directions"
     t.string   "glass"
     t.string   "alcohol"
-    t.datetime "created_at",                                  :null => false
-    t.datetime "updated_at",                                  :null => false
-    t.decimal  "rating_avg",   :precision => 10, :scale => 0
+    t.datetime "created_at",                                        :null => false
+    t.datetime "updated_at",                                        :null => false
+    t.decimal  "rating_avg",         :precision => 10, :scale => 0
     t.integer  "rating_count"
+    t.integer  "created_by_user_id"
   end
 
   create_table "users", :force => true do |t|

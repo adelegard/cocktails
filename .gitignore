@@ -16,3 +16,4 @@
 /tmp
 db/sphinx
 config/development.sphinx.conf
+/public/photos

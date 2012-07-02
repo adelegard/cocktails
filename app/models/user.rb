@@ -1,6 +1,7 @@
 class User < ActiveRecord::Base
   has_many :recipe_users
   has_many :recipe, :through => :recipe_users
+  has_many :recipe_photos
   has_many :authentications
   # Include default devise modules. Others available are:
   # :token_authenticatable, :encryptable, :confirmable, :lockable, :timeoutable and :omniauthable

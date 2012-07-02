@@ -5,12 +5,6 @@ class RecipeUsersController < ApplicationController
     @recipe_user = RecipeUser.create(params[:recipe_user])
   end
 
-  def update
-    RecipeUser.update(params[:recipe_user])
-
-    render 'recipes/show'
-  end
-
   def rated
     @recipes = RecipeUser.getRatedRecipesByUserId(params, current_user.id)
     @recipe_users = RecipeUser.getRecipeUsers(@recipes, current_user.id)
@@ -60,11 +54,5 @@ class RecipeUsersController < ApplicationController
     respond_to do |format|
       format.js   { render :nothing => true }
     end
-  end
-
-  def uploadphoto
-      @recipe = Recipe.where(:id => params[:recipe_id]).first
-      @recipe_user = RecipeUser.find_or_initialize_by_recipe_id_and_user_id(@recipe.id, current_user.id)
-      render 'recipes/upload_photo'
   end
 end

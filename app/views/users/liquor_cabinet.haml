@@ -14,6 +14,6 @@
 				%tr
 					%td
 						%l.icon-remove
-						.lc_ingredient.dib= ingredient.ingredient
+						.lc_ingredient.dib= render :partial => '/recipes/ingredient', :locals => {:ingredient => ingredient}
 %br
 %a#view_makeable_recipes.btn.btn-primary{:href => "/recipes/liquor_cabinet", "data-loading-text" => "Calculating..."} View Recipes I Can Make

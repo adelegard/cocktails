@@ -55,6 +55,47 @@ ul.recipe_ingredients {
 	margin: 0;
 }
 
+#drink_thumb {
+	margin-right: 8px;
+}
+
+.num_photos {
+	margin-top: 3px;
+	margin-left: 32px;
+	font-size: 11px;
+}
+.add_photo {
+	margin: 2px 0 0 3px;
+}
+.default_thumb_photo {
+	width: 100px;
+	height: 100px;
+	background: transparent asset-url("cocktails/default.jpg", image) no-repeat center left;
+}
+
+#photo_modal {
+	width: 400px;
+	margin: -250px 0 0 -180px;
+
+	#main_img_container {
+		height: 300px;
+		margin-bottom: 10px;
+		overflow: hidden;
+	}
+	#main_img {
+		margin-bottom: 10px;
+	}
+	.thumb {
+		width: 50px;
+		display: inline-block;
+		margin-bottom: 5px;
+	}
+	.thumb.active {
+		border: 3px solid blue;
+	}
+}
+
+
 .ingredients_heading,
 .recipe_ingredients .ingredient.not_in_liquor_cabinet,
 .recipe_ingredients .ingredient.in_liquor_cabinet {

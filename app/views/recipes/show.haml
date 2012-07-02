@@ -3,14 +3,42 @@
 .cb
 =render :partial => '/recipes/full_page_view'
 .page-header
-	%h2= @recipe.title
+    #drink_thumb.dib.fl
+        -if @recipe_photos.empty?
+            .default_thumb_photo
+        -else
+            %a{:href => "#", "data-toggle" => "modal", "data-target" => "#photo_modal"}
+                = image_tag @recipe_photos.first.photo.url(:thumb)
+            .num_photos 1 of #{@recipe_photos.size}
+        .add_photo
+            %a{:href => "/recipes/uploadphoto?id=#{@recipe.id}"}
+                %i.icon-upload
+                %span Add a Photo
+    .dib
+        %h2= @recipe.title
+        -if @recipe_creator
+            %small by #{@recipe_creator.name}
+    .cl
 %ul.nav.nav-tabs
-	%li.active
-		%a{:href => "#recipe", "data-toggle" => "tab"} Recipe
-	%li
-		%a{:href => "#comments", "data-toggle" => "tab"} Comments
+    %li.active
+        %a{:href => "#recipe", "data-toggle" => "tab"} Recipe
+    %li
+        %a{:href => "#comments", "data-toggle" => "tab"} Comments
 .tab-content
-	.tab-pane.fade.in.active#recipe
-		=render :partial => 'recipes/recipe'
-	.tab-pane.fade#comments
-		=render :partial => 'widgets/disqus'
+    .tab-pane.fade.in.active#recipe
+        =render :partial => 'recipes/recipe'
+    .tab-pane.fade#comments
+        =render :partial => 'widgets/disqus'
+#photo_modal.modal.hide
+    .modal-header
+        %button.close{:type => "button", "data-dismiss" => "modal"} ×
+        %h3 Cocktail Photos
+    .modal-body
+        #main_img_container
+            -if !@recipe_photos.empty?
+                =image_tag @recipe_photos.first.photo.url(:large), :id => "main_img"
+        .thumbs
+            -@recipe_photos.each_with_index do |photo, index|
+                -if index == 0
+                    -cssClass = "active"
+                =image_tag photo.photo.url(:tiny), :class => "#{cssClass} thumb"

@@ -3,40 +3,48 @@ Cocktails::Application.routes.draw do
 				:controllers => { :omniauth_callbacks => "users/omniauth_callbacks", 
 								  :registrations => 'users/registration' }
 
+	root :to => "recipes#index"
+
     match '/about' => 'about#about'
     match '/contact' => 'contact#contact'
 
+    #recipe [user] lists
 	match '/recipes/favorites' => 'recipe_users#favorites'
 	match '/recipes/rated' => 'recipe_users#rated'
 	match '/recipes/liquor_cabinet' => 'recipe_users#liquor_cabinet_recipes'
 
+	#recipe lists
 	match '/recipes/popular' => 'recipes#popular'
 	match '/recipes/new_recipes' => 'recipes#new_recipes'
 
-	resources :recipes
-	resources :recipe_users
-
-	root :to => "recipes#index"
-
+	#recipe pages
 	match '/recipes/show' => 'recipes#show'
 
+	#recipe actions
 	match '/recipes/:id/favorite' => 'recipe_users#favorite'
 	match '/recipes/:id/unfavorite' => 'recipe_users#unfavorite'
 	match '/recipes/:id/rate' => 'recipe_users#rate'
 	match '/recipes/rate' => 'recipe_users#rate'
 
+	#recipe photos
+	match '/recipes/uploadphoto' => 'recipes#uploadphoto'
+	match '/recipes/do_upload_photo' => 'recipes#do_upload_photo', :as => :recipe_do_upload_photo, :via => :put
+
+	#user pages
 	match '/profile' => 'users#profile'
 	match '/cabinet' => 'liquor_cabinet#view'
+
+	#user actions
 	match '/cabinet/add' => 'liquor_cabinet#add'
 	match '/cabinet/remove' => 'liquor_cabinet#remove'
-
-	match '/uploadphoto' => 'recipe_users#uploadphoto'
-	#match '/uploadphoto/:id'
 
 	match '/search' => 'search#search'
 	match '/search/autocomplete_recipes' => 'search#autocomplete_recipes'
 	match '/search/autocomplete_ingredients' => 'search#autocomplete_ingredients'
 	match '/search/autocomplete_ingredients_titles' => 'search#autocomplete_ingredients_titles'
+
+	resources :recipes
+	resources :recipe_users
 
 	unless Rails.application.config.consider_all_requests_local
 		match '*not_found', to: 'errors#error_404'

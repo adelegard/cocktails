@@ -4,7 +4,7 @@
 		%i.icon-list-alt
 		%a.showFullPageView{:href => "#"} Full Page View
 	%i.icon-picture
-	%a{:href => "/uploadphoto?recipe_id=#{@recipe.id}"} Add Photo
+	%a{:href => "/recipes/uploadphoto?id=#{@recipe.id}"} Add Photo
 	%br
 	%i.icon-print
 	%a{:href => "#"} Print
@@ -16,44 +16,14 @@
 	.social
 		=render :partial => '/widgets/twitter'
 =render :partial => '/recipes/rating_links'
-%br
-%br
 =render :partial => '/widgets/vote_tastes'
 %br
 %br
 -if @ingredients.size > 0
 	%h3.ingredients_heading Ingredients
 	%ul.recipe_ingredients
-		-remove_message = "Remove from Liquor Cabinet"
-		%input{:type => "hidden", :class => "lc_remove_message", :value => "#{remove_message}"}
-		-add_message = "Add to Liquor Cabinet"
-		%input{:type => "hidden", :class => "lc_add_message", :value => "#{add_message}"}
 		- @ingredients.each do |ingredient|
-			-if ingredient[:in_liquor_cabinet]
-				-ingredient_icon = "icon-ok"
-				-ingredient_class = "in_liquor_cabinet"
-				-lc_message = remove_message
-			-elsif ingredient[:in_liquor_cabinet] != nil
-				-ingredient_icon = "icon-remove"
-				-ingredient_class = "not_in_liquor_cabinet"
-				-lc_message = add_message
-			-if ingredient_icon != nil
-				%i.dib{:class => "#{ingredient_icon}"}
-			%li.dib.dropdown.ingredient{:class => "#{ingredient_class}"}
-				%a.dropdown-toggle{"data-toggle" => "dropdown", :href => "#"}
-					%span.full_ingredient
-						%span= ingredient[:amount]
-						%span.the_ingredient= ingredient[:ingredient]
-						%b.caret
-				%ul.dropdown-menu
-					-if user_signed_in?
-						%li
-							%input.the_ingredient{:type => "hidden", :value => "#{ingredient[:ingredient]}"}
-							%a.toggle_in_lc{:href => "#"}= lc_message
-						%li.divider
-					%li
-						%a{:href => "/search?spirit=#{ingredient[:ingredient]}"} See other recipes with this
-			%br
+			=render :partial => '/recipes/ingredient', :locals => {:ingredient => ingredient}
 %br
 .directions
 	%h3 Directions

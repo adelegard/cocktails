@@ -1,6 +1,7 @@
 class Recipe < ActiveRecord::Base
 	has_many :recipe_ingredients
 	has_many :recipe_users
+  has_many :recipe_photos
 	has_many :ingredients, :through => :recipe_ingredients
 	has_many :users, :through => :recipe_users
 
@@ -16,7 +17,7 @@ class Recipe < ActiveRecord::Base
     indexes directions
     indexes ingredients(:ingredient), :as => :ingredient, :sortable => true
 
-    has updated_at, created_at, rating_avg, rating_count
+    has updated_at, created_at, rating_avg, rating_count, created_by_user_id
     has ingredients(:id), :as => :ingredient_ids
   end
 

@@ -1,0 +1,27 @@
+-remove_message = "Remove from Liquor Cabinet"
+-add_message = "Add to Liquor Cabinet"
+-if ingredient[:in_liquor_cabinet]
+    -ingredient_icon = "icon-ok"
+    -ingredient_class = "in_liquor_cabinet"
+    -lc_message = remove_message
+-elsif ingredient[:in_liquor_cabinet] != nil
+    -ingredient_icon = "icon-remove"
+    -ingredient_class = "not_in_liquor_cabinet"
+    -lc_message = add_message
+-if ingredient_icon != nil
+    %i.dib{:class => "#{ingredient_icon}"}
+%li.dib.dropdown.ingredient{:class => "#{ingredient_class}"}
+    %a.dropdown-toggle{"data-toggle" => "dropdown", :href => "#"}
+        %span.full_ingredient
+            %span= ingredient[:amount]
+            %span.the_ingredient= ingredient[:ingredient]
+            %b.caret
+    %ul.dropdown-menu
+        -if lc_message != nil && user_signed_in?
+            %li
+                %input.the_ingredient{:type => "hidden", :value => "#{ingredient[:ingredient]}"}
+                %a.toggle_in_lc{:href => "#"}= lc_message
+            %li.divider
+        %li
+            %a.see_other{:href => "/search?spirit=#{ingredient[:ingredient]}"} See other recipes with this
+%br

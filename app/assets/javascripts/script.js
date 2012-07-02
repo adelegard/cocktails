@@ -3,7 +3,6 @@ $(function() {
   $('#new_recipe_directions').NobleCount('#characters_remaining', 
                                 {max_chars:2000, on_negative: 'go_red'});
 
-
   /* set sidebar search checkboxes based on cookied values */
   var cookie_str = "checkbox [cookie] values: ";
   var search_cookies = new cookieList("search_ingredient").items();

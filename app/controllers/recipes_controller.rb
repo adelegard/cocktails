@@ -1,6 +1,3 @@
-require 'rubygems'
-require 'aws/s3'
-
 class RecipesController < ApplicationController
 
   before_filter :authenticate_user!, :except => [:show, :index]
@@ -21,22 +18,7 @@ class RecipesController < ApplicationController
   end
 
   def show
-    params.delete(:id) unless params[:id].to_i > 0
-    @recipe = Recipe.where(:id => params[:id]).first
-
-    liquor_cabinet_ingredients = []
-    if user_signed_in?
-      @recipe_user = RecipeUser.where(:recipe_id => params[:id], :user_id => current_user.id).first_or_create
-      liquor_cabinet_ingredients = LiquorCabinet.where(:user_id => current_user.id).collect{|ingredient| ingredient.ingredient_id}
-    end
-    @ingredients = Ingredient.getIngredients(params[:id], user_signed_in?, liquor_cabinet_ingredients)
-
-    user_data = RecipeUser.getUserData(params[:id])
-    @num_starred = user_data[:num_starred]
-    @num_rated = user_data[:num_rated]
-    @avg_rating = user_data[:avg_rating]
-
-    render 'recipes/show'
+    setup_show
   end
 
   def new
@@ -53,7 +35,8 @@ class RecipesController < ApplicationController
     @recipe = Recipe.create(:title => params[:recipe][:title], 
                             :directions => params[:recipe][:directions], 
                             :glass => params[:glass], 
-                            :alcohol => params[:recipe][:alcohol])
+                            :alcohol => params[:recipe][:alcohol],
+                            :created_by_user_id => current_user.id)
 
     order = 1
     params[:recipe][:ing].each do |key, val|
@@ -74,7 +57,47 @@ class RecipesController < ApplicationController
     end
   end
 
+  def uploadphoto
+      @recipe = Recipe.where(:id => params[:id]).first
+      @recipe_photo = RecipePhoto.new(:recipe_id => @recipe.id, :user_id => current_user.id)
+      render 'recipes/upload_photo'
+  end
+
+  def do_upload_photo
+    recipe_photo = RecipePhoto.create(:recipe_id => params[:recipe_id],
+                                      :user_id => current_user.id)
+    recipe_photo.update_attributes(params[:recipe_photo])
+    params[:id] = params[:recipe_id]
+    setup_show
+    respond_to do |format|
+      if @recipe.save
+        format.html { redirect_to @recipe, notice: 'Photo was successfully added!' }
+      else
+        format.html { redirect_to @recipe, error: 'Error uploading photo :(' }
+      end
+    end
+  end
+
   private
+
+  def setup_show
+    params.delete(:id) unless params[:id].to_i > 0
+    @recipe = Recipe.where(:id => params[:id]).first
+    @recipe_creator = User.where(:id => @recipe.created_by_user_id).first if @recipe.created_by_user_id != nil
+    @recipe_photos = RecipePhoto.where(:recipe_id => params[:id])
+
+    liquor_cabinet_ingredients = []
+    if user_signed_in?
+      @recipe_user = RecipeUser.where(:recipe_id => params[:id], :user_id => current_user.id).first_or_create
+      liquor_cabinet_ingredients = LiquorCabinet.where(:user_id => current_user.id).collect{|ingredient| ingredient.ingredient_id}
+    end
+    @ingredients = Ingredient.getIngredients(params[:id], user_signed_in?, liquor_cabinet_ingredients)
+
+    user_data = RecipeUser.getUserData(params[:id])
+    @num_starred = user_data[:num_starred]
+    @num_rated = user_data[:num_rated]
+    @avg_rating = user_data[:avg_rating]
+  end
 
   def setup_popular_recipes
     @recipes_popular = Recipe.getPopularRecipes(params)

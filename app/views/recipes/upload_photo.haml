@@ -1,7 +1,9 @@
 -@pageTitle = "Upload Photo for - #{@recipe.title}"
+%h2= @pageTitle
+%br
 
-this is currently broken
-=form_for @recipe_user, :html => { :multipart => true } do |f|
-	= hidden_field(:recipe_user, :recipe_id)
-	= f.file_field :photo
-	= f.submit
+=form_for @recipe_photo, :url => recipe_do_upload_photo_path, :method => :put, :html => { :multipart => true } do |f|
+    %input{:type => "hidden", :name => "recipe_id", :value => @recipe.id}
+    = f.file_field :photo
+    %br
+    = f.submit "Upload Photo", :class => "btn"
