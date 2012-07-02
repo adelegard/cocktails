@@ -37,6 +37,11 @@ class RecipesController < ApplicationController
                             :glass => params[:glass], 
                             :alcohol => params[:recipe][:alcohol],
                             :created_by_user_id => current_user.id)
+    if params[:recipe_photo] != nil
+      recipe_photo = RecipePhoto.create(:recipe_id => @recipe.id,
+                                        :user_id => current_user.id)
+      recipe_photo.update_attributes(params[:recipe_photo])
+    end
 
     order = 1
     params[:recipe][:ing].each do |key, val|

@@ -12,7 +12,7 @@
 		.control-group
 			= f.label :photo, 'Choose a photo:', :class => "control-label"
 			.controls
-				= f.file_field :photo
+				%input{:name => "recipe_photo[photo]", :type => "file"}
 		.the_ingredients
 			.control-group.ingredient
 				= f.label :ingredients, :class => "control-label"
