@@ -1,4 +1,4 @@
-class RecipesController < ApplicationController
+class RecipesController < BaseRecipesController
 
   before_filter :authenticate_user!, :except => [:show, :index]
 
@@ -84,25 +84,6 @@ class RecipesController < ApplicationController
   end
 
   private
-
-  def setup_show
-    params.delete(:id) unless params[:id].to_i > 0
-    @recipe = Recipe.where(:id => params[:id]).first
-    @recipe_creator = User.where(:id => @recipe.created_by_user_id).first if @recipe.created_by_user_id != nil
-    @recipe_photos = RecipePhoto.where(:recipe_id => params[:id])
-
-    liquor_cabinet_ingredients = []
-    if user_signed_in?
-      @recipe_user = RecipeUser.where(:recipe_id => params[:id], :user_id => current_user.id).first_or_create
-      liquor_cabinet_ingredients = LiquorCabinet.where(:user_id => current_user.id).collect{|ingredient| ingredient.ingredient_id}
-    end
-    @ingredients = Ingredient.getIngredients(params[:id], user_signed_in?, liquor_cabinet_ingredients)
-
-    user_data = RecipeUser.getUserData(params[:id])
-    @num_starred = user_data[:num_starred]
-    @num_rated = user_data[:num_rated]
-    @avg_rating = user_data[:avg_rating]
-  end
 
   def setup_popular_recipes
     @recipes_popular = Recipe.getPopularRecipes(params)

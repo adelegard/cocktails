@@ -18,6 +18,8 @@ gem "paperclip", "~> 2.7.0"
 gem "rmagick", "~> 2.13.1"
 gem 'chosen-rails'
 gem 'thinking-sphinx', '2.0.10'
+gem 'ts-delayed-delta', '1.1.2', :require => 'thinking_sphinx/deltas/delayed_delta'
+gem 'delayed_job_active_record'
 gem "dynamic_form"
 
 # Gems used only for assets and not required

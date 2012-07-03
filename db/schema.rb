@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120630151245) do
+ActiveRecord::Schema.define(:version => 20120702234638) do
 
   create_table "authentications", :force => true do |t|
     t.string   "provider"
@@ -21,10 +21,27 @@ ActiveRecord::Schema.define(:version => 20120630151245) do
     t.datetime "updated_at", :null => false
   end
 
+  create_table "delayed_jobs", :force => true do |t|
+    t.integer  "priority",   :default => 0
+    t.integer  "attempts",   :default => 0
+    t.text     "handler"
+    t.text     "last_error"
+    t.datetime "run_at"
+    t.datetime "locked_at"
+    t.datetime "failed_at"
+    t.string   "locked_by"
+    t.string   "queue"
+    t.datetime "created_at",                :null => false
+    t.datetime "updated_at",                :null => false
+  end
+
+  add_index "delayed_jobs", ["priority", "run_at"], :name => "delayed_jobs_priority"
+
   create_table "ingredients", :force => true do |t|
     t.string   "ingredient"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",                   :null => false
+    t.datetime "updated_at",                   :null => false
+    t.boolean  "delta",      :default => true, :null => false
   end
 
   create_table "liquor_cabinets", :id => false, :force => true do |t|
@@ -71,11 +88,12 @@ ActiveRecord::Schema.define(:version => 20120630151245) do
     t.text     "directions"
     t.string   "glass"
     t.string   "alcohol"
-    t.datetime "created_at",                                        :null => false
-    t.datetime "updated_at",                                        :null => false
+    t.datetime "created_at",                                                          :null => false
+    t.datetime "updated_at",                                                          :null => false
     t.decimal  "rating_avg",         :precision => 10, :scale => 0
     t.integer  "rating_count"
     t.integer  "created_by_user_id"
+    t.boolean  "delta",                                             :default => true, :null => false
   end
 
   create_table "users", :force => true do |t|

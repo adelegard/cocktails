@@ -19,6 +19,7 @@ class Recipe < ActiveRecord::Base
 
     has updated_at, created_at, rating_avg, rating_count, created_by_user_id
     has ingredients(:id), :as => :ingredient_ids
+    set_property :delta => :delayed
   end
 
   class << self

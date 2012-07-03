@@ -12,6 +12,7 @@ class Ingredient < ActiveRecord::Base
 		has :id, :as => :ingredient_id
 		has created_at
 		has updated_at
+		set_property :delta => :delayed
 	end
 
   	class << self
