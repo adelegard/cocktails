@@ -5,10 +5,10 @@ class BaseRecipesController < ApplicationController
   def setup_show
     params.delete(:id) unless params[:id].to_i > 0
     recipe = Recipe.where(:id => params[:id]).first
-    setup_show(recipe)
+    setup_show_with_recipe(recipe)
   end
 
-  def setup_show(recipe)
+  def setup_show_with_recipe(recipe)
     @recipe = recipe
     @recipe_creator = User.where(:id => @recipe.created_by_user_id).first if @recipe.created_by_user_id != nil
     @recipe_photos = RecipePhoto.where(:recipe_id => @recipe.id)

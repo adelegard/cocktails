@@ -16,8 +16,54 @@
 	margin-bottom: 1px;
 }
 
+.navbar .brand:hover {
+	color: white;
+}
+
+form.navbar-search .icon-search {
+	position: relative;
+	left: -25px;
+}
+
 .sidebar-nav.search input.add_ingredient {
 	width: 100px;
+}
+
+form.sign_in {
+	text-align: center;
+
+	.controls {
+		margin-left: 0px;
+	}
+	.control-group.remember_me,
+	input[type='email'],
+	input[type='password'] {
+		width: 260px;
+	}
+	input[type='email'],
+	input[type='password'] {
+		height: 25px;
+		font-size: 16px;
+	}
+	.control-group.remember_me {
+		margin: 0 auto 18px;
+	}
+	input.remember_me {
+		height: 18px;
+		margin: 0;
+	}
+	label.remember_me {
+		padding: 0;
+		margin: 0;
+	}
+	.or {
+		padding: 0 8px;
+	}
+
+	.help-inline {
+		position: absolute;
+		margin-top: 10px;
+	}
 }
 
 .favorite,

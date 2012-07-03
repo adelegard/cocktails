@@ -9,13 +9,14 @@ Cocktails::Application.routes.draw do
     match '/contact' => 'contact#contact'
 
     #recipe [user] lists
-	match '/recipes/favorites' => 'recipe_users#favorites'
-	match '/recipes/rated' => 'recipe_users#rated'
-	match '/recipes/liquor_cabinet' => 'recipe_users#liquor_cabinet_recipes'
+	match '/recipes/favorites' => 'recipe_users#favorites', :as => :recipes_favorites
+	match '/recipes/rated' => 'recipe_users#rated', :as => :recipes_rated
+	match '/recipes/created' => 'recipe_users#created', :as => :recipes_created
+	match '/recipes/liquor_cabinet' => 'recipe_users#liquor_cabinet_recipes', :as => :recipes_lc
 
 	#recipe lists
-	match '/recipes/popular' => 'recipes#popular'
-	match '/recipes/new_recipes' => 'recipes#new_recipes'
+	match '/recipes/popular' => 'recipes#popular', :as => :recipes_popular
+	match '/recipes/new_recipes' => 'recipes#new_recipes', :as => :recipes_new
 
 	#recipe pages
 	match '/recipes/show' => 'recipes#show'

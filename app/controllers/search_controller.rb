@@ -49,7 +49,7 @@ class SearchController < BaseRecipesController
 
     if @recipes.size == 1
       # Then just bring them to the recipe's show page
-      setup_show(@recipes.first)
+      setup_show_with_recipe(@recipes.first)
       render 'recipes/show'
     end
 
@@ -57,6 +57,7 @@ class SearchController < BaseRecipesController
     if user_signed_in?
       @recipe_users = RecipeUser.getRecipeUsers(@recipes, current_user.id)
     end
+    @display_search_sidebar = true
   end
 
   def autocomplete_recipes

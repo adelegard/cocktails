@@ -1,4 +1,5 @@
-%h2 Resend unlock instructions
+.page-header
+    %h1 Resend unlock instructions
 = form_for(resource, :as => resource_name, :url => unlock_path(resource_name), :html => { :method => :post }) do |f|
   = devise_error_messages!
   %div
@@ -7,4 +8,4 @@
     = f.email_field :email
   %div= f.submit "Resend unlock instructions"
 %br
-= render "links"
+= render :partial => "devise/links"

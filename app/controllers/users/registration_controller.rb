@@ -1,8 +1,11 @@
 class Users::RegistrationController < Devise::RegistrationsController
 
   def new
-    if session[:omniauth][:info][:nickname]
-      @nickname = session[:omniauth][:info][:nickname]
+    begin
+      if session[:omniauth][:info][:nickname]
+        @nickname = session[:omniauth][:info][:nickname]
+      end
+    rescue
     end
     super
   end

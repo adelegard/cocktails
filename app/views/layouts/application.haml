@@ -21,128 +21,17 @@
                 js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
                 fjs.parentNode.insertBefore(js, fjs);
             }(document, 'script', 'facebook-jssdk'));
-        .navbar.navbar-fixed-top
-            .navbar-inner
-                .container-fluid
-                    %a.btn.btn-navbar{"data-toggle" => "collapse", "data-target" => ".nav-collapse"}
-                        %span.icon-bar
-                        %span.icon-bar
-                        %span.icon-bar
-                    %a.brand{:href => "/"} Cocktail Recipes
-                    .nav-collapse
-                        %ul.nav
-                            %li{:class => request.fullpath == '/' ? "active" : ""}
-                                %a{:href => "/"} Home
-                            %li{:class => request.fullpath == '/about' ? "active" : ""}
-                                %a{:href => "/about"} About
-                            %li{:class => request.fullpath == '/contact' ? "active" : ""}
-                                %a{:href => "/contact"} Contact
-                        %form.navbar-search{:action => "/search", :method => :get}
-                            %input.recipe_ac.search-query.span3{:placeholder => "Search for a cocktail", :type => "text", :name => "q", :value => @q}
-                            %input.btn{:type => "submit", :value => "Search"}
-                        %ul.nav.pull-right
-                            %li= link_to 'Add Recipe', new_recipe_path
-                            - if user_signed_in?
-                                %li.dropdown
-                                    %a.dropdown-toggle{"data-toggle" => "dropdown", :href => "#"}
-                                        = current_user.email
-                                        %b.caret
-                                    %ul.dropdown-menu
-                                        %li= link_to "Profile", edit_user_registration_path
-                                        %li
-                                            %a{:href => "/cabinet"} Liquor Cabinet
-                                        %li
-                                            %a{:href => "/recipes/favorites"} Favorites
-                                        %li
-                                            %a{:href => "/recipes/rated"} Rated
-                                        %li.divider
-                                        %li= link_to "Sign out", destroy_user_session_path, :method => :delete
-                            - else
-                                %li
-                                    %p.navbar-text
-                                        = link_to "Sign up", new_user_registration_path
-                                        or 
-                                        = link_to "Sign in", new_user_session_path
+        =render :partial => "layouts/top_navbar"
         .container-fluid
             .main-content.row-fluid
-                .span2
-                    .well.sidebar-nav.search
-                        %ul.nav.nav-list.spirits
-                            %li.nav-header Spirit
-                            %li.spirit_reset
-                                =link_to "All", {:controller => "/search", :action => "search", :ingredients => @searched_ingredients}
-                            
-                            - default_spirits.each do |s|
-                                %li.spirit{:class => (@spirit && @spirit.include?(s.downcase) ? 'active' : nil)}
-                                    =link_to s, {:controller => "/search", :action => "search", :spirit => "#{s.downcase}", :ingredients => @searched_ingredients}
-                            %li.nav-header Ingredients
-                            %li
-                                %input.add_ingredient.ingredients_ac{:type => "text", :placeholder => "Add Ingredient"}
-                            %a.reset{:href => "javascript:void(0);"}Reset
-                            %input{:type => "hidden", :name => "ingredients[]"}
-                            %form{:id => "sidebar_indgredients_form", :action => "/search", :method => :get}
-                                %input{:type => "hidden", :name => "spirit", :value => @spirit}
-                                -if @searched_ingredients != nil
-                                    -@searched_ingredients.each do |i|
-                                        %input{:type => "hidden", :name => "ingredients[]", :value => i}
-                            - default_ingredients.each do |i|
-                                %li.checked_ingredient
-                                    %label.checkbox
-                                        -if @searched_ingredients != nil && @searched_ingredients.include?(i)
-                                            -checked = true
-                                        -else
-                                            -checked = false
-                                        %input{:type => "checkbox", :checked => checked}
-                                        %span= i
-                            -if @searched_ingredients != nil
-                                -@searched_ingredients.each do |i|
-                                    -if !default_ingredients.include?(i)
-                                        %li.checked_ingredient
-                                            %label.checkbox
-                                                %input{:type => "checkbox", :checked => "checked"}
-                                                %span= i
-                .span10
+                -span_size = 12
+                -if @display_search_sidebar
+                    -search_span_size = 2
+                    -span_size = span_size - search_span_size
+                    %div{:class => "span#{search_span_size}"}
+                        =render :partial => "layouts/search_sidebar"
+                %div{:class => "span#{span_size}"}
                     =render :partial => "shared/flash_messages", :locals => {:flash => flash}
                     = yield
     %footer
-        .container
-            #footer_top.row
-                .span4
-                    %h2 Links
-                    .row
-                        .span2
-                            %ul
-                                %li
-                                    %a{:href => "/about"} Our Story
-                                %li
-                                    %a{:href => "/contact"} Get in Touch
-                                %li
-                                    %a{:href => "/testimonials"} Testimonials
-                        .span2
-                            %ul
-                                %li
-                                    %a{:href => "/terms"} Terms & Conditions
-                                %li
-                                    %a{:href => "/copyright"} Copyright Policy
-                                %li
-                                    %a{:href => "/privacy"} Privacy Policy
-                    %br
-                        .row
-                            .span4
-                                %a#twitter_icon{:href => "", :title => "Twitter"}
-                                %a#facebook_icon{:href => "", :title => "Facebook"}
-                                %a#rss_icon{:href => "", :title => "RSS"}
-                .span4.tweets
-                    %h2 Tweets
-                    %p.sub-heading new Post foods logo  at http://bit.ly/wL89kH #corporatecleanup
-                    %p.sub-heading we want a revolution - http://bit.ly/zj6hPG #sethgodin
-                .span4.articles
-                    %h2 Articles
-                    %ul
-                        %li
-                            %a{:href => "http://shawngraham.me/index.php/blog/creating-a-logo-for-your-small-business-that-doesnt-suck"} Creating A Logo That Doesn't Suck
-                            %span.date.right 10/27/11
-                            %br 2 comments
-            #footer_bottom.row
-                .span12 © DragonTree LLC 2012
-        =render :partial => "shared/sitewide_text"
+        =render :partial => "layouts/footer"

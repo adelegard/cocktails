@@ -1,0 +1,41 @@
+.container
+    #footer_top.row
+        .span4
+            %h2 Links
+            .row
+                .span2
+                    %ul
+                        %li
+                            %a{:href => "/about"} Our Story
+                        %li
+                            %a{:href => "/contact"} Get in Touch
+                        %li
+                            %a{:href => "/testimonials"} Testimonials
+                .span2
+                    %ul
+                        %li
+                            %a{:href => "/terms"} Terms & Conditions
+                        %li
+                            %a{:href => "/copyright"} Copyright Policy
+                        %li
+                            %a{:href => "/privacy"} Privacy Policy
+            %br
+                .row
+                    .span4
+                        %a#twitter_icon{:href => "", :title => "Twitter"}
+                        %a#facebook_icon{:href => "", :title => "Facebook"}
+                        %a#rss_icon{:href => "", :title => "RSS"}
+        .span4.tweets
+            %h2 Tweets
+            %p.sub-heading new Post foods logo  at http://bit.ly/wL89kH #corporatecleanup
+            %p.sub-heading we want a revolution - http://bit.ly/zj6hPG #sethgodin
+        .span4.articles
+            %h2 Articles
+            %ul
+                %li
+                    %a{:href => "http://spiritedcocktails.com/index.php/2011/07/29/beautiful-combinations-tequila-chartreuse/"} Beautiful Combinations: Tequila & Chartreuse
+                    %span.date.right 6/11/11
+                    %br 5 comments
+    #footer_bottom.row
+        .span12 © DragonTree LLC 2012
+=render :partial => "shared/sitewide_text"

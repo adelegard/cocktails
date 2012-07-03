@@ -5,6 +5,17 @@ class RecipeUsersController < ApplicationController
     @recipe_user = RecipeUser.create(params[:recipe_user])
   end
 
+  def created
+    @recipes = Recipe.where(:created_by_user_id => current_user.id).paginate(:order => "created_at DESC",
+                                                                             :page => params[:page],
+                                                                             :per_page => params[:per_page])
+    @recipe_users = RecipeUser.getRecipeUsers(@recipes, current_user.id)
+    @total_ratings = RecipeUser.getTotalRatings(@recipes)
+
+    @title = "My Created Recipes"
+    render 'search/search'
+  end
+
   def rated
     @recipes = RecipeUser.getRatedRecipesByUserId(params, current_user.id)
     @recipe_users = RecipeUser.getRecipeUsers(@recipes, current_user.id)

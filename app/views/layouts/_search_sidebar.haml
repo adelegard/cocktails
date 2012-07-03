@@ -1,0 +1,35 @@
+.well.sidebar-nav.search
+    %ul.nav.nav-list.spirits
+        %li.nav-header Spirit
+        %li.spirit_reset
+            =link_to "All", {:controller => "/search", :action => "search", :ingredients => @searched_ingredients}
+        
+        - default_spirits.each do |s|
+            %li.spirit{:class => (@spirit && @spirit.include?(s.downcase) ? 'active' : nil)}
+                =link_to s, {:controller => "/search", :action => "search", :spirit => "#{s.downcase}", :ingredients => @searched_ingredients}
+        %li.nav-header Ingredients
+        %li
+            %input.add_ingredient.ingredients_ac{:type => "text", :placeholder => "Add Ingredient"}
+        %a.reset{:href => "javascript:void(0);"}Reset
+        %input{:type => "hidden", :name => "ingredients[]"}
+        %form{:id => "sidebar_indgredients_form", :action => "/search", :method => :get}
+            %input{:type => "hidden", :name => "spirit", :value => @spirit}
+            -if @searched_ingredients != nil
+                -@searched_ingredients.each do |i|
+                    %input{:type => "hidden", :name => "ingredients[]", :value => i}
+        - default_ingredients.each do |i|
+            %li.checked_ingredient
+                %label.checkbox
+                    -if @searched_ingredients != nil && @searched_ingredients.include?(i)
+                        -checked = true
+                    -else
+                        -checked = false
+                    %input{:type => "checkbox", :checked => checked}
+                    %span= i
+        -if @searched_ingredients != nil
+            -@searched_ingredients.each do |i|
+                -if !default_ingredients.include?(i)
+                    %li.checked_ingredient
+                        %label.checkbox
+                            %input{:type => "checkbox", :checked => "checked"}
+                            %span= i
