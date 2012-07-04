@@ -7,40 +7,43 @@
                 %span.icon-bar
             %a.brand{:href => "/"} Cocktail Recipes
             .nav-collapse
-                %ul.nav
-                    %li.dropdown
-                        %a.dropdown-toggle{"data-toggle" => "dropdown", :href => "#"}
-                            Recipes
-                            %b.caret
-                        %ul.dropdown-menu
-                            %li.nav-header Views
-                            %li
-                                %a{:href => recipes_popular_path} Popular
-                            %li
-                                %a{:href => recipes_new_path} Newly Added
-                            -if user_signed_in?
+                -if !@hide_topnav_items
+                    %ul.nav
+                        %li.dropdown
+                            %a.dropdown-toggle{"data-toggle" => "dropdown", :href => "#"}
+                                Recipes
+                                %b.caret
+                            %ul.dropdown-menu
+                                %li.nav-header Views
+                                %li
+                                    %a{:href => recipes_popular_path} Popular
+                                %li
+                                    %a{:href => recipes_new_path} Newly Added
+                                -if user_signed_in?
+                                    %li.divider
+                                    %li.nav-header My Recipes
+                                    %li
+                                        %a{:href => recipes_favorites_path} Favorites
+                                    %li
+                                        %a{:href => recipes_rated_path} Rated
+                                    %li
+                                        %a{:href => recipes_created_path} Created
                                 %li.divider
-                                %li.nav-header My Recipes
-                                %li
-                                    %a{:href => recipes_favorites_path} Favorites
-                                %li
-                                    %a{:href => recipes_rated_path} Rated
-                                %li
-                                    %a{:href => recipes_created_path} Created
-                            %li.divider
-                            %li.nav-header Liquor Types
-                            - default_spirits.each do |s|
-                                %li
-                                    =link_to s, {:controller => "/search", :action => "search", :spirit => "#{s.downcase}"}
-                    %li{:class => request.fullpath == '/about' ? "active" : ""}
-                        %a{:href => "/about"} About
-                    %li{:class => request.fullpath == '/contact' ? "active" : ""}
-                        %a{:href => "/contact"} Contact
-                %form.navbar-search{:action => "/search", :method => :get}
-                    %input.recipe_ac.search-query.span3{:placeholder => "Search for a cocktail", :type => "text", :name => "q", :value => @q}
-                    %a.icon-search{:type => "submit", :href => "javascript:void(0);"}
+                                %li.nav-header Liquor Types
+                                - default_spirits.each do |s|
+                                    %li
+                                        =link_to s, {:controller => "/search", :action => "search", :spirit => "#{s.downcase}"}
+                        %li{:class => request.fullpath == '/about' ? "active" : ""}
+                            %a{:href => "/about"} About
+                        %li{:class => request.fullpath == '/contact' ? "active" : ""}
+                            %a{:href => "/contact"} Contact
+                    %form.navbar-search{:action => "/search", :method => :get}
+                        %input.recipe_ac.search-query.span3{:placeholder => "Search for a cocktail", :type => "text", :name => "q", :value => @q}
+                        %a.icon-search{:type => "submit", :href => "javascript:void(0);"}
                 %ul.nav.pull-right
-                    %li= link_to 'Add Recipe', new_recipe_path
+                    -if !@hide_topnav_items
+                        %li
+                            %a.btn.btn-small.btn-danger{:href => new_recipe_path} Add Recipe
                     - if user_signed_in?
                         %li.dropdown
                             %a.dropdown-toggle{"data-toggle" => "dropdown", :href => "#"}

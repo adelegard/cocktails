@@ -1,22 +1,20 @@
 class RecipesController < BaseRecipesController
 
   before_filter :authenticate_user!, :except => [:index, :new_recipes, :popular, :show]
+  before_filter :display_search_sidebar, :except => [:show, :new, :uploadphoto]
 
   def index
     setup_new_recipes
     setup_popular_recipes
-    @display_search_sidebar = true
     @most_used = Ingredient.getMostUsed(params)
   end
 
   def new_recipes
     setup_new_recipes
-    @display_search_sidebar = true
   end
 
   def popular
     setup_popular_recipes
-    @display_search_sidebar = true
   end
 
   def show

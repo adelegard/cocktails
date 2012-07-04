@@ -15,6 +15,28 @@ body > .container-fluid {
     @include border-radius(2px);
 }
 
+.navbar .nav > li > a.btn {
+    padding: 4px 10px 4px;
+}
+
+.navbar .nav > li > a.btn-danger {
+    color: #FFF;
+}
+
+.navbar .nav > li > a.btn-danger:hover,
+.navbar .nav > li > a.btn-danger:active,
+.navbar .nav > li > a.btn-danger.active,
+.navbar .nav > li > a.btn-danger.disabled,
+.navbar .nav > li > a.btn-danger[disabled] {
+  background-color: #bd362f;
+  *background-color: #a9302a;
+}
+
+.navbar .nav > li > a.btn-danger:active,
+.navbar .nav > li > a.btn-danger.active {
+  background-color: #942a25 \9;
+}
+
 footer {
     color: #999; //#666;
     background-color: #2C2C2C; //#333;

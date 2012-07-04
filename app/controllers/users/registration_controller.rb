@@ -1,4 +1,5 @@
 class Users::RegistrationController < Devise::RegistrationsController
+  before_filter :set_common_stuff, :except => [:edit]
 
   def new
     begin
@@ -20,6 +21,20 @@ class Users::RegistrationController < Devise::RegistrationsController
       current_user.authentications.create!(:provider => session[:omniauth]['provider'], 
       	    :uuid => session[:omniauth]['uid'])
     end
+  end
+
+  def edit
+    super
+  end
+
+  def update
+    super
+  end
+
+  private
+
+  def set_common_stuff
+    @hide_topnav_items = true
   end
 
 end

@@ -1,6 +1,7 @@
 -hide_sign_up ||= false
+-hide_sign_in ||= false
 -hide_forgot_password ||= false
-- if controller_name != 'sessions'
+- if controller_name != 'sessions' && !hide_sign_in
   = link_to "Sign in", new_session_path(resource_name)
   %br/
 - if devise_mapping.registerable? && controller_name != 'registrations' && !hide_sign_up

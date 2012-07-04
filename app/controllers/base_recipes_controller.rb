@@ -2,6 +2,10 @@ class BaseRecipesController < ApplicationController
 
   private
 
+  def display_search_sidebar
+    @display_search_sidebar = true
+  end
+
   def setup_show
     params.delete(:id) unless params[:id].to_i > 0
     recipe = Recipe.where(:id => params[:id]).first
@@ -9,6 +13,7 @@ class BaseRecipesController < ApplicationController
   end
 
   def setup_show_with_recipe(recipe)
+    @display_search_sidebar = false
     @recipe = recipe
     @recipe_creator = User.where(:id => @recipe.created_by_user_id).first if @recipe.created_by_user_id != nil
     @recipe_photos = RecipePhoto.where(:recipe_id => @recipe.id)

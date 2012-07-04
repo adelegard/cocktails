@@ -1,6 +1,6 @@
 .page-header
   %h1.tac Sign In
-= form_for(resource, :as => resource_name, :url => session_path(resource_name), :html => { :class => "sign_in form-horizontal"}) do |f|
+= form_for(resource, :as => resource_name, :url => session_path(resource_name), :html => { :class => "devise form-horizontal"}) do |f|
   %fieldset
     .control-group
       .controls
@@ -15,10 +15,9 @@
           = f.label :remember_me, {:class => "checkbox remember_me di"}
         %span.fr= link_to "Forgot your password?", new_password_path(resource_name)
   = f.submit "Sign in", {:class => "btn btn-large btn-primary"}
-  %span.sign_up
+  %span
     %span.or or
     = link_to "Sign up", new_registration_path(resource_name)
-
   %br
   %br
   = render :partial => "devise/links", :locals => {:hide_sign_up => true, :hide_forgot_password => true}

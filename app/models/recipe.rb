@@ -9,7 +9,7 @@ class Recipe < ActiveRecord::Base
   validates :directions, :presence => true, :length => { :in => 10..2000 }
   validates_associated :ingredients
 
-  self.per_page = 12
+  self.per_page = 20
 
   define_index do
     indexes title, :sortable => true

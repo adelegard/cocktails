@@ -1,7 +1,9 @@
 Cocktails::Application.routes.draw do
 	devise_for :users, :path_names => { :sign_up => "register" }, 
 				:controllers => { :omniauth_callbacks => "users/omniauth_callbacks", 
-								  :registrations => 'users/registration' }
+								  :registrations => 'users/registration',
+								  :sessions => 'users/sessions',
+								  :passwords => 'users/passwords' }
 
 	root :to => "recipes#index"
 

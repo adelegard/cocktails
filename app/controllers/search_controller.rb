@@ -1,6 +1,7 @@
 class SearchController < BaseRecipesController
 
   before_filter :set_default_params, :only => %w(simple_results advanced_results)
+  before_filter :display_search_sidebar
 
   def search
     @spirit = params[:spirit]

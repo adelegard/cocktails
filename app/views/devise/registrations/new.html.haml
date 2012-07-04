@@ -1,25 +1,24 @@
 .page-header
-  %h1 Sign up
+  %h1.tac Sign up
 -if @nickname
-  %span= "Welcome #{@nickname}! Let's get you signed up shall we..."
-  %br
-%br
-= form_for(resource, :as => resource_name, :url => registration_path(resource_name), :id => "new_user_form") do |f|
+  //%span.tac= "Welcome #{@nickname}! Let's get you signed up shall we..."
+  //%br
+= form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :class => "devise form-horizontal"}) do |f|
   = devise_error_messages!
   %fieldset
     .control-group
-      = f.label :email, :class => "control-label"
       .controls
-        = f.email_field :email
+        = f.email_field :email, :placeholder => "Enter Email"
     .control-group
-      = f.label :password, :class => "control-label"
       .controls
-        = f.password_field :password
+        = f.password_field :password, :placeholder => "Enter Password"
     .control-group
-      = f.label :password_confirmation, :class => "control-label"
       .controls
-        = f.password_field :password_confirmation
-    .control-group
-      .controls= f.submit "Sign up", {:class => "btn"}
-%br
-= render :partial => "devise/links"
+        = f.password_field :password_confirmation, :placeholder => "Repeat Password"
+  = f.submit "Sign up", {:class => "btn btn-large btn-primary"}
+  %span
+    %span.or or
+    = link_to "Sign in", new_session_path(resource_name)
+  %br
+  %br
+  = render :partial => "devise/links", :locals => {:hide_sign_up => true, :hide_sign_in => true}
