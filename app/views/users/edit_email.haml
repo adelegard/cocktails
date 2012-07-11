@@ -1,0 +1,18 @@
+=render :partial => "layouts/account_sidebar"
+.span7
+  .page-header
+    %h1 Email Address
+  = form_for @user, :url => user_email_path, :html => { :method => :put, :class => "form-horizontal" } do |f|
+    = f.error_messages
+    %fieldset
+      .control-group
+        = f.label :current_email, :class => "control-label"
+        .controls
+          %span.input-xlarge.uneditable-input= @user.email
+      .control-group
+        = f.label :new_address, :class => "control-label"
+        .controls
+          = f.email_field :email, :class => "input-xlarge", :placeholder => "Enter new email...", :value => ""
+      .control-group
+        .controls
+          = f.submit "Save", {:class => "btn btn-primary btn-large"}

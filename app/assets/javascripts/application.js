@@ -19,4 +19,5 @@
 //= require jquery.validate
 //= require ajax-chosen.min
 //= require chosen-jquery
+//= require gravtastic
 //= require_tree .

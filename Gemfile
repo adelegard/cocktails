@@ -21,6 +21,7 @@ gem 'thinking-sphinx', '2.0.10'
 gem 'ts-delayed-delta', '1.1.2', :require => 'thinking_sphinx/deltas/delayed_delta'
 gem 'delayed_job_active_record'
 gem "dynamic_form"
+gem 'gravtastic'
 
 # Gems used only for assets and not required
 # in production environments by default.

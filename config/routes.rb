@@ -1,9 +1,9 @@
 Cocktails::Application.routes.draw do
 	devise_for :users, :path_names => { :sign_up => "register" }, 
-				:controllers => { :omniauth_callbacks => "users/omniauth_callbacks", 
-								  :registrations => 'users/registration',
-								  :sessions => 'users/sessions',
-								  :passwords => 'users/passwords' }
+				:controllers => { :omniauth_callbacks => "my_devise/omniauth_callbacks", 
+								  :registrations => 'my_devise/registration',
+								  :sessions => 'my_devise/sessions',
+								  :passwords => 'my_devise/passwords' }
 
 	root :to => "recipes#index"
 
@@ -34,6 +34,10 @@ Cocktails::Application.routes.draw do
 	match '/recipes/do_upload_photo' => 'recipes#do_upload_photo', :as => :recipe_do_upload_photo, :via => :put
 
 	#user pages
+	match '/settings/password' => 'users/password#edit', :as => :edit_user_pass
+	match '/settings/password/update' => 'users/password#update', :as => :user_pass, :via => :put
+	match '/settings/email' => 'users/email#edit', :as => :edit_user_email
+	match '/settings/email/update' => 'users/email#update', :as => :user_email, :via => :put
 	match '/profile' => 'users#profile'
 	match '/cabinet' => 'liquor_cabinet#view'
 

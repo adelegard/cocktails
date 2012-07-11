@@ -1,33 +1,50 @@
-=@test
-.page-header
-  %h1 Edit #{resource_name.to_s.humanize}
-= form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :method => :put, :class => "form-horizontal" }) do |f|
-  = devise_error_messages!
-  %fieldset
-    .control-group
-      = f.label :email, :class => "control-label"
-      .controls
-        = f.email_field :email
-    .control-group
-      = f.label :password, :class => "control-label"
-      .controls
-        = f.password_field :password, :autocomplete => "off"
-        %p.help-block (leave blank if you don't want to change it)
-    .control-group
-      = f.label :password_confirmation, :class => "control-label"
-      .controls
-        = f.password_field :password_confirmation
-    .control-group
-      = f.label :current_password, :class => "control-label"
-      .controls
-        = f.password_field :current_password
-        %p.help-block (we need your current password to confirm your changes)
-    .control-group
-      .controls
-        = f.submit "Update", {:class => "btn"}
-%br
-.page-header
-%h3 Cancel my account
-%p
-  Unhappy? #{link_to "Cancel my account", registration_path(resource_name), :confirm => "Are you sure?", :method => :delete}.
-= link_to "Back", :back
+=render :partial => "layouts/account_sidebar"
+.span7
+  .page-header
+    %h1 Profile
+  = form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :method => :put, :class => "form-horizontal" }) do |f|
+    = devise_error_messages!
+    %fieldset
+      .control-group
+        = f.label :email, :class => "control-label"
+        .controls
+          = f.email_field :email
+      .control-group
+        = f.label :password, :class => "control-label"
+        .controls
+          = f.password_field :password, :autocomplete => "off"
+          %p.help-block (leave blank if you don't want to change it)
+      .control-group
+        = f.label :password_confirmation, :class => "control-label"
+        .controls
+          = f.password_field :password_confirmation
+      .control-group
+        = f.label :current_password, :class => "control-label"
+        .controls
+          = f.password_field :current_password
+          %p.help-block (we need your current password to confirm your changes)
+      .control-group
+        = f.label :url, :class => "control-label"
+        .controls
+          = f.text_field :url
+      .control-group
+        = f.label :location, :class => "control-label"
+        .controls
+          = f.text_field :location
+      .control-group
+        = f.label :about_me, :class => "control-label"
+        .controls
+          = f.text_area :about_me, :class => "input-xlarge", :rows => 3
+      .control-group
+        .controls
+          = f.submit "Update", {:class => "btn btn-large btn-primary"}
+  %br
+  %img.avatar_small
+  %a{:href => "http://www.gravatar.com"} Change your avatar at Gravatar.com
+  %span
+    We are using
+    = current_user.email
+  .page-header
+  %h3.danger Cancel my account
+  %p
+    Unhappy? #{link_to "Cancel my account", registration_path(resource_name), :confirm => "Are you sure?", :method => :delete}.

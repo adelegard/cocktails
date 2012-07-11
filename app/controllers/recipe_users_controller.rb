@@ -1,5 +1,6 @@
-class RecipeUsersController < ApplicationController
+class RecipeUsersController < BaseRecipesController
 	before_filter :authenticate_user!
+  before_filter :display_search_sidebar, :except => [:create, :created, :rate, :favorite, :unfavorite]
 
   def create
     @recipe_user = RecipeUser.create(params[:recipe_user])

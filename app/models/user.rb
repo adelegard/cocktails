@@ -1,4 +1,5 @@
 class User < ActiveRecord::Base
+  include Gravtastic
   has_many :recipe_users
   has_many :recipe, :through => :recipe_users
   has_many :recipe_photos
@@ -9,7 +10,7 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable, :omniauthable
 
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :email, :nickname, :name, :password, :password_confirmation, :remember_me
+  attr_accessible :email, :nickname, :name, :password, :password_confirmation, :remember_me, :url, :location, :about_me
 
   class << self
 

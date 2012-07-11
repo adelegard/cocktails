@@ -10,6 +10,16 @@ body > .container-fluid {
     height: 100%;
 }
 
+.navbar .nav > li.avatar {
+    margin-left: -11px;
+}
+.navbar .nav > li.avatar > a img {
+    border: 1px solid transparent;
+}
+.navbar .nav > li.avatar > a:hover img {
+    border: 1px solid #FFF;
+}
+
 .nav-list > li > a,
 .nav-list > li > a:hover {
     @include border-radius(2px);

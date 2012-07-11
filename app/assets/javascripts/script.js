@@ -3,6 +3,12 @@ $(function() {
   $('#new_recipe_directions').NobleCount('#characters_remaining', 
                                 {max_chars:2000, on_negative: 'go_red'});
 
+  var usr_email = $('#user_email').val();
+  if (typeof(usr_email) !== 'undefined') {
+    $('li.avatar img').attr('src', Gravtastic(usr_email, {size: 22}));
+    $('img.avatar_small').attr('src', Gravtastic(usr_email, {size: 35}));
+  }
+
   /* set sidebar search checkboxes based on cookied values */
   var cookie_str = "checkbox [cookie] values: ";
   var search_cookies = new cookieList("search_ingredient").items();

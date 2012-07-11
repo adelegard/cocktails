@@ -1,2 +1,4 @@
+- if user_signed_in?
+    %input#user_email{:type => "hidden", :value => current_user.email}
 %input{:type => "hidden", :class => "lc_remove_message", :value => "Remove from Liquor Cabinet"}
 %input{:type => "hidden", :class => "lc_add_message", :value => "Add to Liquor Cabinet"}

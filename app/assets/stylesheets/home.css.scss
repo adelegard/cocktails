@@ -1,3 +1,16 @@
+.danger {
+	color: #B94A48;
+}
+
+.providers {
+	margin: 0 auto;
+	width: 280px;
+	border: 1px solid #EEE;
+	@include border-radius(3px);
+	padding: 5px;
+	padding-top: 7px;
+}
+
 .new_recipe_directions {
 	margin-bottom: 1px;
 }
@@ -9,7 +22,7 @@
 .popularity {
 	height: 20px;
 	background-color: #08C;
-	border-radius: 2px;
+	@include border-radius(2px);
 }
 
 .favorite-links {
@@ -154,7 +167,7 @@ ul.recipe_ingredients {
 .recipe_ingredients .ingredient.not_in_liquor_cabinet a > span,
 .recipe_ingredients .ingredient.in_liquor_cabinet a > span {
 	padding: 3px 4px;
-	border-radius: 3px;
+	@include border-radius(3px);
 	color: white;
 
 	&:hover {

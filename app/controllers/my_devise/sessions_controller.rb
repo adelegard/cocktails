@@ -1,4 +1,4 @@
-class Users::SessionsController < Devise::SessionsController
+class MyDevise::SessionsController < Devise::SessionsController
   before_filter :set_common_stuff
 
   def new

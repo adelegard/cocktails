@@ -1,0 +1,10 @@
+.span2.account_sidebar
+  .page-header
+    %h2 Settings
+  %ul.nav.nav-tabs.nav-stacked
+    %li{:class => (request.fullpath == edit_user_registration_path ? 'active' : nil)}
+      %a{:href => edit_user_registration_path} Profile
+    %li{:class => (request.fullpath == edit_user_pass_path ? 'active' : nil)}
+      %a{:href => edit_user_pass_path} Password
+    %li{:class => (request.fullpath == edit_user_email_path ? 'active' : nil)}
+      %a{:href => edit_user_email_path} Email
