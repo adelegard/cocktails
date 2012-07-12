@@ -6,6 +6,10 @@ body > .container-fluid {
     margin-bottom: 70px;
 }
 
+.btn-group + .btn-group {
+    margin-left: 0px;
+}
+
 .main-content {
     height: 100%;
 }

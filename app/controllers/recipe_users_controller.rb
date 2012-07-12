@@ -48,7 +48,7 @@ class RecipeUsersController < BaseRecipesController
     RecipeUser.rate(params[:recipe_id], current_user.id, params[:rating])
 
     respond_to do |format|
-      format.js   { render :nothing => true }
+      format.js { render :nothing => true }
     end
   end
 
@@ -56,7 +56,7 @@ class RecipeUsersController < BaseRecipesController
     RecipeUser.favorite(params[:id], current_user.id)
 
     respond_to do |format|
-      format.js   { render :nothing => true }
+      format.js { render :nothing => true }
     end
   end
 
@@ -65,6 +65,14 @@ class RecipeUsersController < BaseRecipesController
 
     respond_to do |format|
       format.js   { render :nothing => true }
+    end
+  end
+
+  def like
+    RecipeUser.like(params[:id], current_user.id)
+
+    respond_to do |format|
+      format.js { render :nothing => true }
     end
   end
 end

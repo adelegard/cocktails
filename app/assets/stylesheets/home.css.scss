@@ -105,8 +105,24 @@ form.devise {
 	}
 }
 
-#recipe_actions {
+#recipe_actions,
+#recipe_social {
 	float: right;
+}
+
+.recipe_social {
+	.btn-group:nth-child(-n+2) {
+		margin-bottom: 5px;
+	}
+	.btn-group i {
+		margin-right: 6px;
+	}
+	.btn-group a:first-child {
+		width: 53px;
+	}
+	.btn-group a:last-child {
+		width: 30px;
+	}
 }
 
 ul.recipe_ingredients {

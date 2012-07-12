@@ -24,7 +24,7 @@ class RecipeUser < ActiveRecord::Base
 		def favorite(recipe_id, user_id)
 		    recipe = Recipe.where(:id => recipe_id).first
 		    recipe_user = RecipeUser.find_or_initialize_by_recipe_id_and_user_id(recipe.id, user_id)
-		    recipe_user.starred = true
+			recipe_user.starred = recipe_user.starred ? false : true #allows us to get rid of the unfavorite method below
 		    recipe_user.save
 		end
 
@@ -32,6 +32,13 @@ class RecipeUser < ActiveRecord::Base
 		    recipe = Recipe.where(:id => recipe_id).first
 		    recipe_user = RecipeUser.find_or_initialize_by_recipe_id_and_user_id(recipe.id, user_id)
 		    recipe_user.starred = false
+		    recipe_user.save
+		end
+
+		def like(recipe_id, user_id)
+		    recipe = Recipe.where(:id => recipe_id).first
+		    recipe_user = RecipeUser.find_or_initialize_by_recipe_id_and_user_id(recipe.id, user_id)
+		    recipe_user.liked = recipe_user.liked ? false : true
 		    recipe_user.save
 		end
 
@@ -76,15 +83,15 @@ class RecipeUser < ActiveRecord::Base
 			recipe_users = RecipeUser.where(:recipe_id => recipe_id)
 
 			num_starred = 0
+			num_liked = 0
 			ratings = []
 			recipe_users.each do |recipe_user|
-				if recipe_user.starred != nil
-					num_starred = num_starred + 1
-				end
+				num_starred = num_starred + 1 if recipe_user.starred
+				num_liked = num_liked + 1 if recipe_user.liked
 				ratings << recipe_user.rating if recipe_user.rating
 			end
 			avg = ratings.inject{ |sum, el| sum + el }.to_f / ratings.size
-			return {:num_starred => num_starred, :num_rated => ratings.size, :avg_rating => avg}
+			return {:num_starred => num_starred, :num_liked => num_liked, :num_rated => ratings.size, :avg_rating => avg}
 		end
 	end
 end

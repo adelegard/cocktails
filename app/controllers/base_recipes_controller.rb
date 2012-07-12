@@ -15,6 +15,8 @@ class BaseRecipesController < ApplicationController
   def setup_show_with_recipe(recipe)
     @display_search_sidebar = false
     @recipe = recipe
+    @recipe.view_count = @recipe.view_count ? @recipe.view_count + 1 : 1 #increment the view count by 1
+    @recipe.save
     @recipe_creator = User.where(:id => @recipe.created_by_user_id).first if @recipe.created_by_user_id != nil
     @recipe_photos = RecipePhoto.where(:recipe_id => @recipe.id)
 
@@ -27,6 +29,7 @@ class BaseRecipesController < ApplicationController
 
     user_data = RecipeUser.getUserData(@recipe.id)
     @num_starred = user_data[:num_starred]
+    @num_liked = user_data[:num_liked]
     @num_rated = user_data[:num_rated]
     @avg_rating = user_data[:avg_rating]
   end

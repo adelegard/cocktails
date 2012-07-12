@@ -3,6 +3,8 @@
 .cb
 =render :partial => '/recipes/full_page_view'
 .page-header
+    #recipe_social.well.span2.fr
+        =render :partial => '/recipes/social', :locals => {:recipe_id => @recipe.id, :recipe_user => @recipe_user, :num_shared => 367, :num_liked => @num_liked, :num_saved => @num_starred}
     #drink_thumb.dib.fl
         -if @recipe_photos.empty?
             .default_thumb_photo
@@ -24,6 +26,7 @@
         %a{:href => "#recipe", "data-toggle" => "tab"} Recipe
     %li
         %a{:href => "#comments", "data-toggle" => "tab"} Comments
+//%a{:href => "#{request.fullpath}#disqus_thread#comments", "data-toggle" => "tab", "data-disqus-identifier" => "#{@recipe.id}"} Comment
 .tab-content
     .tab-pane.fade.in.active#recipe
         =render :partial => 'recipes/recipe'

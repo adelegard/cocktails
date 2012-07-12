@@ -138,6 +138,30 @@ $(function() {
     });
   });
 
+  $(document).on("click", ".btn-group.like > a, .btn-group.save > a", function(e) {
+    socialBtnClicked(e);
+  });
+
+  function socialBtnClicked(e) {
+    e.preventDefault();
+    var btn_grp = $(e.target).closest(".btn-group");
+    var like_btn = btn_grp.find("a:nth-child(1)");
+    var num_liked_btn = btn_grp.find("a:nth-child(2)");
+    var num = parseInt(num_liked_btn.text(),10);
+    var is_disabled = like_btn.hasClass("disabled");
+    if (is_disabled) {
+      num_liked_btn.text(num-1);
+    } else {
+      num_liked_btn.text(num+1);
+    }
+    btn_grp.find("a").toggleClass("disabled");
+
+    var href = $(e.currentTarget).attr("href");
+    $.ajax({
+      url: href
+    });
+  }
+
   $(document).on({
       mouseenter: function () {
         $(this).find("input:checkbox").attr("checked", true);

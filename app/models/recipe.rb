@@ -17,7 +17,7 @@ class Recipe < ActiveRecord::Base
     indexes directions
     indexes ingredients(:ingredient), :as => :ingredient, :sortable => true
 
-    has updated_at, created_at, rating_avg, rating_count, created_by_user_id
+    has updated_at, created_at, rating_avg, rating_count, view_count, created_by_user_id
     has ingredients(:id), :as => :ingredient_ids
     set_property :delta => :delayed
   end

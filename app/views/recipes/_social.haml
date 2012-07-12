@@ -1,0 +1,21 @@
+-like_disabled = recipe_user && recipe_user.liked ? "disabled" : ""
+-save_disabled = recipe_user && recipe_user.starred ? "disabled" : ""
+.recipe_social
+    .btn-group
+        %a.share.btn{:href => "#"}
+            %i.icon-share.fl
+            %span.fl Share
+        %a.btn{:href => "#"}
+            = num_shared
+    .btn-group.like
+        %a.btn{:href => "/recipes/#{recipe_id}/like", :class => like_disabled}
+            %i.icon-heart.fl
+            %span.fl Like
+        %a.btn{:href => "#", :title => "See who liked this", :class => like_disabled}
+            = num_liked
+    .btn-group.save
+        %a.btn{:href => "/recipes/#{recipe_id}/favorite", :class => save_disabled}
+            %i.icon-star.fl
+            %span.fl Save
+        %a.btn{:href => "#", :title => "See who saved this", :class => save_disabled}
+            = num_saved

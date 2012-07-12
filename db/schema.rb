@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120711044413) do
+ActiveRecord::Schema.define(:version => 20120712030751) do
 
   create_table "authentications", :force => true do |t|
     t.string   "provider"
@@ -81,6 +81,7 @@ ActiveRecord::Schema.define(:version => 20120711044413) do
     t.decimal  "rating",     :precision => 10, :scale => 0
     t.datetime "created_at",                                :null => false
     t.datetime "updated_at",                                :null => false
+    t.boolean  "liked"
   end
 
   create_table "recipes", :force => true do |t|
@@ -94,6 +95,7 @@ ActiveRecord::Schema.define(:version => 20120711044413) do
     t.integer  "rating_count"
     t.integer  "created_by_user_id"
     t.boolean  "delta",                                             :default => true, :null => false
+    t.integer  "view_count"
   end
 
   create_table "users", :force => true do |t|
