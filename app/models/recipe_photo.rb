@@ -19,7 +19,7 @@ class RecipePhoto < ActiveRecord::Base
       attachment.instance.photo_file_name
     end
 
-    has_attached_file :photo, :styles => {:tiny => '50x50', :thumb => '100x100', :medium => '300x300>', :large => '600x600>'},
+    has_attached_file :photo, :styles => {:icon => '25x25', :tiny => '50x50', :thumb => '100x100', :medium => '300x300>', :large => '600x600>'},
                               :url  => "/photos/recipes/:recipe_id/recipe_photos/:id/:basename_:style.:extension",
                               :path => ":rails_root/public/photos/recipes/:recipe_id/recipe_photos/:id/:basename_:style.:extension"
 

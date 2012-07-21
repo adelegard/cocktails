@@ -21,6 +21,18 @@ class RecipesController < BaseRecipesController
     setup_show
   end
 
+  def comments
+    setup_show
+    @active_tab = "comments"
+    render 'recipes/show'
+  end
+
+  def photos
+    setup_show
+    @active_tab = "photos"
+    render 'recipes/show'
+  end
+
   def new
     @recipe = Recipe.new
     @glasses = Recipe.getAllGlasses
@@ -33,9 +45,11 @@ class RecipesController < BaseRecipesController
 
   def create
     @recipe = Recipe.create(:title => params[:recipe][:title], 
-                            :directions => params[:recipe][:directions], 
+                            :directions => params[:recipe][:directions],
+                            :inspiration => params[:recipe][:inspiration], 
                             :glass => params[:glass], 
                             :alcohol => params[:recipe][:alcohol],
+                            :servings => params[:recipe][:servings],
                             :created_by_user_id => current_user.id)
     if params[:recipe_photo] != nil
       recipe_photo = RecipePhoto.create(:recipe_id => @recipe.id,
@@ -83,11 +97,21 @@ class RecipesController < BaseRecipesController
     end
   end
 
+  def share
+    Recipe.share(params)
+
+    respond_to do |format|
+      format.js { render :nothing => true }
+    end
+  end
+
   private
 
   def setup_popular_recipes
     @recipes_popular = Recipe.getPopularRecipes(params)
     @total_ratings_popular = RecipeUser.getTotalRatings(@recipes_popular)
+    user_id = current_user != nil && current_user.id ? current_user.id : nil
+    @full_recipes_popular = Recipe.getFullRecipes(@recipes_popular, user_id)
     if user_signed_in?
       @recipe_users_popular = RecipeUser.getRecipeUsers(@recipes_popular, current_user.id)
     end
@@ -96,6 +120,8 @@ class RecipesController < BaseRecipesController
   def setup_new_recipes
     @recipes_new = Recipe.getNewRecipes(params)
     @total_ratings_new = RecipeUser.getTotalRatings(@recipes_new)
+    user_id = current_user != nil && current_user.id ? current_user.id : nil
+    @full_recipes_new = Recipe.getFullRecipes(@recipes_new, user_id)
     if user_signed_in?
       @recipe_users_new = RecipeUser.getRecipeUsers(@recipes_new, current_user.id)
     end

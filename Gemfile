@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', '3.2.1'
+gem 'rails', '3.2.6'
 
 gem 'thin'
 
@@ -14,7 +14,7 @@ gem 'omniauth-openid'
 gem 'omniauth-twitter'
 gem "haml-rails"
 gem 'bootstrap-will_paginate'
-gem "paperclip", "~> 2.7.0"
+gem "paperclip", "~> 3.1.3"
 gem "rmagick", "~> 2.13.1"
 gem 'chosen-rails'
 gem 'thinking-sphinx', '2.0.10'
@@ -22,6 +22,7 @@ gem 'ts-delayed-delta', '1.1.2', :require => 'thinking_sphinx/deltas/delayed_del
 gem 'delayed_job_active_record'
 gem "dynamic_form"
 gem 'gravtastic'
+gem 'fb-channel-file'
 
 # Gems used only for assets and not required
 # in production environments by default.

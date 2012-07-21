@@ -19,6 +19,28 @@
 	margin-top: 5px;
 }
 
+#search_results_design1,
+#search_results_design2 {
+	img.icon {
+		border: 1px solid transparent;
+	}
+	img.icon:hover {
+		cursor: pointer;
+		border: 1px solid pink;
+	}
+	.recipe_title {
+		font-size: 18px;
+	}
+	.social_small {
+		font-size: 11px;
+		margin-top: 5px;
+
+		div {
+			width: 45px;
+		}
+	}
+}
+
 .popularity {
 	height: 20px;
 	background-color: #08C;
@@ -118,7 +140,7 @@ form.devise {
 		margin-right: 6px;
 	}
 	.btn-group a:first-child {
-		width: 53px;
+		width: 57px;
 	}
 	.btn-group a:last-child {
 		width: 30px;
@@ -148,7 +170,7 @@ ul.recipe_ingredients {
 	background: transparent asset-url("cocktails/default.jpg", image) no-repeat center left;
 }
 
-#photo_modal {
+#photos_modal {
 	width: 400px;
 	margin: -250px 0 0 -180px;
 
@@ -170,6 +192,11 @@ ul.recipe_ingredients {
 	}
 }
 
+.recipe_share.modal .modal-body > span {
+	margin-top: 10px;
+	font-weight: bold;
+	font-size: 14px;
+}
 
 .ingredients_heading,
 .recipe_ingredients .ingredient.not_in_liquor_cabinet,
@@ -243,7 +270,7 @@ ul.recipe_ingredients {
 			}
 		}
 	}
-	.content {
+	.full_page_content {
 		width: 100%;
 
 		h2 {

@@ -22,21 +22,36 @@
 			.controls
 				%button.btn.btn-primary.new_recipe_ingredient_add Add Ingredient
 		.control-group
-			= f.label :alcohol, :class => "control-label"
-			.controls
-				= f.text_field :alcohol, :class => "input-small"
-		.control-group
 			= f.label :glass, :class => "control-label"
 			.controls
 				%select.chzn-select{"data-placeholder" => "Choose a glass...", :style => "width:200px;", :name => "glass"}
 					-@glasses.each do |glass|
 						%option= glass
 		.control-group
-			= f.label :directions, :class => "control-label"
+			= f.label :alcohol, :class => "control-label"
 			.controls
-				= f.text_area(:directions, :id => "new_recipe_directions", :cols => 10, :rows => 5, :class => "input-xlarge span6 new_recipe_directions", :placeholder => "Enter any required instructions for this recipe...")
+				.input-append
+					= f.text_field :alcohol, :class => "span2 alcohol"
+					%span.add-on %
+		.control-group
+			= f.label :servings, :class => "control-label"
+			.controls
+				%select.chzn-select{:name => "servings", :style => "width:45px;"}
+					-(1..12).each do |i|
+						%option= i
+		.control-group
+			= f.label :directions, :class => "control-label"
+			.controls.textarea
+				= f.text_area(:directions, :id => "new_recipe_directions", :cols => 10, :rows => 3, :class => "input-xlarge span6 new_recipe_directions", :placeholder => "Enter any required instructions for this recipe...")
 				.char_remaining
-					%span#characters_remaining
+					%span.characters_remaining
+					%span characters remaining
+		.control-group
+			= f.label :inspiration, :class => "control-label"
+			.controls.textarea
+				= f.text_area(:inspiration, :id => "new_recipe_inspiration", :cols => 10, :rows => 3, :class => "input-xlarge span6 new_recipe_inspiration", :placeholder => "Enter your inpiration for this recipe...")
+				.char_remaining
+					%span.characters_remaining
 					%span characters remaining
 		.control-group
 			.controls

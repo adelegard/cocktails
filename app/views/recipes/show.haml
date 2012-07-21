@@ -4,12 +4,12 @@
 =render :partial => '/recipes/full_page_view'
 .page-header
     #recipe_social.well.span2.fr
-        =render :partial => '/recipes/social', :locals => {:recipe_id => @recipe.id, :recipe_user => @recipe_user, :num_shared => 367, :num_liked => @num_liked, :num_saved => @num_starred}
+        =render :partial => '/recipes/social', :locals => {:recipe_id => @recipe.id, :recipe_user => @recipe_user, :num_shared => @recipe.shared ||= 0, :num_liked => @num_liked, :num_saved => @num_starred}
     #drink_thumb.dib.fl
         -if @recipe_photos.empty?
             .default_thumb_photo
         -else
-            %a{:href => "#", "data-toggle" => "modal", "data-target" => "#photo_modal"}
+            %a{:href => "#", "data-toggle" => "modal", "data-target" => "#photos_modal"}
                 = image_tag @recipe_photos.first.photo.url(:thumb)
             .num_photos 1 of #{@recipe_photos.size}
         .add_photo
@@ -22,17 +22,24 @@
             %small by #{@recipe_creator.name}
     .cl
 %ul.nav.nav-tabs
-    %li.active
+    %li{:class => @active_tab == nil ? "active" : ""}
         %a{:href => "#recipe", "data-toggle" => "tab"} Recipe
-    %li
-        %a{:href => "#comments", "data-toggle" => "tab"} Comments
-//%a{:href => "#{request.fullpath}#disqus_thread#comments", "data-toggle" => "tab", "data-disqus-identifier" => "#{@recipe.id}"} Comment
+    %li{:class => @active_tab == "comments" ? "active" : ""}
+        %a{:href => "#{request.fullpath}#disqus_thread#comments", "data-toggle" => "tab", "data-disqus-identifier" => "#{@recipe.id}"}
+    %li{:class => @active_tab == nil ? "photos" : ""}
+        %a{:href => "#photos", "data-toggle" => "tab"}
+            =@recipe_photos.length
+            Photos
 .tab-content
-    .tab-pane.fade.in.active#recipe
+    .tab-pane.fade.in#recipe{:class => @active_tab == nil ? "active" : ""}
         =render :partial => 'recipes/recipe'
-    .tab-pane.fade#comments
-        =render :partial => 'widgets/disqus'
-#photo_modal.modal.hide
+    .tab-pane.fade#comments{:class => @active_tab == "comments" ? "active" : ""}
+        //%input.disqus_identifier{:type => "hidden", :value => "#{@recipe.id}"}
+        //%input.disqus_url{:type => "hidden", :value => "http://127.0.0.1:3000/recipes/" + "#{@recipe.id}"}
+        //=render :partial => 'widgets/disqus', :locals => {:disqus_identifier => @recipe.id, :disqus_url => 'http://127.0.0.1:3000/recipes/' + '#{@recipe.id}'}
+    .tab-pane.fade#photos{:class => @active_tab == "photos" ? "active" : ""}
+        =render :partial => 'recipes/photos', :locals => {:recipe_photos => @recipe_photos}
+#photos_modal.modal.hide
     .modal-header
         %button.close{:type => "button", "data-dismiss" => "modal"} ×
         %h3 Cocktail Photos

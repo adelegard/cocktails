@@ -55,6 +55,16 @@ $(function() {
       required: true,
       minlength: 2
     },
+    alcohol: {
+      required: true,
+      range: [1, 100],
+      digits: true
+    },
+    servings: {
+      required: true,
+      range: [1, 100],
+      digits: true
+    },
     new_recipe_directions: {
       required: true,
       minlength: 5

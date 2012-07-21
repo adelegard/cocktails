@@ -24,6 +24,7 @@ Cocktails::Application.routes.draw do
 	match '/recipes/show' => 'recipes#show'
 
 	#recipe actions
+	match '/recipes/:id/share' => 'recipes#share'
 	match '/recipes/:id/favorite' => 'recipe_users#favorite'
 	match '/recipes/:id/unfavorite' => 'recipe_users#unfavorite'
 	match '/recipes/:id/like' => 'recipe_users#like'

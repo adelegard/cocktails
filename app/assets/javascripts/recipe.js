@@ -1,16 +1,134 @@
+//Initialize disqus global vars
+var disqus_shortname = 'bombcocktails';
+var disqus_identifier; //made of post id &nbsp; guid
+var disqus_url; //post permalink
+var disqus_developer = 1; // developer mode is on
+
 $(function() {
 
-  $('#photo_modal .thumb').click(function(e) {
-    $('#photo_modal .thumb').removeClass("active");
+  function loadDisqus(source, identifier, url, callback) {
+    $('#disqus_thread').remove();
+    jQuery('<div id="disqus_thread"></div>').insertBefore(source);
+
+    if (window.DISQUS) {
+      //if Disqus exists, call it's reset method with new parameters
+      DISQUS.reset({
+        reload: true,
+        config: function () {
+          this.page.identifier = identifier;
+          this.page.url = url;
+          callback();
+        }
+      });
+    } else {
+      disqus_identifier = identifier; //set the identifier argument
+      disqus_url = url; //set the permalink argument
+
+      //append the Disqus embed script to HTML
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+      jQuery('head').append(dsq);
+
+      callback();
+    }
+  }
+
+  // We only want these styles applied when javascript is enabled
+  $('div.navigation').css({'width' : '350px', 'float' : 'left'});
+  $('div.content').css('display', 'block');
+  // Initially set opacity on thumbs and add
+  // additional styling for hover effect on thumbs
+  var onMouseOutOpacity = 0.75;
+  $('#thumbs ul.thumbs li').opacityrollover({
+    mouseOutOpacity:   onMouseOutOpacity,
+    mouseOverOpacity:  1.0,
+    fadeSpeed:         'fast',
+    exemptionSelector: '.selected'
+  });
+
+  if ($("#thumbs")[0]) {
+  // Initialize Advanced Galleriffic Gallery
+  var gallery = $('#thumbs').galleriffic({
+      delay:                     3000, // in milliseconds
+      numThumbs:                 10, // The number of thumbnails to show page
+      preloadAhead:              40, // Set to -1 to preload all images
+      enableTopPager:            true,
+      enableBottomPager:         false,
+      maxPagesToShow:            7,  // The maximum number of pages to display in either the top or bottom pager
+      imageContainerSel:         '#slideshow', // The CSS selector for the element within which the main slideshow image should be rendered
+      controlsContainerSel:      '#controls', // The CSS selector for the element within which the slideshow controls should be rendered
+      captionContainerSel:       '#caption', // The CSS selector for the element within which the captions should be rendered
+      loadingContainerSel:       '#loading', // The CSS selector for the element within which should be shown when an image is loading
+      renderSSControls:          true, // Specifies whether the slideshow's Play and Pause links should be rendered
+      renderNavControls:         true, // Specifies whether the slideshow's Next and Previous links should be rendered
+      playLinkText:              'Play',
+      pauseLinkText:             'Pause',
+      prevLinkText:              'Previous',
+      nextLinkText:              'Next',
+      nextPageLinkText:          'Next &rsaquo;',
+      prevPageLinkText:          '&lsaquo; Prev',
+      enableHistory:             false, // Specifies whether the url's hash and the browser's history cache should update when the current slideshow image changes
+      enableKeyboardNavigation:  true, // Specifies whether keyboard navigation is enabled
+      autoStart:                 false, // Specifies whether the slideshow should be playing or paused when the page first loads
+      syncTransitions:           false, // Specifies whether the out and in transitions occur simultaneously or distinctly
+      defaultTransitionDuration: 1000, // If using the default transitions, specifies the duration of the transitions
+
+      onSlideChange:             function(prevIndex, nextIndex) { // accepts a delegate like such: function(prevIndex, nextIndex) { ... }
+        // 'this' refers to the gallery, which is an extension of $('#thumbs')
+        this.find('ul.thumbs').children()
+                .eq(prevIndex).fadeTo('fast', onMouseOutOpacity).end()
+                .eq(nextIndex).fadeTo('fast', 1.0);
+      },
+      onPageTransitionOut:       function(callback) { // accepts a delegate like such: function(callback) { ... }
+        this.fadeTo('fast', 0.0, callback);
+      },
+      onPageTransitionIn:        function() { // accepts a delegate like such: function() { ... }
+        this.fadeTo('fast', 1.0, function() {
+          $("#disqus_thread").remove();
+          var caption = $(".caption");
+          var ident = caption.find("input.disqus_identifier").val();
+          var url = caption.find("input.disqus_url").val();
+          loadDisqus(caption, ident, url, function() {
+            caption.fadeTo('fast', 1.0);
+          });
+        });
+      },
+      onTransitionOut:           function(slide, caption, isSync, callback) { // accepts a delegate like such: function(slide, caption, isSync, callback) { ... }
+        callback();
+      },
+      onTransitionIn:            function(slide, caption, isSync) { // accepts a delegate like such: function(slide, caption, isSync) { ... }
+        //caption.children().first().prepend('<div id="disqus_thread"></div>');
+        var the_caption = caption.children().first();
+        var ident = caption.find("input.disqus_identifier").val();
+        var url = caption.find("input.disqus_url").val();
+        
+        slide.fadeTo('slow', 1.0);
+        loadDisqus(the_caption, ident, url, function() {
+          caption.fadeTo('fast', 1.0);
+        });
+      },
+      onImageAdded:              undefined, // accepts a delegate like such: function(imageData, $li) { ... }
+      onImageRemoved:            undefined  // accepts a delegate like such: function(imageData, $li) { ... }
+  }); 
+  }
+
+  $('#photos_modal .thumb').click(function(e) {
+    $('#photos_modal .thumb').removeClass("active");
     $(this).addClass("active");
 
     $('#main_img').attr('src',$(this).attr('src').replace('tiny','medium'));
   });
-  $('#photo_modal .close').click(function() {
-    $("#photo_modal").modal('hide');
+  $('img.icon').click(function(e) {
+    $("#photo_modal").modal('show');
+    $('img.main_img').attr('src',$(this).attr('src').replace('icon','large'));
   });
 
-  $('#photo_modal').on('show', function(){
+
+  $('.modal .close').click(function(e) {
+    $(this).closest('.modal').modal('hide');
+  });
+
+  $('#photos_modal').on('show', function(){
     $(document).on("keyup.photo_key", function(e) {
       if (e.which == 37) { /* left arrow */
         var active_thumb = $(".thumbs .thumb.active");
@@ -24,8 +142,8 @@ $(function() {
         }
       }
     });
-  })
-  $('#photo_modal').on('hide', function(){
+  });
+  $('#photos_modal').on('hide', function(){
     $(document).off("keyup.photo_key");
   });
 
@@ -138,27 +256,26 @@ $(function() {
     });
   });
 
+  $(document).on("click", ".btn-group.share > a", function(e) {
+    socialBtnClicked(e, true);
+  });
   $(document).on("click", ".btn-group.like > a, .btn-group.save > a", function(e) {
     socialBtnClicked(e);
   });
 
-  function socialBtnClicked(e) {
-    e.preventDefault();
+  function socialBtnClicked(e, share_clicked) {
     var btn_grp = $(e.target).closest(".btn-group");
-    var like_btn = btn_grp.find("a:nth-child(1)");
     var num_liked_btn = btn_grp.find("a:nth-child(2)");
     var num = parseInt(num_liked_btn.text(),10);
-    var is_disabled = like_btn.hasClass("disabled");
-    if (is_disabled) {
+    if (btn_grp.find("a:nth-child(1)").hasClass("disabled")) {
       num_liked_btn.text(num-1);
     } else {
       num_liked_btn.text(num+1);
     }
-    btn_grp.find("a").toggleClass("disabled");
+    if (typeof(share_clicked) === 'undefined') btn_grp.find("a").toggleClass("disabled");
 
-    var href = $(e.currentTarget).attr("href");
     $.ajax({
-      url: href
+      url: $(e.currentTarget).attr("data-href")
     });
   }
 

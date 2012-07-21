@@ -1,0 +1,8 @@
+---
+:RecipePhoto:
+  :photo:
+  - :icon
+  - :large
+  - :medium
+  - :thumb
+  - :tiny

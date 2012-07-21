@@ -1,6 +1,9 @@
 $(function() {
+
 	$(".chzn-select").chosen();
-  $('#new_recipe_directions').NobleCount('#characters_remaining', 
+  $('#new_recipe_directions').NobleCount('.characters_remaining:first', 
+                                {max_chars:2000, on_negative: 'go_red'});
+  $('#new_recipe_inspiration').NobleCount('.characters_remaining:last', 
                                 {max_chars:2000, on_negative: 'go_red'});
 
   var usr_email = $('#user_email').val();

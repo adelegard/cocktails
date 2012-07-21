@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120712030751) do
+ActiveRecord::Schema.define(:version => 20120721173849) do
 
   create_table "authentications", :force => true do |t|
     t.string   "provider"
@@ -96,6 +96,9 @@ ActiveRecord::Schema.define(:version => 20120712030751) do
     t.integer  "created_by_user_id"
     t.boolean  "delta",                                             :default => true, :null => false
     t.integer  "view_count"
+    t.integer  "servings"
+    t.text     "inspiration"
+    t.integer  "shared"
   end
 
   create_table "users", :force => true do |t|

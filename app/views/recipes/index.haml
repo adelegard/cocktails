@@ -3,13 +3,17 @@
 .row-fluid
   %ul.nav.nav-tabs
     %li.active
-      %a{:href => "#featured", "data-toggle" => "tab"} Featured
+      %a{:href => "#design1", "data-toggle" => "tab"} Popular (Design 1)
     %li
-      %a{:href => "#popular", "data-toggle" => "tab"} Popular
+      %a{:href => "#design2", "data-toggle" => "tab"} Popular (Design 2)
+    %li
+      %a{:href => "#featured", "data-toggle" => "tab"} Featured
     %li
       %a{:href => "#new", "data-toggle" => "tab"} New
   .tab-content
-    .tab-pane.fade.in.active#featured
+    .tab-pane.fade.in.active#design1
+      = render :partial => '/search/search_results_table_design1', :locals => {:full_recipes => @full_recipes_popular, :total_ratings => @total_ratings_popular}
+    .tab-pane.fade#featured
       .hero-unit
         #myCarousel.carousel.slide
           .carousel-inner
@@ -36,7 +40,7 @@
                     %p Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.
           %a.left.carousel-control{"data-slide" => "prev", :href => "#myCarousel"} ‹
           %a.right.carousel-control{"data-slide" => "next", :href => "#myCarousel"} ›
-    .tab-pane.fade.in#popular
-      = render :partial => '/search/search_results_table', :locals => {:recipes => @recipes_popular, :recipe_users => @recipe_users_popular, :total_ratings => @total_ratings_popular}
+    .tab-pane.fade.in#design2
+      = render :partial => '/search/search_results_table_design2', :locals => {:full_recipes => @full_recipes_popular, :total_ratings => @total_ratings_popular}
     .tab-pane.fade#new
       = render :partial => '/search/search_results_table', :locals => {:recipes => @recipes_new, :recipe_users => @recipe_users_new, :total_ratings => @total_ratings_new}

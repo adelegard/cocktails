@@ -1,0 +1,40 @@
+div.caption-container {
+	color: #111;
+}
+div.image-title {
+	font-weight: bold;
+	font-size: 1.4em;
+}
+div.image-desc {
+	line-height: 1.3em;
+	padding-top: 12px;
+}
+div.download {
+	margin-top: 8px;
+}
+div.photo-index {
+	color: #777;
+}
+div.navigation a.prev {
+	background-image: asset-url("galleriffic/prevPageArrow.gif", image);
+}
+div.navigation a.next {
+	background-image: asset-url("galleriffic/nextPageArrow.gif", image);
+}
+div.loader {
+	background-image: asset-url("galleriffic/loader.gif", image);
+}
+div.slideshow img {
+	border-color: #ccc;
+}
+ul.thumbs li.selected a.thumb {
+	background: #000;
+}
+div.pagination a:hover {
+	background-color: #eee;
+}
+div.pagination span.current {
+	background-color: #000;
+	border-color: #000;
+	color: #fff;
+}
