@@ -13,11 +13,11 @@ div.content a, div.navigation a {
 div.content a:focus, div.content a:hover, div.content a:active {
 	text-decoration: underline;
 }
-div.controls {
+#gallery div.controls {
 	margin-top: 5px;
 	height: 23px;
 }
-div.controls a {
+#gallery div.controls a {
 	padding: 5px;
 }
 div.ss-controls {

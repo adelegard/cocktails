@@ -26,7 +26,7 @@
         %a{:href => "#recipe", "data-toggle" => "tab"} Recipe
     %li.comments_tab{:class => @active_tab == "comments" ? "active" : ""}
         %a{:href => "#{request.fullpath}#disqus_thread#comments", "data-toggle" => "tab", "data-disqus-identifier" => "#{@recipe.id}"}
-    %li{:class => @active_tab == nil ? "photos" : ""}
+    %li.photos_tab{:class => @active_tab == nil ? "photos" : ""}
         %a{:href => "#photos", "data-toggle" => "tab"}
             =@recipe_photos.length
             Photos

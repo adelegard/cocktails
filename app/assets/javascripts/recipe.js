@@ -100,7 +100,15 @@ $(function() {
 
   $('li.comments_tab').click(function() {
     if ($('#comments.tab-pane #disqus_thread').length !== 0) return;
-    loadDisqus($('#comments.tab-pane .disqus_identifier'), $('.disqus_identifier:first').val(), $('.disqus_identifier:first').val());
+    loadDisqus($('#comments.tab-pane .disqus_identifier'), 
+      $('#comments.tab-pane .disqus_identifier').val(), 
+      $('#comments.tab-pane .disqus_url').val());
+  });
+  $('li.photos_tab').click(function() {
+    if ($('#photos.tab-pane #disqus_thread').length !== 0) return;
+    loadDisqus($('#photos.tab-pane #caption .disqus_identifier'), 
+      $('#photos.tab-pane #caption .disqus_identifier').val(), 
+      $('#photos.tab-pane #caption .disqus_url').val());
   });
 
   $('#photos_modal .thumb').click(function(e) {
