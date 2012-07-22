@@ -24,7 +24,7 @@
 %ul.nav.nav-tabs
     %li{:class => @active_tab == nil ? "active" : ""}
         %a{:href => "#recipe", "data-toggle" => "tab"} Recipe
-    %li{:class => @active_tab == "comments" ? "active" : ""}
+    %li.comments_tab{:class => @active_tab == "comments" ? "active" : ""}
         %a{:href => "#{request.fullpath}#disqus_thread#comments", "data-toggle" => "tab", "data-disqus-identifier" => "#{@recipe.id}"}
     %li{:class => @active_tab == nil ? "photos" : ""}
         %a{:href => "#photos", "data-toggle" => "tab"}
@@ -34,9 +34,8 @@
     .tab-pane.fade.in#recipe{:class => @active_tab == nil ? "active" : ""}
         =render :partial => 'recipes/recipe'
     .tab-pane.fade#comments{:class => @active_tab == "comments" ? "active" : ""}
-        //%input.disqus_identifier{:type => "hidden", :value => "#{@recipe.id}"}
-        //%input.disqus_url{:type => "hidden", :value => "http://127.0.0.1:3000/recipes/" + "#{@recipe.id}"}
-        //=render :partial => 'widgets/disqus', :locals => {:disqus_identifier => @recipe.id, :disqus_url => 'http://127.0.0.1:3000/recipes/' + '#{@recipe.id}'}
+        %input.disqus_identifier{:type => "hidden", :value => "#{@recipe.id}"}
+        %input.disqus_url{:type => "hidden", :value => "http://127.0.0.1:3000/recipes/" + "#{@recipe.id}"}
     .tab-pane.fade#photos{:class => @active_tab == "photos" ? "active" : ""}
         =render :partial => 'recipes/photos', :locals => {:recipe_photos => @recipe_photos}
 #photos_modal.modal.hide

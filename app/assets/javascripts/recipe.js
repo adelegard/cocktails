@@ -17,7 +17,7 @@ $(function() {
         config: function () {
           this.page.identifier = identifier;
           this.page.url = url;
-          callback();
+          if (typeof(callback) !== 'undefined') callback();
         }
       });
     } else {
@@ -29,7 +29,7 @@ $(function() {
       dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
       jQuery('head').append(dsq);
 
-      callback();
+      if (typeof(callback) !== 'undefined') callback();
     }
   }
 
@@ -79,23 +79,9 @@ $(function() {
                 .eq(prevIndex).fadeTo('fast', onMouseOutOpacity).end()
                 .eq(nextIndex).fadeTo('fast', 1.0);
       },
-      onPageTransitionOut:       function(callback) { // accepts a delegate like such: function(callback) { ... }
-        this.fadeTo('fast', 0.0, callback);
-      },
-      onPageTransitionIn:        function() { // accepts a delegate like such: function() { ... }
-        this.fadeTo('fast', 1.0, function() {
-          $("#disqus_thread").remove();
-          var caption = $(".caption");
-          var ident = caption.find("input.disqus_identifier").val();
-          var url = caption.find("input.disqus_url").val();
-          loadDisqus(caption, ident, url, function() {
-            caption.fadeTo('fast', 1.0);
-          });
-        });
-      },
-      onTransitionOut:           function(slide, caption, isSync, callback) { // accepts a delegate like such: function(slide, caption, isSync, callback) { ... }
-        callback();
-      },
+      onPageTransitionOut:      undefined,
+      onPageTransitionIn:       undefined,
+      onTransitionOut:          undefined, // accepts a delegate like such: function(slide, caption, isSync, callback) { ... }
       onTransitionIn:            function(slide, caption, isSync) { // accepts a delegate like such: function(slide, caption, isSync) { ... }
         //caption.children().first().prepend('<div id="disqus_thread"></div>');
         var the_caption = caption.children().first();
@@ -111,6 +97,11 @@ $(function() {
       onImageRemoved:            undefined  // accepts a delegate like such: function(imageData, $li) { ... }
   }); 
   }
+
+  $('li.comments_tab').click(function() {
+    if ($('#comments.tab-pane #disqus_thread').length !== 0) return;
+    loadDisqus($('#comments.tab-pane .disqus_identifier'), $('.disqus_identifier:first').val(), $('.disqus_identifier:first').val());
+  });
 
   $('#photos_modal .thumb').click(function(e) {
     $('#photos_modal .thumb').removeClass("active");
