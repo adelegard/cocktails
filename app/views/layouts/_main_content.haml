@@ -1,0 +1,11 @@
+.container-fluid
+    .main-content.row-fluid
+        -span_size = 12
+        -if @display_search_sidebar
+            -search_span_size = 2
+            -span_size = span_size - search_span_size
+            %div{:class => "span#{search_span_size}"}
+                =render :partial => "layouts/search_sidebar"
+        %div{:class => "span#{span_size}"}
+            =render :partial => "shared/flash_messages", :locals => {:flash => flash}
+            = yield

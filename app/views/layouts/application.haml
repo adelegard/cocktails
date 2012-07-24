@@ -9,26 +9,11 @@
         = stylesheet_link_tag "application"
         = javascript_include_tag "application"
         %link(href='http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css' rel='stylesheet' type='text/css')
-        %script(src='http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js')
-        %script{:src => "https://apis.google.com/js/plusone.js", :type => "text/javascript"}
+        %script{:src => "http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"}
     %body
-        #photo_modal.modal.hide
-            %button.close{:type => "button", "data-dismiss" => "modal"} ×
-            .modal-body
-                %img.main_img
-        =render :partial => "social/facebook_root"
+        =render :partial => "layouts/body_start"
         =render :partial => "layouts/top_navbar"
-        .container-fluid
-            .main-content.row-fluid
-                -span_size = 12
-                -if @display_search_sidebar
-                    -search_span_size = 2
-                    -span_size = span_size - search_span_size
-                    %div{:class => "span#{search_span_size}"}
-                        =render :partial => "layouts/search_sidebar"
-                %div{:class => "span#{span_size}"}
-                    =render :partial => "shared/flash_messages", :locals => {:flash => flash}
-                    = yield
-        =render :partial => "social/disqus_count"
+        =render :partial => "layouts/main_content"
+        =render :partial => "layouts/body_end"
     %footer
         =render :partial => "layouts/footer"

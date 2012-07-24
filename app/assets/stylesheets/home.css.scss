@@ -2,6 +2,17 @@
 	color: #B94A48;
 }
 
+.modal.lightbox {
+	border: 0;
+	background: transparent asset-url("lightbox_border.png", image) repeat 0 0;
+	padding: 13px;
+	@include border-radius(6px);
+
+	.lb_container {
+		background-color: white;
+	}
+}
+
 .providers {
 	margin: 0 auto;
 	width: 280px;

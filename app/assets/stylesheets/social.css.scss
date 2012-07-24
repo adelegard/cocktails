@@ -14,7 +14,7 @@ ul.socialicons 						{ list-style-type: none; margin: 0 0 0px 10px; }
 ul.socialicons li					{ list-style-type: none; display: inline; float: left; padding: 0 5px 0 0; }
 ul.color li a 						{ background: asset-url('social/supermassivecsspriteicons2.png', image) no-repeat 0 0; }
 ul.bw li a 							{ background: asset-url('social/supermassivecsspriteicons.png', image) no-repeat 0 0; }
-ul.socialicons li a 				{ text-indent: -9999px; width: 32px; height: 33px; display: inline-block; overflow: hidden; margin: 2px; cursor: pointer}
+ul.socialicons li a 				{ text-indent: -9999px; width: 32px; height: 33px; display: inline-block; overflow: hidden; margin: 2px; }
 
 /* Each icon's sprite coordinates */
 ul.socialicons li a.stumbleupon 			{ background-position: 0 0; }

@@ -2,36 +2,37 @@
 -save_disabled = recipe_user && recipe_user.starred ? "disabled" : ""
 .recipe_social
     .btn-group.share
-        %a.btn{:href => "#", "data-toggle" => "modal", "data-target" => ".recipe_share", "data-href" => "/recipes/#{recipe_id}/share"}
+        %a.btn{:href => "#", "data-backdrop" => "false", "data-toggle" => "modal", "data-target" => ".recipe_share", "data-href" => "/recipes/#{recipe.id}/share"}
             %i.icon-share.fl
             %span.fl Share
         %a.btn
             = num_shared
     .btn-group.like
-        %a.btn{"data-href" => "/recipes/#{recipe_id}/like", :class => like_disabled}
+        %a.btn{"data-href" => "/recipes/#{recipe.id}/like", :class => like_disabled}
             %i.icon-heart.fl
             %span.fl= like_disabled == "disabled" ? "Liked" : "Like"
         %a.btn{:href => "#", :title => "See who liked this", :class => like_disabled}
             = num_liked
     .btn-group.save
-        %a.btn{"data-href" => "/recipes/#{recipe_id}/favorite", :class => save_disabled}
+        %a.btn{"data-href" => "/recipes/#{recipe.id}/favorite", :class => save_disabled}
             %i.icon-star.fl
             %span.fl= save_disabled == "disabled" ? "Saved" : "Save"
         %a.btn{:href => "#", :title => "See who saved this", :class => save_disabled}
             = num_saved
-.recipe_share.modal.hide
-    .modal-header
-        %button.close{:type => "button", "data-dismiss" => "modal"} ×
-        %h3 Share this cocktail!
-    .modal-body
-        %span.fl Click to share:
-        %ul.dib.color.socialicons
-            %li
-                %a.facebook
-                %a.twitter
-                %a.stumbleupon
-                %a.delicious
-                %a.blogger
-                %a.rss
-                %a.pinterest
-                %a.email
+.recipe_share.modal.lightbox.hide
+    .lb_container
+        .modal-header
+            %button.close{:type => "button", "data-dismiss" => "modal"} ×
+            %h3 Share this cocktail!
+        .modal-body
+            %span.fl Click to share:
+            %ul.dib.color.socialicons
+                %li
+                    %a.facebook
+                    %a.gpluslight{:href => "https://plusone.google.com/_/+1/confirm?hl=en-US&url=http://127.0.0.1:3000/recipes/#{@recipe.id}"}
+                        %img{:alt => "Google+", :src => "#{photo_url}", :title => "Google+"}
+                    %a.twitter{:href => "https://twitter.com/intent/tweet?text=Check out this great recipe! #{recipe.title}"}
+                    %a.stumbleupon{:href => "http://www.stumbleupon.com/submit?url=http://127.0.0.1:3000/recipes/#{@recipe.id}"}
+                    %a.delicious
+                    %a.pinterest{"count-layout" => "none", :href => "http://pinterest.com/pin/create/button/?url=http%3A%2F%2F127.0.0.1%2Frecipes%2F7154&media=http%3A%2F%2F127.0.0.1%2Fphotos%2Fslksjdf.jpg&description=Gin%20%26%20Tonic%20Recipe"}
+                    %a.email

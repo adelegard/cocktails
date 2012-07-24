@@ -5,15 +5,15 @@ function fb_postToFeed(link, img_link, name) {
   // calling the API ...
   var obj = {
     method: 'feed',
-    link: 'https://developers.facebook.com/docs/reference/dialogs/',
-    picture: 'http://fbrell.com/f8.jpg',
-    name: 'Facebook Dialogs',
-    caption: 'Reference Documentation',
-    description: 'Using Dialogs to interact with users.'
+    link: link,
+    picture: 'http://fbrell.com/f8.jpg', /* replace with img_link once site is released */
+    name: name,
+    caption: 'Enter cocktail caption here!',
+    description: 'Enter cocktail description here! Maybe the inspiration? Description? Ingredients?'
   };
 
   function callback(response) {
-    document.getElementById('msg').innerHTML = "Post ID: " + response['post_id'];
+    //document.getElementById('msg').innerHTML = "Post ID: " + response['post_id'];
   }
 
   FB.ui(obj, callback);
