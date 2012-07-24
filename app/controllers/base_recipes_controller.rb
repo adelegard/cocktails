@@ -9,7 +9,8 @@ class BaseRecipesController < ApplicationController
   def setup_show
     params.delete(:id) unless params[:id].to_i > 0
     recipe = Recipe.find(params[:id])
-    @full_recipe = Recipe.getFullRecipe(recipe, current_user.id)
+    user_id = current_user != nil && current_user.id ? current_user.id : nil
+    @full_recipe = Recipe.getFullRecipe(recipe, user_id)
     setup_show_with_recipe(@full_recipe)
   end
 
