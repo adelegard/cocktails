@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120721173849) do
+ActiveRecord::Schema.define(:version => 20120725205402) do
 
   create_table "authentications", :force => true do |t|
     t.string   "provider"
@@ -99,6 +99,13 @@ ActiveRecord::Schema.define(:version => 20120721173849) do
     t.integer  "servings"
     t.text     "inspiration"
     t.integer  "shared"
+  end
+
+  create_table "user_follows", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "follow_user_id"
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
   end
 
   create_table "users", :force => true do |t|

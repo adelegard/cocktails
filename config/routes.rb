@@ -1,4 +1,6 @@
 Cocktails::Application.routes.draw do
+  resources :user_follows
+
 	devise_for :users, :path_names => { :sign_up => "register" }, 
 				:controllers => { :omniauth_callbacks => "my_devise/omniauth_callbacks", 
 								  :registrations => 'my_devise/registration',
@@ -40,12 +42,23 @@ Cocktails::Application.routes.draw do
 	match '/settings/password/update' => 'users/password#update', :as => :user_pass, :via => :put
 	match '/settings/email' => 'users/email#edit', :as => :edit_user_email
 	match '/settings/email/update' => 'users/email#update', :as => :user_email, :via => :put
-	match '/profile' => 'users#profile'
 	match '/cabinet' => 'liquor_cabinet#view'
 
 	#user actions
 	match '/cabinet/add' => 'liquor_cabinet#add'
 	match '/cabinet/remove' => 'liquor_cabinet#remove'
+
+	#user follow
+	match '/user/:id/follow' => 'user_follows#follow'
+	match '/user/:id/unfollow' => 'user_follows#unfollow'
+
+	#user pages
+	match '/user/:id' => 'users#profile', :as => :user_profile
+	match '/user/:id/recipes' => 'users#profile_recipes', :as => :user_profile_recipes
+	match '/user/:id/favorites' => 'users#profile_favorites', :as => :user_profile_favorites
+	match '/user/:id/rated' => 'users#profile_rated', :as => :user_profile_rated
+	match '/user/:id/photos' => 'users#profile_photos', :as => :user_profile_photos
+	match '/user/:id/cabinet' => 'users#profile_cabinet', :as => :user_profile_cabinet
 
 	match '/search' => 'search#search'
 	match '/search/autocomplete_recipes' => 'search#autocomplete_recipes'

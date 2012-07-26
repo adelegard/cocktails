@@ -39,7 +39,7 @@
         .controls
           = f.submit "Update", {:class => "btn btn-large btn-primary"}
   %br
-  %img.avatar_small
+  %img.avatar_small{"data-email" => current_user.email}
   %a{:href => "http://www.gravatar.com"} Change your avatar at Gravatar.com
   %span
     We are using

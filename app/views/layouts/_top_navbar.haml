@@ -50,18 +50,17 @@
                                 = current_user.email
                                 %b.caret
                             %ul.dropdown-menu
-                                %li= link_to "Profile", edit_user_registration_path
+                                %li= link_to "Profile", user_profile_path(current_user.id)
+                                %li= link_to "My Account", edit_user_registration_path
                                 %li
                                     %a{:href => "/cabinet"} Liquor Cabinet
                                 %li
                                     %a{:href => "/recipes/favorites"} Favorites
-                                %li
-                                    %a{:href => "/recipes/rated"} Rated
                                 %li.divider
                                 %li= link_to "Sign out", destroy_user_session_path, :method => :delete
                         %li.avatar
-                            %a{:href => edit_user_registration_path}
-                                %img
+                            %a{:href => user_profile_path(current_user.id)}
+                                %img.avatar_tiny{"data-email" => current_user.email}
                     - else
                         %li
                             %p.navbar-text

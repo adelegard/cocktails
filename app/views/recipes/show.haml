@@ -4,7 +4,8 @@
 =render :partial => '/recipes/full_page_view'
 .page-header
     #recipe_social.well.span2.fr
-        =render :partial => '/recipes/social', :locals => {:recipe => @recipe, :recipe_user => @recipe_user, :photo_url => @recipe_photos.first.photo.url(:thumb), :num_shared => @recipe.shared ||= 0, :num_liked => @num_liked, :num_saved => @num_starred}
+        -photo_url = !@recipe_photos.empty? ? @recipe_photos.first.photo.url(:large) : nil
+        =render :partial => '/recipes/social', :locals => {:recipe => @recipe, :recipe_user => @recipe_user, :photo_url => photo_url, :num_shared => @recipe.shared ||= 0, :num_liked => @num_liked, :num_saved => @num_starred}
     #drink_thumb.dib.fl
         -if @recipe_photos.empty?
             .default_thumb_photo
@@ -19,7 +20,9 @@
     .dib
         %h1.recipe_title= @recipe.title
         -if @recipe_creator
-            %small by #{@recipe_creator.name}
+            %small
+                by
+                = link_to @recipe_creator.name, user_profile_path(@recipe_creator.id)
     .cl
 %ul.nav.nav-tabs
     %li{:class => @active_tab == nil ? "active" : ""}

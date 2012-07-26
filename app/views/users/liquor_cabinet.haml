@@ -8,12 +8,6 @@
 
 %br
 %form.form-horizontal{:id => "liquor_cabinet_form",:action => "/cabinet/save", :method => :post}
-    %table#my_ingredients
-        %tbody
-            -@ingredients.each do |ingredient|
-                %tr
-                    %td
-                        %l.icon-remove
-                        .lc_ingredient.dib= render :partial => '/recipes/ingredient', :locals => {:ingredient => ingredient}
+    =render :partial => '/recipes/liquor_cabinet', :locals => {:ingredients => @ingredients, :editable => true}
 %br
 %a#view_makeable_recipes.btn.btn-primary{:href => "/recipes/liquor_cabinet", "data-loading-text" => "Calculating..."} View Recipes I Can Make

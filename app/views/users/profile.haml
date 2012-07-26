@@ -1,7 +1,80 @@
 -@pageTitle = "My Favotite Cocktails"
 
-.page-header
-    %h1 My Profile
-
-%br
-= link_to "Change your password", edit_user_registration_path
+.page-header.profile
+    %img.fl.avatar_large{"data-email" => @user.email}
+    .top_details
+        %h1
+            = @user.name
+            %small Location City, ST
+        -if @show_follow_btn
+            -follow_class = @is_following ? "dn" : ""
+            -unfollow_class = @is_following ? "" : "dn"
+            %a.btn.btn-large.btn-danger.follow{"data-href" => "/user/#{@user.id}/follow", :class => follow_class} Follow
+            %a.btn.btn-large.btn-danger.follow.unfollow.disabled{"data-href" => "/user/#{@user.id}/unfollow", :class => unfollow_class} Following
+    .stats
+        %a.left
+            %span
+                %strong=@follower_users.size
+                Followers
+        %a.middle
+            %span
+                %strong=@num_favorited
+                Favorites
+        %a.right
+            %span
+                %strong=@num_liked
+                Likes
+    .cb
+.profile_tabs
+    .tabbable.tabs-left
+        %ul.nav.nav-tabs.span2
+            %li.active
+                %a{:href => "#recipes_tab", "data-toggle" => "tab"}
+                    Created Recipes
+                    %span.muted.fr=@full_recipes_created.size
+            %li
+                %a{:href => "#favorites_tab", "data-toggle" => "tab"}
+                    Favorites
+                    %span.muted.fr=@full_recipes_favorites.size
+            %li
+                %a{:href => "#rated_tab", "data-toggle" => "tab"}
+                    Rated
+                    %span.muted.fr=@full_recipes_rated.size
+            %li
+                %a{:href => "#photos_tab", "data-toggle" => "tab"}
+                    Photos
+                    %span.muted.fr=@photos.size
+            %li
+                %a{:href => "#following_tab", "data-toggle" => "tab"}
+                    Following
+                    %span.muted.fr=@following_users.size
+            %li
+                %a{:href => "#cabinet_tab", "data-toggle" => "tab"}
+                    Liquor Cabinet
+                    %span.muted.fr=@lc_ingredients.size
+        .tab-content.span10
+            #recipes_tab.tab-pane.fade.in.active
+                %h2 Created Recipes
+                %hr
+                = render :partial => '/search/search_results_table_design1', :locals => {:full_recipes => @full_recipes_created, :total_ratings => @total_ratings_created}
+            #favorites_tab.tab-pane.fade.in
+                %h2 Favorite Recipes
+                %hr
+                = render :partial => '/search/search_results_table_design1', :locals => {:full_recipes => @full_recipes_favorites, :total_ratings => @total_ratings_favorites}
+            #rated_tab.tab-pane.fade.in
+                %h2 Rated Recipes
+                %hr
+                = render :partial => '/search/search_results_table_design1', :locals => {:full_recipes => @full_recipes_rated, :total_ratings => @total_ratings_rated}
+            #photos_tab.tab-pane.fade.in
+                %h2 Uploaded Photos
+                %hr
+                =render :partial => 'recipes/photos', :locals => {:recipe_photos => @photos}
+            #following_tab.tab-pane.fade.in
+                %h2 Following
+                %hr
+                -@following_users.each do |f|
+                    %img.fl.avatar_large{"data-email" => f.email}
+            #cabinet_tab.cabinet.tab-pane.fade.in
+                %h2 Liquor Cabinet
+                %hr
+                =render :partial => '/recipes/liquor_cabinet', :locals => {:ingredients => @lc_ingredients, :editable => false}

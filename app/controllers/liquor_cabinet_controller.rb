@@ -1,7 +1,7 @@
 class LiquorCabinetController < ApplicationController
   
   def view
-    @ingredients = LiquorCabinet.getByCurrentUser(current_user.id)
+    @ingredients = LiquorCabinet.getByUserId(current_user.id)
     render 'users/liquor_cabinet'
   end
 

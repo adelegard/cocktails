@@ -1,0 +1,8 @@
+%table#my_ingredients.liquor_cabinet_ingredients
+    %tbody
+        -ingredients.each do |ingredient|
+            %tr
+                %td
+                    -if editable
+                        %l.icon-remove
+                    .lc_ingredient.dib= render :partial => '/recipes/ingredient', :locals => {:ingredient => ingredient}

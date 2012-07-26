@@ -25,7 +25,7 @@ class LiquorCabinet < ActiveRecord::Base
 	  end
   	end
 
-    def getByCurrentUser(user_id)
+    def getByUserId(user_id)
 	  liquor_cabinet_ingredients = LiquorCabinet.where(:user_id => user_id)
 	  ingredients = []
 	  liquor_cabinet_ingredients.each do |lci|

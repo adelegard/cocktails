@@ -6,11 +6,24 @@ $(function() {
   $('#new_recipe_inspiration').NobleCount('.characters_remaining:last', 
                                 {max_chars:2000, on_negative: 'go_red'});
 
-  var usr_email = $('#user_email').val();
-  if (typeof(usr_email) !== 'undefined') {
-    $('li.avatar img').attr('src', Gravtastic(usr_email, {size: 22}));
-    $('img.avatar_small').attr('src', Gravtastic(usr_email, {size: 35}));
-  }
+  $('img.avatar_tiny').each(function() {
+    var email_addr = $(this).attr("data-email");
+    if (typeof(email_addr) !== 'undefined') {
+      $(this).attr('src', Gravtastic(email_addr, {size: 22}));
+    }
+  });
+  $('img.avatar_small').each(function() {
+    var email_addr = $(this).attr("data-email");
+    if (typeof(email_addr) !== 'undefined') {
+      $(this).attr('src', Gravtastic(email_addr, {size: 35}));
+    }
+  });
+  $('img.avatar_large').each(function() {
+    var email_addr = $(this).attr("data-email");
+    if (typeof(email_addr) !== 'undefined') {
+      $(this).attr('src', Gravtastic(email_addr, {size: 150}));
+    }
+  });
 
   /* set sidebar search checkboxes based on cookied values */
   var cookie_str = "checkbox [cookie] values: ";

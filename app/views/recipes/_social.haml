@@ -29,10 +29,10 @@
             %ul.dib.color.socialicons
                 %li
                     %a.facebook
-                    %a.gpluslight{:href => "https://plusone.google.com/_/+1/confirm?hl=en-US&url=http://127.0.0.1:3000/recipes/#{@recipe.id}"}
-                        %img{:alt => "Google+", :src => "#{photo_url}", :title => "Google+"}
+                    %a.gpluslight{"data-href" => "https://plus.google.com/share?url=http://127.0.0.1/recipes/#{@recipe.id}"}
                     %a.twitter{:href => "https://twitter.com/intent/tweet?text=Check out this great recipe! #{recipe.title}"}
                     %a.stumbleupon{:href => "http://www.stumbleupon.com/submit?url=http://127.0.0.1:3000/recipes/#{@recipe.id}"}
                     %a.delicious
-                    %a.pinterest{"count-layout" => "none", :href => "http://pinterest.com/pin/create/button/?url=http%3A%2F%2F127.0.0.1%2Frecipes%2F7154&media=http%3A%2F%2F127.0.0.1%2Fphotos%2Fslksjdf.jpg&description=Gin%20%26%20Tonic%20Recipe"}
+                    -if photo_url != nil
+                        %a.pinterest{"data-href" => "http://pinterest.com/pin/create/button/?url=http://127.0.0.1/recipes/#{@recipe.id}&media=#{photo_url}&description=#{recipe.title}"}
                     %a.email
