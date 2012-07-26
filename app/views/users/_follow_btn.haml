@@ -1,0 +1,7 @@
+// Should the follow button even be displayed?
+-if (user_signed_in? && (current_user.id != user_id)) || !user_signed_in?
+    -follow_class = is_following == true ? "dn" : ""
+    -unfollow_class = is_following == true ? "" : "dn"
+    .follow_btn
+        %a.btn.btn-large.btn-danger.follow{"data-href" => "/user/#{user_id}/follow", :class => follow_class} Follow
+        %a.btn.btn-large.btn-danger.follow.unfollow.disabled{"data-href" => "/user/#{user_id}/unfollow", :class => unfollow_class} Following

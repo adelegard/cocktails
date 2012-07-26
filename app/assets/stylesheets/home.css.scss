@@ -401,6 +401,7 @@ ul.recipe_ingredients {
 	width: 450px;
 	position: relative;
 	height: 150px;
+	overflow: hidden;
 
 	.btn.follow {
 		position: absolute;
@@ -444,12 +445,16 @@ ul.recipe_ingredients {
 		text-align: center;
 		color: #989898;
 		font-size: 16px;
-		line-height: 134px;
+		padding: 43px 0px;
+		cursor: pointer;
 	}
 	a span {
 		display: inline-block;
 		vertical-align: middle;
 		line-height: 1.3em;
+	}
+	a:hover span {
+		color: #666;
 	}
 	a strong {
 		display: block;
@@ -459,12 +464,9 @@ ul.recipe_ingredients {
 		font-weight: normal;
 		letter-spacing: -1px;
 	}
-	//a:hover span {
-	//	color: #666;
-	//}
-	//a:hover span strong {
-	//	color: #3d3d3d;
-	//}
+	a:hover strong {
+		color: #3d3d3d;
+	}
 	a.left {
 		float: left;
 		@include border-radius(10px 0 0 10px);
@@ -481,6 +483,20 @@ ul.recipe_ingredients {
 	a.selected{background:#e2e2e2}
 	a.selected strong{color:#3d3d3d;font-weight:bold;font-weight:bold}
 	a.selected span{color:#3d3d3d;font-weight:bold;font-weight:bold}
+}
+
+.follow_container {
+	width: 125px;
+	float: left;
+	padding: 20px;
+	margin: 0 25px;
+	text-align: center;
+	border: 1px solid #DDD;
+	@include border-radius(5px);
+
+	.follow_btn .btn {
+		margin-top: 10px;
+	}
 }
 
 

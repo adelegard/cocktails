@@ -14,3 +14,5 @@
                     .caption
                         %input.disqus_identifier{:type => "hidden", :value => "#{p.recipe_id}" + "_" + "#{p.id}"}
                         %input.disqus_url{:type => "hidden", :value => "http://127.0.0.1:3000/recipes/" + "#{p.recipe_id}" + "/photos/" + "#{p.id}"}
+-else
+    %h2 No photos uploaded!

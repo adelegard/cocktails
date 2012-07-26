@@ -23,12 +23,9 @@ class UsersController < ApplicationController
     @follower_users = UserFollow.getFollowers(@user.id)
     @following_users = UserFollow.getFollowing(@user.id)
 
-    @show_follow_btn = (user_signed_in? && current_user.id != @user.id) || !user_signed_in?
-    if !@show_follow_btn
-        @is_following = false
-        if user_signed_in?
-            @is_following = UserFollow.where(:user_id => current_user.id, :follow_user_id => @user.id).length == 1
-        end
+    @is_following = false
+    if user_signed_in?
+        @is_following = UserFollow.where(:user_id => current_user.id, :follow_user_id => @user.id).length == 1
     end
 
     render 'users/profile'

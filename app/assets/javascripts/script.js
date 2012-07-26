@@ -18,6 +18,12 @@ $(function() {
       $(this).attr('src', Gravtastic(email_addr, {size: 35}));
     }
   });
+  $('img.avatar_medium').each(function() {
+    var email_addr = $(this).attr("data-email");
+    if (typeof(email_addr) !== 'undefined') {
+      $(this).attr('src', Gravtastic(email_addr, {size: 125}));
+    }
+  });
   $('img.avatar_large').each(function() {
     var email_addr = $(this).attr("data-email");
     if (typeof(email_addr) !== 'undefined') {

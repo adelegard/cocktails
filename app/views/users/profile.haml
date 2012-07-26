@@ -5,12 +5,10 @@
     .top_details
         %h1
             = @user.name
-            %small Location City, ST
-        -if @show_follow_btn
-            -follow_class = @is_following ? "dn" : ""
-            -unfollow_class = @is_following ? "" : "dn"
-            %a.btn.btn-large.btn-danger.follow{"data-href" => "/user/#{@user.id}/follow", :class => follow_class} Follow
-            %a.btn.btn-large.btn-danger.follow.unfollow.disabled{"data-href" => "/user/#{@user.id}/unfollow", :class => unfollow_class} Following
+            %small=@user.location
+        %br
+        %span.muted=@user.about_me
+        =render :partial => '/users/follow_btn', :locals => {:is_following => @is_following, :user_id => @user.id}
     .stats
         %a.left
             %span
@@ -73,7 +71,12 @@
                 %h2 Following
                 %hr
                 -@following_users.each do |f|
-                    %img.fl.avatar_large{"data-email" => f.email}
+                    .follow_container
+                        %a{:href => user_profile_path(f.id)}
+                            %img.fl.avatar_medium{"data-email" => f.email}
+                        =render :partial => '/users/follow_btn', :locals => {:is_following => true, :user_id => f.id}
+                -if @following_users.size == 0
+                    %h2 Not following anyone!
             #cabinet_tab.cabinet.tab-pane.fade.in
                 %h2 Liquor Cabinet
                 %hr
