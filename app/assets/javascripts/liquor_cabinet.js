@@ -1,10 +1,11 @@
 $(function() {
 
   function addIngredientSuccessCallback(val) {
-      var temp_row = $("#my_ingredients tbody tr:first").clone();
+      var temp_row = $("table.liquor_cabinet_ingredients tbody tr:first").clone();
       temp_row.find(".lc_ingredient .the_ingredient").html(val);
       temp_row.find("a.see_other").attr("href", "/search?spirit=" + val);
-      $("#my_ingredients tbody").append(temp_row);
+      temp_row.removeClass("dn");
+      $("table.liquor_cabinet_ingredients tbody").append(temp_row);
   }
 
   $('#cabinet_ingredient_search').keydown(function(e) {
@@ -44,7 +45,7 @@ $(function() {
 
   function checkLiquorCabinet(val) {
   	var returnVal = false;
-  	$("#my_ingredients tbody tr td .lc_ingredient .the_ingredient").each(function() {
+  	$("table.liquor_cabinet_ingredients tbody tr td .lc_ingredient .the_ingredient").each(function() {
   		if (this.innerHTML === val) {
   			returnVal = true;
   			return returnVal;
@@ -63,7 +64,7 @@ $(function() {
   	});
   }
 
-  $(document).on("click", "#my_ingredients tbody tr td .icon-remove", function(e) {
+  $(document).on("click", "table.liquor_cabinet_ingredients tbody tr td .icon-remove", function(e) {
     var therow = $(e.currentTarget).closest("tr");
     var val = therow.find(".lc_ingredient .the_ingredient").html();
   	removeFromLiquorCabinet(val, function() {

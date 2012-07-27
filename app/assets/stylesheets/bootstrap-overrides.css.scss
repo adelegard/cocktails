@@ -1,5 +1,9 @@
 body {
-    padding-top: 60px;
+    padding-top: 42px;
+}
+
+body > .container-fluid.the_main {
+    margin-top: 18px;
 }
 
 img {
@@ -31,6 +35,9 @@ body > .container-fluid {
     margin-left: -5px;
 }
 
+.navbar .brand {
+    color: #ddd;
+}
 .navbar .nav > li.avatar {
     margin-left: -11px;
     margin-right: -8px;

@@ -3,11 +3,4 @@
 .page-header
     %h1 My Liquor Cabinet
 %br
-%input#cabinet_ingredient_search.ingredients_ac{:type => "text"}
-%button#add_cabinet_ingredient.btn.btn-success Add
-
-%br
-%form.form-horizontal{:id => "liquor_cabinet_form",:action => "/cabinet/save", :method => :post}
-    =render :partial => '/recipes/liquor_cabinet', :locals => {:ingredients => @ingredients, :editable => true}
-%br
-%a#view_makeable_recipes.btn.btn-primary{:href => "/recipes/liquor_cabinet", "data-loading-text" => "Calculating..."} View Recipes I Can Make
+=render :partial => '/recipes/liquor_cabinet', :locals => {:ingredients => @ingredients, :editable => true}

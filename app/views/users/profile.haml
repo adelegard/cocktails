@@ -80,4 +80,4 @@
             #cabinet_tab.cabinet.tab-pane.fade.in
                 %h2 Liquor Cabinet
                 %hr
-                =render :partial => '/recipes/liquor_cabinet', :locals => {:ingredients => @lc_ingredients, :editable => false}
+                =render :partial => '/recipes/liquor_cabinet', :locals => {:ingredients => @lc_ingredients, :editable => @is_current_user}

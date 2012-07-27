@@ -7,9 +7,9 @@ $(function() {
         url: href,
         success: function(){
             if (self.hasClass("unfollow")) {
-                self.prev(".follow").show();
+                self.prev(".follow").addClass("dib").show();
             } else {
-                self.next(".unfollow").show();
+                self.next(".unfollow").addClass("dib").show();
             }
             self.hide();
         }

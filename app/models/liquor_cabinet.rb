@@ -4,34 +4,34 @@ class LiquorCabinet < ActiveRecord::Base
 
   class << self
 
-	# Add an ingredient to a users liquor cabinet
+    # Add an ingredient to a users liquor cabinet
   	def addIngredient(ingredient_name, user_id)
   	  ingredient = Ingredient.where(:ingredient => ingredient_name).first
       @liquor_cabinet = LiquorCabinet.find_or_initialize_by_user_id_and_ingredient_id(user_id, ingredient.id)
       @liquor_cabinet.save
   	end
 
-	# remove an ingredient from a users liquor cabinet
+    # remove an ingredient from a users liquor cabinet
   	def removeIngredient(ingredient_name, user_id)
-	  ingredient = Ingredient.where(:ingredient => ingredient_name).first
-	  if ingredient == nil
-	    render :nothing => false
-	  end
+  	  ingredient = Ingredient.where(:ingredient => ingredient_name).first
+  	  if ingredient == nil
+  	    render :nothing => false
+  	  end
 
-	  liquor_cabinet = LiquorCabinet.where(:user_id => user_id, :ingredient_id => ingredient.id).first
-	    
-	  if liquor_cabinet != nil
-	    LiquorCabinet.delete_all(["user_id = ? AND ingredient_id = ?", user_id, ingredient.id])
-	  end
+  	  liquor_cabinet = LiquorCabinet.where(:user_id => user_id, :ingredient_id => ingredient.id).first
+  	    
+  	  if liquor_cabinet != nil
+  	    LiquorCabinet.delete_all(["user_id = ? AND ingredient_id = ?", user_id, ingredient.id])
+  	  end
   	end
 
     def getByUserId(user_id)
-	  liquor_cabinet_ingredients = LiquorCabinet.where(:user_id => user_id)
-	  ingredients = []
-	  liquor_cabinet_ingredients.each do |lci|
-	    ingredients << Ingredient.where(:id => lci.ingredient_id).first
-	  end
-	  return ingredients
+  	  liquor_cabinet_ingredients = LiquorCabinet.where(:user_id => user_id)
+  	  ingredients = []
+  	  liquor_cabinet_ingredients.each do |lci|
+  	    ingredients << Ingredient.where(:id => lci.ingredient_id).first
+  	  end
+  	  return ingredients
     end
 
     def getAvailableRecipes(params, user_id)

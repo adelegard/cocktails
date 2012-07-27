@@ -23,8 +23,10 @@ class UsersController < ApplicationController
     @follower_users = UserFollow.getFollowers(@user.id)
     @following_users = UserFollow.getFollowing(@user.id)
 
+    @is_current_user = false
     @is_following = false
     if user_signed_in?
+        @is_current_user = @user.id == current_user.id
         @is_following = UserFollow.where(:user_id => current_user.id, :follow_user_id => @user.id).length == 1
     end
 
