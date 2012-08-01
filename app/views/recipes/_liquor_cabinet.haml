@@ -1,6 +1,6 @@
 -if editable
-    %input#cabinet_ingredient_search.ingredients_ac{:type => "text", :placeholder => "Search for an ingredient..."}
-    %button#add_cabinet_ingredient.btn.btn-success Add
+    %input.cabinet_ingredient_search.ingredients_ac{:type => "text", :placeholder => "Search for an ingredient..."}
+    %button.add_cabinet_ingredient.btn.btn-success Add
     %br
 %table.liquor_cabinet_ingredients
     %tbody
@@ -9,7 +9,6 @@
                 %l.icon-remove
                 -ing = {}
                 -ing[:ingredient] = "place_holder"
-                -ing[:amount] = "1"
                 .lc_ingredient.dib= render :partial => '/recipes/ingredient', :locals => {:ingredient => ing}
         -ingredients.each do |ingredient|
             %tr
@@ -18,4 +17,7 @@
                         %l.icon-remove
                     .lc_ingredient.dib= render :partial => '/recipes/ingredient', :locals => {:ingredient => ingredient}
 %br
-%a#view_makeable_recipes.btn.btn-primary{:href => "/recipes/liquor_cabinet", "data-loading-text" => "Calculating..."} View Makeable Recipes
+-disabled = false
+-if ingredients.size == 0
+    -disabled = true
+%a.view_makeable_recipes.btn.btn-primary{:href => "/recipes/liquor_cabinet", "data-loading-text" => "Calculating...", :disabled => disabled} View Makeable Recipes

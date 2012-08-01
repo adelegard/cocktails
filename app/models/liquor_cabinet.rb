@@ -31,6 +31,7 @@ class LiquorCabinet < ActiveRecord::Base
   	  liquor_cabinet_ingredients.each do |lci|
   	    ingredients << Ingredient.where(:id => lci.ingredient_id).first
   	  end
+      ingredients.sort_by! { |i| i.ingredient.downcase }
   	  return ingredients
     end
 

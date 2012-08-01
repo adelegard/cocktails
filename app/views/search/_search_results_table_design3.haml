@@ -1,9 +1,8 @@
-#search_results_design2
+#search_results_design3
   -if full_recipes.length > 0 then
     %table.table.table-striped
       %thead
         %tr
-          %th User
           %th.tal
             = sortable "title", "Title"
             .asc.dn
@@ -31,13 +30,14 @@
           - num_starred = full_recipe[:num_starred]
           - num_liked = full_recipe[:num_liked]
           %tr
-            %td
-              -if @creator != nil
-                %a{:href => user_profile_path(@creator.id)}
-                  %img.avatar_tiny{"data-email" => @creator.email}
             %td.tal
               = link_to(@the_recipe.title, @the_recipe, :class => "recipe_title")
-            %td
+              .ingredient_list
+                -full_recipe[:ingredients].each_with_index do |i, index|
+                  %span{:class => "in_lc_#{i[:in_liquor_cabinet]}"}=i[:ingredient]
+                  -if index < full_recipe[:ingredients].size - 1
+                    ,
+            %td.wsnw
               .photos
                 -full_recipe[:recipe_photos].each_with_index do |photo,index|
                   -if index < 3

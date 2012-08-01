@@ -2,7 +2,7 @@
 -save_disabled = recipe_user && recipe_user.starred ? "disabled" : ""
 .recipe_social
     .btn-group.share
-        %a.btn{:href => "#", "data-backdrop" => "false", "data-toggle" => "modal", "data-target" => ".recipe_share", "data-href" => "/recipes/#{recipe.id}/share"}
+        %a.btn{:href => "#", "data-toggle" => "modal", "data-target" => ".recipe_share", "data-href" => "/recipes/#{recipe.id}/share"}
             %i.icon-share.fl
             %span.fl Share
         %a.btn

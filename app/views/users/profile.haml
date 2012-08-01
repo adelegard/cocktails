@@ -74,6 +74,7 @@
                     .follow_container
                         %a{:href => user_profile_path(f.id)}
                             %img.fl.avatar_medium{"data-email" => f.email}
+                        %span.tac=f.name
                         =render :partial => '/users/follow_btn', :locals => {:is_following => true, :user_id => f.id}
                 -if @following_users.size == 0
                     %h2 Not following anyone!
