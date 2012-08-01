@@ -518,6 +518,10 @@ ul.recipe_ingredients {
 	height: 150px;
 	overflow: hidden;
 
+	a.url {
+		display: inline-block;
+		margin-top: 3px;
+	}
 	.btn.follow {
 		position: absolute;
 		bottom: 0px;
