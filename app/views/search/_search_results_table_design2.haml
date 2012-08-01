@@ -9,11 +9,11 @@
             .asc.dn
             .desc.dn
           %th
-          %th
+          %th.view_count
             %a.icon-eye-open{:href => "#", :rel => "tooltip", :title => "Views"}
           %th
             %a.icon-star{:href => "#", :rel => "tooltip", :title => "Favorites"}
-          %th
+          %th.liked
             %a.icon-heart{:href => "#", :rel => "tooltip", :title => "Likes"}
           %th.tal
             = sortable "rating_avg", "Rating"

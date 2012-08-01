@@ -8,11 +8,12 @@
             %small=@user.location
         %br
         %span.muted=@user.about_me
+        %a{:href => @user.url}=@user.url
         =render :partial => '/users/follow_btn', :locals => {:is_following => @is_following, :user_id => @user.id}
     .stats
         %a.left
             %span
-                %strong=@follower_users.size
+                %strong.followers=@follower_users.size
                 Followers
         %a.middle
             %span

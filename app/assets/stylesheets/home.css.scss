@@ -123,6 +123,13 @@ $not_in_liquor_cabinet_background_color_hover: #bd362f;
 		padding: 6px;
 	}
 
+	tbody td.view_count {
+		border-left: 1px dashed #ddd;
+	}
+	tbody td.liked {
+		border-right: 1px dashed #ddd;
+	}
+
 	td.num {
 		width: 20px;
 	}
