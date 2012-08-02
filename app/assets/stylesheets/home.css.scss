@@ -159,6 +159,9 @@ $not_in_liquor_cabinet_background_color_hover: #bd362f;
 			@include border-radius(2px);
 		}
 	}
+	.ingredient_list.not_signed_in {
+		color: #000
+	}
 
 	.in_lc_true {
 		background-color: $in_liquor_cabinet_background_color;

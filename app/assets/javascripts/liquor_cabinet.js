@@ -64,7 +64,7 @@ if (typeof(Cocktails.LC) === 'undefined') {
         url: '/cabinet/add',
         data: {q: val},
         success: function(data) {
-          if (callback != undefined) callback();
+          if (typeof(callback) !== undefined) callback();
         }
       });
     },
@@ -74,7 +74,7 @@ if (typeof(Cocktails.LC) === 'undefined') {
         url: '/cabinet/remove',
         data: {q: val},
         success: function(data) {
-          if (callback != undefined) callback();
+          if (typeof(callback) !== undefined) callback();
         }
       });
     },
@@ -104,7 +104,7 @@ if (typeof(Cocktails.LC) === 'undefined') {
       });
       return returnVal;
     }
-  }
+  };
 }
 
 $(function() {

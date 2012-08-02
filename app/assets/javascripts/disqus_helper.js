@@ -37,5 +37,5 @@ if (typeof(Cocktails.DisqusHelper) === 'undefined') {
         if (typeof(callback) !== 'undefined') callback();
       }
     }
-  }
+  };
 }

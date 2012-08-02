@@ -28,10 +28,10 @@ if (typeof(Cocktails.RatyHelper) === 'undefined') {
       var size = attr.smallStars ? 18 : 30;
       var read_only = attr.smallStars ? true : false;
       var starOffImg = attr.smallStars ? 'stars_sm_single_off.gif' : 'stars_lg_single_off.gif';
-      var starHalfImg = attr.smallStars ? 'stars_sm_half.gif' : 'stars_lg_half.gif'
+      var starHalfImg = attr.smallStars ? 'stars_sm_half.gif' : 'stars_lg_half.gif';
       var starOnImg = attr.smallStars ? 'stars_sm_single.gif' : 'stars_lg_single.gif';
       if (typeof attr.isRated !== 'undefined' && attr.isRated) {
-        starHalfImg = attr.smallStars ? 'stars_sm_half_orange.gif' : 'stars_lg_half_orange.gif'
+        starHalfImg = attr.smallStars ? 'stars_sm_half_orange.gif' : 'stars_lg_half_orange.gif';
         starOnImg = attr.smallStars ? 'stars_sm_single_orange.gif' : 'stars_lg_single_orange.gif';
       }
       return {
@@ -52,7 +52,7 @@ if (typeof(Cocktails.RatyHelper) === 'undefined') {
             Cocktails.RatyHelper.rateRecipe($("#recipe_id").val(), score);
           }
         }
-      }
+      };
     },
 
     rateRecipe: function(recipe_id, rating) {
@@ -76,7 +76,7 @@ if (typeof(Cocktails.RatyHelper) === 'undefined') {
           $(".raty_star_not_rated").hide();
           $(".raty_star_rated").show();
           var count = $("#recipe_rating_count_num").html();
-          count = parseInt(count);
+          count = parseInt(count, 10);
           count = count+1;
           $("#recipe_rating_count_num").html(count);
           $(".recipe_rating_count").effect("highlight", {}, 3000);
@@ -85,5 +85,5 @@ if (typeof(Cocktails.RatyHelper) === 'undefined') {
     }
 
 
-  }
+  };
 }

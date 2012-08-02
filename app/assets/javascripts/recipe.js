@@ -162,7 +162,7 @@ if (typeof(Cocktails.Recipe) === 'undefined') {
       return false;
     }
 
-  }
+  };
 }
 
 $(function() {

@@ -69,5 +69,5 @@ if (typeof(Cocktails.GallerifficHelper) === 'undefined') {
         });
       }
     }
-  }
+  };
 }
