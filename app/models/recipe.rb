@@ -6,7 +6,7 @@ class Recipe < ActiveRecord::Base
 	has_many :users, :through => :recipe_users
 
   validates :title, :presence => true, :length => { :in => 4..100 }, :uniqueness => true
-  validates :servings, :presence => true, :length => { :in => 1..100 }
+  validates :servings, :presence => true
   validates_associated :ingredients
 
   self.per_page = 20
