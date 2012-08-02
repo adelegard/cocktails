@@ -23,5 +23,7 @@
 //= require ajax-chosen.min
 //= require chosen-jquery
 //= require gravtastic
-//= require social
+//= require disqus_helper
+//= require galleriffic_helper
+//= require raty_helper
 //= require_tree .

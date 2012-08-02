@@ -13,7 +13,7 @@
     %li
       %a{:href => "#featured", "data-toggle" => "tab"} Featured
     %li
-      %a{:href => "#new", "data-toggle" => "tab"} New (Design 2)
+      %a{:href => "#new", "data-toggle" => "tab"} New (Design 4)
   .tab-content
     .tab-pane.fade.in.active#design0
       = render :partial => '/search/search_results_table', :locals => {:recipes => @recipes_popular, :recipe_users => @recipe_users_popular, :total_ratings => @total_ratings_popular}
@@ -51,5 +51,4 @@
     .tab-pane.fade.in#design3
       = render :partial => '/search/search_results_table_design3', :locals => {:full_recipes => @full_recipes_popular, :total_ratings => @total_ratings_popular}
     .tab-pane.fade#new
-      = render :partial => '/search/search_results_table_design2', :locals => {:full_recipes => @full_recipes_new, :total_ratings => @total_ratings_new}
-      //= render :partial => '/search/search_results_table', :locals => {:recipes => @recipes_new, :recipe_users => @recipe_users_new, :total_ratings => @total_ratings_new}
+      = render :partial => '/search/search_results_table_design4', :locals => {:full_recipes => @full_recipes_new, :total_ratings => @total_ratings_new}
