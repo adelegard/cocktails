@@ -21,5 +21,4 @@
   %div= "Or sign in with one of these services"
   .providers
     - resource_class.omniauth_providers.each do |provider|
-      %a{:href => omniauth_authorize_path(resource_name, provider)}
-        .dib{:class => "#{provider.to_s.downcase}_64"}
+      %a.dib{:href => omniauth_authorize_path(resource_name, provider), :class => "#{provider.to_s.downcase}_64"}

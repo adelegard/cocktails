@@ -1,8 +1,9 @@
-#search_results_design2
+#search_results_design4
   -if full_recipes.length > 0 then
     %table.table.table-striped
       %thead
         %tr
+          %th User
           %th.tal
             = sortable "title", "Title"
             .asc.dn
@@ -30,6 +31,10 @@
           - num_starred = full_recipe[:num_starred]
           - num_liked = full_recipe[:num_liked]
           %tr
+            %td
+              -if @creator != nil
+                %a{:href => user_profile_path(@creator.id)}
+                  %img.avatar_tiny{"data-email" => @creator.email}
             %td.tal
               = link_to(@the_recipe.title, @the_recipe, :class => "recipe_title")
             %td

@@ -22,6 +22,16 @@ body > .container-fluid {
     width: 650px;
 }
 
+.modal-backdrop,
+.modal-backdrop.fade.in {
+  opacity: 0.3;
+  filter: alpha(opacity=30);
+}
+
+#photo_modal .modal-body {
+    max-height: 450px;
+}
+
 .btn-group + .btn-group {
     margin-left: 0px;
 }

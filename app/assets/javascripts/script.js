@@ -1,10 +1,8 @@
 $(function() {
 
 	$(".chzn-select").chosen();
-  $('#new_recipe_directions').NobleCount('.characters_remaining:first', 
-                                {max_chars:2000, on_negative: 'go_red'});
-  $('#new_recipe_inspiration').NobleCount('.characters_remaining:last', 
-                                {max_chars:2000, on_negative: 'go_red'});
+  $('#new_recipe_directions').NobleCount('.characters_remaining:first', {max_chars:2000, on_negative: 'go_red'});
+  $('#new_recipe_inspiration').NobleCount('.characters_remaining:last', {max_chars:2000, on_negative: 'go_red'});
 
   $('img.avatar_tiny').each(function() {
     var email_addr = $(this).attr("data-email");
@@ -67,7 +65,7 @@ $(function() {
 
 	$.ajaxSetup({
 		'beforeSend': function(xhr) {
-			xhr.setRequestHeader('Accept','text/javascript')
+			xhr.setRequestHeader('Accept','text/javascript');
 		}
 	});
 
@@ -218,15 +216,14 @@ $(function() {
   });
 
   function setupAjaxChosen() {
-    $("select.chzn-select.ingredients_ac").ajaxChosen(ajaxChosenParams, 
-                                                      ajaxChosenSuccessCallback);
+    $("select.chzn-select.ingredients_ac").ajaxChosen(ajaxChosenParams, ajaxChosenSuccessCallback);
   }
 
   function getAutoCompleteRecipeParams(term) {
     params = {};
     params['url'] = '/search/autocomplete_recipes';
-    dataHash = {}
-    dataHash.q = term
+    dataHash = {};
+    dataHash.q = term;
     params['data'] = dataHash;
     return params;
   }
@@ -234,8 +231,8 @@ $(function() {
   function getAutoCompleteIngredientsParams(term) {
     params = {};
     params['url'] = '/search/autocomplete_ingredients_titles';
-    dataHash = {}
-    dataHash.q = term
+    dataHash = {};
+    dataHash.q = term;
     params['data'] = dataHash;
     return params;
   }

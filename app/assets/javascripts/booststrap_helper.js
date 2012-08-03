@@ -10,7 +10,7 @@ $(function() {
   function addTooltipToElement(elem) {
     elem.tooltip({
       delay: { show: 1000, hide: 50 },
-      placement: elem.attr("data-placement") != undefined ? elem.attr("data-placement") : "top"
+      placement: typeof(elem.attr("data-placement")) !== 'undefined' ? elem.attr("data-placement") : "top"
     });
   }
 });

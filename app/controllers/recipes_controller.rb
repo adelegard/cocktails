@@ -49,7 +49,7 @@ class RecipesController < BaseRecipesController
                             :inspiration => params[:recipe][:inspiration], 
                             :glass => params[:glass], 
                             :alcohol => params[:recipe][:alcohol],
-                            :servings => params[:recipe][:servings],
+                            :servings => params[:servings],
                             :created_by_user_id => current_user.id)
     if params[:recipe_photo] != nil
       recipe_photo = RecipePhoto.create(:recipe_id => @recipe.id,
@@ -70,6 +70,7 @@ class RecipesController < BaseRecipesController
         format.html { redirect_to @recipe, notice: 'Recipe was successfully created.' }
         format.json { render json: @recipe, status: :created, location: @recipe }
       else
+        @glasses = Recipe.getAllGlasses
         format.html { render action: "new" }
         format.json { render json: @recipe.errors, status: :unprocessable_entity }
       end
