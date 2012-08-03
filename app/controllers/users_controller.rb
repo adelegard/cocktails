@@ -6,15 +6,15 @@ class UsersController < ApplicationController
     @photos = RecipePhoto.where(:user_id => @user.id)
 
     @rated_recipes = RecipeUser.getRatedRecipesByUserId(params, @user.id)
-    @total_ratings_rated = RecipeUser.getTotalRatings(@rated_recipes)
+    @total_ratings_rated = Recipe.total_ratings(@rated_recipes)
     @full_recipes_rated = Recipe.getFullRecipes(@rated_recipes, @user.id)
 
     @favorite_recipes = RecipeUser.getFavoriteRecipesByUserId(params, @user.id)
-    @total_ratings_favorites = RecipeUser.getTotalRatings(@favorite_recipes)
+    @total_ratings_favorites = Recipe.total_ratings(@favorite_recipes)
     @full_recipes_favorites = Recipe.getFullRecipes(@favorite_recipes, @user.id)
 
     @created_recipes = RecipeUser.getCreatedRecipesByUserId(params, @user.id)
-    @total_ratings_created = RecipeUser.getTotalRatings(@created_recipes)
+    @total_ratings_created = Recipe.total_ratings(@created_recipes)
     @full_recipes_created = Recipe.getFullRecipes(@created_recipes, @user.id)
 
     @num_liked = RecipeUser.getNumLikedCreatedRecipesByUserId(@user.id)

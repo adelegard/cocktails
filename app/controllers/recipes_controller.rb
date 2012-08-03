@@ -109,7 +109,7 @@ class RecipesController < BaseRecipesController
 
   def setup_popular_recipes
     @recipes_popular = Recipe.getPopularRecipes(params)
-    @total_ratings_popular = RecipeUser.getTotalRatings(@recipes_popular)
+    @total_ratings_popular = Recipe.total_ratings(@recipes_popular)
     user_id = current_user != nil && current_user.id ? current_user.id : nil
     @full_recipes_popular = Recipe.getFullRecipes(@recipes_popular, user_id)
     if user_signed_in?
@@ -118,8 +118,8 @@ class RecipesController < BaseRecipesController
   end
 
   def setup_new_recipes
-    @recipes_new = Recipe.getNewRecipes(params)
-    @total_ratings_new = RecipeUser.getTotalRatings(@recipes_new)
+    @recipes_new = Recipe.new_recipes(params)
+    @total_ratings_new = Recipe.total_ratings(@recipes_new)
     user_id = current_user != nil && current_user.id ? current_user.id : nil
     @full_recipes_new = Recipe.getFullRecipes(@recipes_new, user_id)
     if user_signed_in?

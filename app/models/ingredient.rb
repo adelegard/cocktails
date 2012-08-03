@@ -16,11 +16,8 @@ class Ingredient < ActiveRecord::Base
 	end
 
   	class << self
-		def searchDb(term)
-			return Ingredient.where(:conditions => ['ingredient LIKE ?', "%#{term}%"])
-		end
 
-		def getIngredients(recipe_id, user_signed_in, liquor_cabinet_ingredients)
+		def get_ingredients(recipe_id, user_signed_in, liquor_cabinet_ingredients)
 		    ingredients = []
 		    recipe_ingredients = RecipeIngredient.where(:recipe_id => recipe_id)
 		    recipe_ingredients.each do |recipe_ingredient|

@@ -50,3 +50,8 @@ group :development, :test do
 
   gem 'quiet_assets'
 end
+
+group :test do
+  gem 'shoulda'
+  gem 'factory_girl_rails'
+end

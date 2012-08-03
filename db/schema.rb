@@ -96,7 +96,7 @@ ActiveRecord::Schema.define(:version => 20120725205402) do
     t.integer  "created_by_user_id"
     t.boolean  "delta",                                             :default => true, :null => false
     t.integer  "view_count"
-    t.integer  "servings"
+    t.integer  "servings",                                          :default => 1
     t.text     "inspiration"
     t.integer  "shared"
   end

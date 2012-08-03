@@ -54,7 +54,7 @@ class SearchController < BaseRecipesController
       render 'recipes/show'
     end
 
-    @total_ratings = RecipeUser.getTotalRatings(@recipes)
+    @total_ratings = Recipe.total_ratings(@recipes)
     if user_signed_in?
       @recipe_users = RecipeUser.getRecipeUsers(@recipes, current_user.id)
     end

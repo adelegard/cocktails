@@ -44,7 +44,7 @@ class Recipe < ActiveRecord::Base
         full_recipe[:recipe_user] = RecipeUser.where(:recipe_id => recipe.id, :user_id => current_user_id).first_or_create
         liquor_cabinet_ingredients = LiquorCabinet.where(:user_id => current_user_id).collect{|ingredient| ingredient.ingredient_id}
       end
-      full_recipe[:ingredients] = Ingredient.getIngredients(recipe.id, !current_user_id.nil?, liquor_cabinet_ingredients)
+      full_recipe[:ingredients] = Ingredient.get_ingredients(recipe.id, !current_user_id.nil?, liquor_cabinet_ingredients)
 
       user_data = RecipeUser.getUserData(recipe.id)
       full_recipe[:num_starred] = user_data[:num_starred]
@@ -54,21 +54,17 @@ class Recipe < ActiveRecord::Base
       return full_recipe
     end
 
-    def getNewRecipes(params)
+    def new_recipes(params)
         params[:direction] ||= "DESC"
         order = "created_at #{params[:direction]}"
-        return Recipe.search(:field_weights => {:created_at => 10, :title => 1},
-                             :order => order,
-                             :with => {:created_at => 1.month.ago..Time.now},
-                             :page => params[:page], :per_page => params[:per_page])
+        Recipe.search(:field_weights => {:created_at => 10, :title => 1},
+                      :order => order,
+                      :with => {:created_at => 1.month.ago..Time.now},
+                      :page => params[:page], :per_page => params[:per_page])
     end
 
-    def searchDb(params)
-      orderBy = params[:sort] != nil ? params[:sort] : "rating_count"
-      orderBy += params[:direction] != nil ? " " + params[:direction].to_s : " DESC"
-      return Recipe.paginate(:conditions => ['title LIKE ?', "%#{@q}%"],
-                                 :order => orderBy,
-                                 :page => params[:page], :per_page => params[:per_page])
+    def total_ratings(recipes)
+      recipes.inject(0){|sum, recipe| sum + recipe.rating_count}
     end
 
     def getPopularRecipes(params)
