@@ -4,7 +4,7 @@
 		%i.icon-list-alt
 		%a.showFullPageView{:href => "#"} Full Page View
 	%i.icon-picture
-	%a{:href => "/recipes/uploadphoto?id=#{@recipe.id}"} Add Photo
+	%a{:href => recipe_upload_photo_path(@recipe.id)} Add Photo
 	%br
 	%i.icon-print
 	%a{:href => "#"} Print

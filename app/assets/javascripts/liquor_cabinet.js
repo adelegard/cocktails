@@ -65,13 +65,18 @@ if (typeof(Cocktails.LC) === 'undefined') {
     detail_page_toggle_ingredient: function(e) {
       var btn = $(e.target);
       var ingredient_id = btn.attr("data-id");
+      var cabinets = $('.stats .cabinets');
+      var num_cabinets = parseInt(cabinets.text(), 10);
       if (btn.hasClass("add")) {
         Cocktails.LC._add_ingredient_via_id(ingredient_id);
         $(".btn_container .remove").addClass("dib").show();
+        num_cabinets = num_cabinets + 1;
       } else {
         Cocktails.LC._remove_ingredient_via_id(ingredient_id);
         $(".btn_container .add").addClass("dib").show();
+        num_cabinets = num_cabinets - 1;
       }
+      cabinets.text(num_cabinets);
       btn.hide();
     },
 

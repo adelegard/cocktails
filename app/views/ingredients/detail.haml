@@ -9,7 +9,7 @@
                 = image_tag @ingredient_photos.first.photo.url(:thumb)
             .num_photos 1 of #{@ingredient_photos.size}
         .add_photo
-            %a{:href => "/ingredient/#{@ingredient.id}/uploadphoto"}
+            %a{:href => ingredient_upload_photo_path(@ingredient.id)}
                 %i.icon-upload
                 %span Add a Photo
     .top_details
@@ -18,7 +18,7 @@
     .stats
         %a.left
             %span
-                %strong.followers=@lc_count
+                %strong.cabinets=@lc_count
                 ="Cabinet".pluralize(@lc_count)
         %a.right
             %span
@@ -36,11 +36,11 @@
                 %a{:href => "#new_recipes_tab", "data-toggle" => "tab"}
                     New Recipes
                     %span.muted.fr= @full_recipes_new.length
-            %li
+            %li.photos_tab
                 %a{:href => "#photos_tab", "data-toggle" => "tab"}
                     Photos
                     %span.muted.fr= @photos.size
-            %li
+            %li.comments_tab
                 %a{:href => "#comments_tab", "data-toggle" => "tab"}
                     Comments
                     %span.muted.fr 14
@@ -53,11 +53,12 @@
                 %h2 New Recipes
                 %hr
                 = render :partial => '/search/search_results_table_design2', :locals => {:full_recipes => @full_recipes_new, :total_ratings => @total_ratings_new}
-            #photos_tab.tab-pane.fade.in
+            #photos_tab.photos_tab_content.tab-pane.fade.in
                 %h2 Uploaded Photos
                 %hr
-                =render :partial => 'widgets/photos', :locals => {:photos => @photos, :is_ingredient => true}
-            #comments_tab.tab-pane.fade.in
+                =render :partial => 'widgets/photos', :locals => {:photos => @photos, :is_ingredient => true, :add_photo_url => ingredient_upload_photo_path(@ingredient.id)}
+            #comments_tab.comments_tab_content.tab-pane.fade.in
                 %h2 Comments
                 %hr
-                = render :partial => '/widgets/disqus', :locals => {:disqus_identifier => "ing_#{@ingredient.id}", :disqus_url => "http://127.0.0.1:3000/ingredient/#{@ingredient.id}}"}
+                %input.disqus_identifier{:type => "hidden", :value => "ing_#{@ingredient.id}"}
+                %input.disqus_url{:type => "hidden", :value => ingredient_detail_path(@ingredient.id)}

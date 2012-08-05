@@ -34,8 +34,9 @@ Cocktails::Application.routes.draw do
 	match '/recipes/rate' => 'recipe_users#rate'
 
 	#recipe photos
-	match '/recipes/uploadphoto' => 'recipes#uploadphoto'
-	match '/recipes/do_upload_photo' => 'recipes#do_upload_photo', :as => :recipe_do_upload_photo, :via => :put
+	match '/recipes/:id/uploadphoto' => 'recipes#uploadphoto', :as => :recipe_upload_photo
+	match '/recipes/:id/do_upload_photo' => 'recipes#do_upload_photo', :as => :recipe_do_upload_photo, :via => :put
+	match '/recipes/:recipe_id/photos/:photo_id' => 'recipes#photos', :as => :recipe_photo
 
 	#user pages
 	match '/settings/password' => 'users/password#edit', :as => :edit_user_pass
@@ -64,8 +65,9 @@ Cocktails::Application.routes.draw do
 
 	#ingredient pages
 	match '/ingredient/:id' => 'ingredients#detail', :as => :ingredient_detail
+	match '/ingredient/:ingredient_id/photos/:photo_id' => 'ingredients#photos', :as => :ingredient_photo
 
-	match '/ingredient/:id/uploadphoto' => 'ingredients#uploadphoto'
+	match '/ingredient/:id/uploadphoto' => 'ingredients#uploadphoto', :as => :ingredient_upload_photo
 	match '/ingredient/:id/do_upload_photo' => 'ingredients#do_upload_photo', :as => :ingredient_do_upload_photo, :via => :put
 
 	match '/search' => 'search#search'

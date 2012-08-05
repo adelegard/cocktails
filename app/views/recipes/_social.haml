@@ -29,10 +29,10 @@
             %ul.dib.color.socialicons
                 %li
                     %a.facebook
-                    %a.gpluslight{"data-href" => "https://plus.google.com/share?url=http://127.0.0.1/recipes/#{@recipe.id}"}
+                    %a.gpluslight{"data-href" => "https://plus.google.com/share?url=" + recipes_path(@recipe.id)}
                     %a.twitter{:href => "https://twitter.com/intent/tweet?text=Check out this great recipe! #{recipe.title}"}
-                    %a.stumbleupon{:href => "http://www.stumbleupon.com/submit?url=http://127.0.0.1:3000/recipes/#{@recipe.id}"}
+                    %a.stumbleupon{:href => "http://www.stumbleupon.com/submit?url=" + recipes_path(@recipe.id)}
                     %a.delicious
                     -if photo_url != nil
-                        %a.pinterest{"data-href" => "http://pinterest.com/pin/create/button/?url=http://127.0.0.1/recipes/#{@recipe.id}&media=#{photo_url}&description=#{recipe.title}"}
+                        %a.pinterest{"data-href" => "http://pinterest.com/pin/create/button/?url=" + recipes_path(@recipe.id) + "&media=#{photo_url}&description=#{recipe.title}"}
                     %a.email
