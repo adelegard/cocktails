@@ -1,0 +1,63 @@
+-@pageTitle = @ingredient.ingredient
+
+.page-header.profile
+    .photo_thumb
+        -if @ingredient_photos.empty?
+            .default_thumb_photo
+        -else
+            %a{:href => "#", "data-toggle" => "modal", "data-target" => "#photos_modal"}
+                = image_tag @ingredient_photos.first.photo.url(:thumb)
+            .num_photos 1 of #{@ingredient_photos.size}
+        .add_photo
+            %a{:href => "/ingredient/#{@ingredient.id}/uploadphoto"}
+                %i.icon-upload
+                %span Add a Photo
+    .top_details
+        %h1.fl= @ingredient.ingredient
+        =render :partial => '/users/cabinet_btn', :locals => {:in_cabinet => @in_cabinet, :ingredient_id => @ingredient.id}
+    .stats
+        %a.left
+            %span
+                %strong.followers=@lc_count
+                ="Cabinet".pluralize(@lc_count)
+        %a.right
+            %span
+                %strong=@recipe_count
+                ="Recipe".pluralize(@recipe_count)
+    .cb
+.profile_tabs
+    .tabbable.tabs-left
+        %ul.nav.nav-tabs.span2
+            %li.active
+                %a{:href => "#popular_recipes_tab", "data-toggle" => "tab"}
+                    Popular Recipes
+                    %span.muted.fr= @full_recipes_popular.length
+            %li
+                %a{:href => "#new_recipes_tab", "data-toggle" => "tab"}
+                    New Recipes
+                    %span.muted.fr= @full_recipes_new.length
+            %li
+                %a{:href => "#photos_tab", "data-toggle" => "tab"}
+                    Photos
+                    %span.muted.fr= @photos.size
+            %li
+                %a{:href => "#comments_tab", "data-toggle" => "tab"}
+                    Comments
+                    %span.muted.fr 14
+        .tab-content.span10
+            #popular_recipes_tab.tab-pane.fade.in.active
+                %h2 Popular Recipes
+                %hr
+                = render :partial => '/search/search_results_table_design2', :locals => {:full_recipes => @full_recipes_popular, :total_ratings => @total_ratings_popular}
+            #new_recipes_tab.tab-pane.fade.in
+                %h2 New Recipes
+                %hr
+                = render :partial => '/search/search_results_table_design2', :locals => {:full_recipes => @full_recipes_new, :total_ratings => @total_ratings_new}
+            #photos_tab.tab-pane.fade.in
+                %h2 Uploaded Photos
+                %hr
+                =render :partial => 'widgets/photos', :locals => {:photos => @photos, :is_ingredient => true}
+            #comments_tab.tab-pane.fade.in
+                %h2 Comments
+                %hr
+                = render :partial => '/widgets/disqus', :locals => {:disqus_identifier => "ing_#{@ingredient.id}", :disqus_url => "http://127.0.0.1:3000/ingredient/#{@ingredient.id}}"}

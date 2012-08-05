@@ -15,10 +15,10 @@ $(function() {
         return false;
     });
     $(".socialicons li a.delicious").on("click", function() {
-        window.open('http://www.delicious.com/save?v=5&noui&jump=close&url='
-            +encodeURIComponent(location.href)
-            +'&title='
-            +encodeURIComponent(document.title), 'delicious','toolbar=no,width=550,height=550');
+        window.open('http://www.delicious.com/save?v=5&noui&jump=close&url='+
+            encodeURIComponent(location.href)+
+            '&title='+
+            encodeURIComponent(document.title), 'delicious','toolbar=no,width=550,height=550');
         return false;
     });
     $(".socialicons li a.pinterest").on("click", function() {

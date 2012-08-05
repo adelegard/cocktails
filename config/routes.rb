@@ -46,7 +46,9 @@ Cocktails::Application.routes.draw do
 
 	#user actions
 	match '/cabinet/add' => 'liquor_cabinet#add'
+	match '/cabinet/add_by_id' => 'liquor_cabinet#add_by_id'
 	match '/cabinet/remove' => 'liquor_cabinet#remove'
+	match '/cabinet/remove_by_id' => 'liquor_cabinet#remove_by_id'
 
 	#user follow
 	match '/user/:id/follow' => 'user_follows#follow'
@@ -59,6 +61,12 @@ Cocktails::Application.routes.draw do
 	match '/user/:id/rated' => 'users#profile_rated', :as => :user_profile_rated
 	match '/user/:id/photos' => 'users#profile_photos', :as => :user_profile_photos
 	match '/user/:id/cabinet' => 'users#profile_cabinet', :as => :user_profile_cabinet
+
+	#ingredient pages
+	match '/ingredient/:id' => 'ingredients#detail', :as => :ingredient_detail
+
+	match '/ingredient/:id/uploadphoto' => 'ingredients#uploadphoto'
+	match '/ingredient/:id/do_upload_photo' => 'ingredients#do_upload_photo', :as => :ingredient_do_upload_photo, :via => :put
 
 	match '/search' => 'search#search'
 	match '/search/autocomplete_recipes' => 'search#autocomplete_recipes'

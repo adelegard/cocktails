@@ -6,7 +6,7 @@
     #recipe_social.well.span2.fr
         -photo_url = !@recipe_photos.empty? ? @recipe_photos.first.photo.url(:large) : nil
         =render :partial => '/recipes/social', :locals => {:recipe => @recipe, :recipe_user => @recipe_user, :photo_url => photo_url, :num_shared => @recipe.shared ||= 0, :num_liked => @num_liked, :num_saved => @num_starred}
-    #drink_thumb.dib.fl
+    .photo_thumb
         -if @recipe_photos.empty?
             .default_thumb_photo
         -else
@@ -40,7 +40,7 @@
         %input.disqus_identifier{:type => "hidden", :value => "#{@recipe.id}"}
         %input.disqus_url{:type => "hidden", :value => "http://127.0.0.1:3000/recipes/#{@recipe.id}"}
     .tab-pane.fade#photos{:class => @active_tab == "photos" ? "active" : ""}
-        =render :partial => 'recipes/photos', :locals => {:recipe_photos => @recipe_photos}
+        =render :partial => 'widgets/photos', :locals => {:photos => @recipe_photos, :is_recipe => true}
 #photos_modal.modal.hide
     .modal-header
         %button.close{:type => "button", "data-dismiss" => "modal"} ×

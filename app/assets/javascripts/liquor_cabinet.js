@@ -13,6 +13,9 @@ if (typeof(Cocktails.LC) === 'undefined') {
         $(".recipe_ingredients .toggle_in_lc").on("click", this.toggle_ingredient);
         $(document).on("click", "table.liquor_cabinet_ingredients tbody tr td .icon-remove", this.remove_ingredient_via_x);
 
+        // Ingredient Detail page
+        $(".btn_container .btn.cabinet").on("click", this.detail_page_toggle_ingredient);
+
         this._initialized = true;
       }
     },
@@ -21,13 +24,13 @@ if (typeof(Cocktails.LC) === 'undefined') {
       if (e.which !== 13) return;
       var val = $(e.target).val();
       if (Cocktails.LC._can_add(val) === false) return;
-      Cocktails.LC._add_ingredient(val, Cocktails.LC._add_ingredient_callback(val));
+      Cocktails.LC._add_ingredient_via_name(val, Cocktails.LC._add_ingredient_callback(val));
     },
 
     add_ingredient_via_click: function(e) {
       var val = $(".cabinet_ingredient_search").val();
       if (Cocktails.LC._can_add(val) === false) return;
-      Cocktails.LC._add_ingredient(val, Cocktails.LC._add_ingredient_callback(val));
+      Cocktails.LC._add_ingredient_via_name(val, Cocktails.LC._add_ingredient_callback(val));
     },
 
     toggle_ingredient: function(e) {
@@ -35,10 +38,10 @@ if (typeof(Cocktails.LC) === 'undefined') {
       var li_ingredient = $(e.target).closest("li.ingredient");
       var new_msg;
       if (li_ingredient.hasClass("in_liquor_cabinet")) {
-          Cocktails.LC._remove_ingredient(val);
+          Cocktails.LC._remove_ingredient_via_name(val);
           new_msg = $("input.lc_add_message").val();
       } else {
-          Cocktails.LC._add_ingredient(val);
+          Cocktails.LC._add_ingredient_via_name(val);
           new_msg = $("input.lc_remove_message").val();
       }
       $(e.target).text(new_msg);
@@ -49,7 +52,7 @@ if (typeof(Cocktails.LC) === 'undefined') {
     remove_ingredient_via_x: function(e) {
       var therow = $(e.currentTarget).closest("tr");
       var val = therow.find(".lc_ingredient .the_ingredient").html();
-      Cocktails.LC._remove_ingredient(val, function() {
+      Cocktails.LC._remove_ingredient_via_name(val, function() {
         therow.fadeOut('fast', function() {
           $(therow).empty().remove();
           if ($("table.liquor_cabinet_ingredients .lc_ingredient").length == 1) { //1 b/c there is always a hidden one for copying
@@ -59,22 +62,53 @@ if (typeof(Cocktails.LC) === 'undefined') {
       });
     },
 
-    _add_ingredient: function(val, callback) {
+    detail_page_toggle_ingredient: function(e) {
+      var btn = $(e.target);
+      var ingredient_id = btn.attr("data-id");
+      if (btn.hasClass("add")) {
+        Cocktails.LC._add_ingredient_via_id(ingredient_id);
+        $(".btn_container .remove").addClass("dib").show();
+      } else {
+        Cocktails.LC._remove_ingredient_via_id(ingredient_id);
+        $(".btn_container .add").addClass("dib").show();
+      }
+      btn.hide();
+    },
+
+    _add_ingredient_via_name: function(val, callback) {
       $.ajax({
         url: '/cabinet/add',
         data: {q: val},
         success: function(data) {
-          if (typeof(callback) !== undefined) callback();
+          if (typeof(callback) !== 'undefined') callback();
         }
       });
     },
-
-    _remove_ingredient: function(val, callback) {
+    _remove_ingredient_via_name: function(val, callback) {
       $.ajax({
         url: '/cabinet/remove',
         data: {q: val},
         success: function(data) {
-          if (typeof(callback) !== undefined) callback();
+          if (typeof(callback) !== 'undefined') callback();
+        }
+      });
+    },
+
+    _add_ingredient_via_id: function(ingredient_id, callback) {
+      $.ajax({
+        url: '/cabinet/add_by_id',
+        data: {id: ingredient_id},
+        success: function(data) {
+          if (typeof(callback) !== 'undefined') callback();
+        }
+      });
+    },
+    _remove_ingredient_via_id: function(ingredient_id, callback) {
+      $.ajax({
+        url: '/cabinet/remove_by_id',
+        data: {id: ingredient_id},
+        success: function(data) {
+          if (typeof(callback) !== 'undefined') callback();
         }
       });
     },

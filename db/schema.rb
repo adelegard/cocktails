@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120725205402) do
+ActiveRecord::Schema.define(:version => 20120805011539) do
 
   create_table "authentications", :force => true do |t|
     t.string   "provider"
@@ -36,6 +36,20 @@ ActiveRecord::Schema.define(:version => 20120725205402) do
   end
 
   add_index "delayed_jobs", ["priority", "run_at"], :name => "delayed_jobs_priority"
+
+  create_table "ingredient_photos", :force => true do |t|
+    t.string   "photo_file_name"
+    t.string   "photo_content_type"
+    t.integer  "photo_file_size"
+    t.datetime "photo_updated_at"
+    t.integer  "ingredient_id"
+    t.integer  "user_id"
+    t.datetime "created_at",         :null => false
+    t.datetime "updated_at",         :null => false
+  end
+
+  add_index "ingredient_photos", ["ingredient_id"], :name => "index_ingredient_photos_on_ingredient_id"
+  add_index "ingredient_photos", ["user_id"], :name => "index_ingredient_photos_on_user_id"
 
   create_table "ingredients", :force => true do |t|
     t.string   "ingredient"

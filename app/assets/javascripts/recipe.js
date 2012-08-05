@@ -56,15 +56,15 @@ if (typeof(Cocktails.Recipe) === 'undefined') {
     _load_comments_tab: function() {
       if ($('#comments.tab-pane #disqus_thread').length !== 0) return;
       var tab_pane = $('#comments.tab-pane');
-      Cocktails.DisqusHelper.load_disqus(tab_pane.find('.disqus_identifier'), 
-        tab_pane.find('.disqus_identifier').val(), 
+      Cocktails.DisqusHelper.load_disqus(tab_pane.find('.disqus_identifier'),
+        tab_pane.find('.disqus_identifier').val(),
         tab_pane.find('.disqus_url').val());
     },
     _load_photos_tab: function() {
       if ($('#photos.tab-pane #disqus_thread').length !== 0) return;
       var tab_pane_caption = $('#photos.tab-pane #caption');
-      Cocktails.DisqusHelper.load_disqus(tab_pane_caption.find('.disqus_identifier'), 
-        tab_pane_caption.find('.disqus_identifier').val(), 
+      Cocktails.DisqusHelper.load_disqus(tab_pane_caption.find('.disqus_identifier'),
+        tab_pane_caption.find('.disqus_identifier').val(),
         tab_pane_caption.find('.disqus_url').val());
     },
 

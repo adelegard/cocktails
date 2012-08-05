@@ -11,6 +11,11 @@ class LiquorCabinet < ActiveRecord::Base
       @liquor_cabinet.save
   	end
 
+    def addIngredientById(ingredient_id, user_id)
+      @liquor_cabinet = LiquorCabinet.find_or_initialize_by_user_id_and_ingredient_id(user_id, ingredient_id)
+      @liquor_cabinet.save
+    end
+
     # remove an ingredient from a users liquor cabinet
   	def removeIngredient(ingredient_name, user_id)
   	  ingredient = Ingredient.where(:ingredient => ingredient_name).first
@@ -25,6 +30,13 @@ class LiquorCabinet < ActiveRecord::Base
   	  end
   	end
 
+    def removeIngredientById(ingredient_id, user_id)
+      liquor_cabinet = LiquorCabinet.where(:user_id => user_id, :ingredient_id => ingredient_id).first
+      if liquor_cabinet != nil
+        LiquorCabinet.delete_all(["user_id = ? AND ingredient_id = ?", user_id, ingredient_id])
+      end
+    end
+
     def getByUserId(user_id)
   	  liquor_cabinet_ingredients = LiquorCabinet.where(:user_id => user_id)
   	  ingredients = []
@@ -33,6 +45,14 @@ class LiquorCabinet < ActiveRecord::Base
   	  end
       ingredients.sort_by! { |i| i.ingredient.downcase }
   	  return ingredients
+    end
+
+    def inCabinet(ingredient_id, user_id)
+      return LiquorCabinet.where(:ingredient_id => ingredient_id, :user_id => user_id).size == 1
+    end
+
+    def getCountByIngredientId(ingredient_id)
+      return LiquorCabinet.where(:ingredient_id => ingredient_id).size
     end
 
     def getAvailableRecipes(params, user_id)

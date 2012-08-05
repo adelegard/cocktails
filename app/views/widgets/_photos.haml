@@ -1,0 +1,28 @@
+-if photos.length > 0
+    #gallery.content
+        #controls.controls
+        .slideshow-container
+            #loading.loader
+            #slideshow.slideshow
+        #caption.caption-container
+    #thumbs.navigation
+        %ul.thumbs.noscript
+            -photos.each do |p|
+                -disqus_identifier = ""
+                -disqus_url = ""
+                -is_recipe = is_recipe != nil ? is_recipe : false
+                -is_ingredient = is_ingredient != nil ? is_ingredient : false
+                -if is_recipe
+                    -disqus_identifier = "#{p.recipe_id}" + "_" + "#{p.id}"
+                    -disqus_url = "http://127.0.0.1:3000/recipes/" + "#{p.recipe_id}" + "/photos/" + "#{p.id}"
+                -elsif is_ingredient
+                    -disqus_identifier = "#{p.ingredient_id}" + "_" + "#{p.id}"
+                    -disqus_url = "http://127.0.0.1:3000/ingredient/" + "#{p.ingredient_id}" + "/photos/" + "#{p.id}"
+                %li
+                    %a.thumb{:href => p.photo.url(:large), :name => "#{p.id}", :title => "your image title"}
+                        =image_tag p.photo.url(:thumb), :alt => "your image title"
+                    .caption
+                        %input.disqus_identifier{:type => "hidden", :value => disqus_identifier}
+                        %input.disqus_url{:type => "hidden", :value => disqus_url}
+-else
+    %h2 No photos uploaded!

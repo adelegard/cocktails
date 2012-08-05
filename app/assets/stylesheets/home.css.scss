@@ -268,12 +268,20 @@ form.devise {
 	}
 	.btn-group i {
 		margin-right: 6px;
+		margin-top: 4px;
 	}
 	.btn-group a:first-child {
 		width: 57px;
 	}
 	.btn-group a:last-child {
 		width: 30px;
+	}
+
+	.btn-group .btn.disabled .icon-heart {
+		color: #BD362F;
+	}
+	.btn-group .btn.disabled .icon-star {
+		color: #FAA732;
 	}
 }
 
@@ -282,21 +290,23 @@ ul.recipe_ingredients {
 	margin: 0;
 }
 
-#drink_thumb {
+.page-header .photo_thumb {
+	display: inline-block;
+	float: left;
 	margin-right: 8px;
+	text-align: center;
 }
 
 .num_photos {
 	margin-top: 3px;
-	margin-left: 32px;
 	font-size: 11px;
 }
 .add_photo {
 	margin: 2px 0 0 3px;
 }
 .default_thumb_photo {
-	width: 100px;
-	height: 100px;
+	width: 150px;
+	height: 150px;
 	background: transparent asset-url("cocktails/default.jpg", image) no-repeat center left;
 }
 
@@ -522,15 +532,16 @@ ul.recipe_ingredients {
 	height: 150px;
 	overflow: hidden;
 
-	a.url {
-		display: inline-block;
-		margin-top: 3px;
-	}
-	.btn.follow {
+	.btn_container {
 		position: absolute;
 		bottom: 0px;
 		left: 0px;
 		font-size: 18px;
+	}
+
+	a.url {
+		display: inline-block;
+		margin-top: 3px;
 	}
 }
 

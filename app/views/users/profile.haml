@@ -1,4 +1,4 @@
--@pageTitle = "My Favotite Cocktails"
+-@pageTitle = "Profile"
 
 .page-header.profile
     %img.fl.avatar_large{"data-email" => @user.email}
@@ -55,19 +55,19 @@
             #recipes_tab.tab-pane.fade.in.active
                 %h2 Created Recipes
                 %hr
-                = render :partial => '/search/search_results_table_design1', :locals => {:full_recipes => @full_recipes_created, :total_ratings => @total_ratings_created}
+                = render :partial => '/search/search_results_table_design2', :locals => {:full_recipes => @full_recipes_created, :total_ratings => @total_ratings_created}
             #favorites_tab.tab-pane.fade.in
                 %h2 Favorite Recipes
                 %hr
-                = render :partial => '/search/search_results_table_design1', :locals => {:full_recipes => @full_recipes_favorites, :total_ratings => @total_ratings_favorites}
+                = render :partial => '/search/search_results_table_design2', :locals => {:full_recipes => @full_recipes_favorites, :total_ratings => @total_ratings_favorites}
             #rated_tab.tab-pane.fade.in
                 %h2 Rated Recipes
                 %hr
-                = render :partial => '/search/search_results_table_design1', :locals => {:full_recipes => @full_recipes_rated, :total_ratings => @total_ratings_rated}
+                = render :partial => '/search/search_results_table_design2', :locals => {:full_recipes => @full_recipes_rated, :total_ratings => @total_ratings_rated}
             #photos_tab.tab-pane.fade.in
                 %h2 Uploaded Photos
                 %hr
-                =render :partial => 'recipes/photos', :locals => {:recipe_photos => @photos}
+                =render :partial => 'widgets/photos', :locals => {:photos => @photos, :is_recipe => true}
             #following_tab.tab-pane.fade.in
                 %h2 Following
                 %hr

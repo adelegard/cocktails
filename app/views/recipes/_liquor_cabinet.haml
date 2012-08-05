@@ -6,15 +6,16 @@
     %tbody
         %tr.dn
             %td
-                %l.icon-remove
+                %i.icon-remove
                 -ing = {}
                 -ing[:ingredient] = "place_holder"
+                -ing[:id] = -1
                 .lc_ingredient.dib= render :partial => '/recipes/ingredient', :locals => {:ingredient => ing}
         -ingredients.each do |ingredient|
             %tr
                 %td
                     -if editable
-                        %l.icon-remove
+                        %i.icon-remove
                     .lc_ingredient.dib= render :partial => '/recipes/ingredient', :locals => {:ingredient => ingredient}
 %br
 -disabled = false
