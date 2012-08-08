@@ -20,7 +20,7 @@ Cocktails::Application.routes.draw do
 
 	#recipe lists
 	match '/recipes/popular' => 'recipes#popular', :as => :recipes_popular
-	match '/recipes/new_recipes' => 'recipes#new_recipes', :as => :recipes_new
+	match '/recipes/new' => 'recipes#new_recipes', :as => :recipes_new
 
 	#recipe pages
 	match '/recipes/show' => 'recipes#show'
@@ -43,7 +43,7 @@ Cocktails::Application.routes.draw do
 	match '/settings/password/update' => 'users/password#update', :as => :user_pass, :via => :put
 	match '/settings/email' => 'users/email#edit', :as => :edit_user_email
 	match '/settings/email/update' => 'users/email#update', :as => :user_email, :via => :put
-	match '/cabinet' => 'liquor_cabinet#view'
+	match '/cabinet' => 'liquor_cabinet#view', :as => :cabinet
 
 	#user actions
 	match '/cabinet/add' => 'liquor_cabinet#add'

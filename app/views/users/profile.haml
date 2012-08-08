@@ -55,15 +55,60 @@
             #recipes_tab.tab-pane.fade.in.active
                 %h2 Created Recipes
                 %hr
-                = render :partial => '/search/search_results_table_design2', :locals => {:full_recipes => @full_recipes_created, :total_ratings => @total_ratings_created}
+                = render :partial => '/search/search_results_table_design2', :locals => {:full_recipes => @full_recipes_created, :total_ratings => @total_ratings_created, :hide_no_results_msg => true}
+                -if @full_recipes_created.length == 0
+                    %h2
+                        -if @is_current_user
+                            You haven't created any recipes!
+                            %a{:href => new_recipe_path} Create one now!
+                        -else
+                            =render :partial => 'users/user_name', :locals => {:user => @user}
+                            hasn't created any recipes!
+                            %br
+                            %small
+                                Show them how it's done and
+                                %a{:href => new_recipe_path} create one now!
             #favorites_tab.tab-pane.fade.in
                 %h2 Favorite Recipes
                 %hr
-                = render :partial => '/search/search_results_table_design2', :locals => {:full_recipes => @full_recipes_favorites, :total_ratings => @total_ratings_favorites}
+                = render :partial => '/search/search_results_table_design2', :locals => {:full_recipes => @full_recipes_favorites, :total_ratings => @total_ratings_favorites, :hide_no_results_msg => true}
+                -if @full_recipes_favorites.length == 0
+                    %h2
+                        -if @is_current_user
+                            You haven't favorited any recipes!
+                            -small_msg = "to view some popular recipes. Find some you love and favorite away!"
+                        -else
+                            =render :partial => 'users/user_name', :locals => {:user => @user}
+                            hasn't favorited any recipes!
+                            -small_msg = "to view some popular recipes, favorite away, and show them how it's done!"
+                        %br
+                        %small
+                            %a{:href => recipes_popular_path} Click here
+                            =small_msg
             #rated_tab.tab-pane.fade.in
                 %h2 Rated Recipes
                 %hr
-                = render :partial => '/search/search_results_table_design2', :locals => {:full_recipes => @full_recipes_rated, :total_ratings => @total_ratings_rated}
+                = render :partial => '/search/search_results_table_design2', :locals => {:full_recipes => @full_recipes_rated, :total_ratings => @total_ratings_rated, :hide_no_results_msg => true}
+                -if @full_recipes_rated.length == 0
+                    %h2
+                        -if @is_current_user
+                            You haven't rated any recipes!
+                            -small_msg = "to view some popular recipes. Find some you love and rate away!"
+                        -else
+                            =render :partial => 'users/user_name', :locals => {:user => @user}
+                            hasn't rated any recipes!
+                            -small_msg = "to view some popular recipes, rate away, and show them how it's done!"
+                        %br
+                        %small
+                            %a{:href => recipes_popular_path} Click here
+                            =small_msg
+                    %br
+                    %h3
+                        %small
+                            p.s. To rate a recipe, simply click on the star that you think a given recipe deserves!
+                            %br
+                            Try it here: 
+                            =render :partial => '/recipes/rating_links', :locals => {:recipe_id => -1, :user_rating => 4, :avg_rating => 4, :num_rated => 23}
             #photos_tab.tab-pane.fade.in
                 %h2 Uploaded Photos
                 %hr
@@ -78,7 +123,16 @@
                         %span.tac=f.name
                         =render :partial => '/users/follow_btn', :locals => {:is_following => true, :user_id => f.id}
                 -if @following_users.size == 0
-                    %h2 Not following anyone!
+                    %h2
+                        -if @is_current_user
+                            You're not following anyone!
+                        -else
+                            =render :partial => 'users/user_name', :locals => {:user => @user}
+                            isn't following anyone!
+                        %br
+                        %small
+                            %a{:href => recipes_new_path} Click here
+                            to view new user-submitted recipes. Follow the users creating your favorites!
             #cabinet_tab.cabinet.tab-pane.fade.in
                 %h2 Liquor Cabinet
                 %hr

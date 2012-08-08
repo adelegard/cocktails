@@ -12,7 +12,8 @@
 	=render :partial => '/widgets/facebook', :locals => {:href => "http://www.blahcocktails.com/recipe/#{@recipe.id}"}
 	.social
 		=render :partial => '/widgets/twitter'
-=render :partial => '/recipes/rating_links'
+-user_rating = @recipe_user != nil ? @recipe_user.rating : nil
+=render :partial => '/recipes/rating_links', :locals => {:recipe_id => @recipe.id, :user_rating => user_rating, :avg_rating => @avg_rating, :num_rated => @num_rated}
 =render :partial => '/widgets/vote_tastes'
 %br
 %br

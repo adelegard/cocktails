@@ -26,3 +26,9 @@ $(function() {
         return false;
     });
 });
+var add_pinterest_btn = function(iframe_selector, insert_before_selector, page_url, photo_url, description) {
+    $(iframe_selector).remove();
+    $(insert_before_selector).before("<a class='pin-it-button' count-layout='none' href='http://pinterest.com/pin/create/button/?url="+
+        page_url + "&media=" + photo_url + "&description=" + description + "'>" +
+        "<img border = '0' src = '//assets.pinterest.com/images/PinExt.png' title = 'Pin It'/></a>");
+};
