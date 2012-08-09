@@ -20,7 +20,7 @@ Cocktails::Application.routes.draw do
 
 	#recipe lists
 	match '/recipes/popular' => 'recipes#popular', :as => :recipes_popular
-	match '/recipes/new' => 'recipes#new_recipes', :as => :recipes_new
+	match '/recipes/recent' => 'recipes#new_recipes', :as => :recipes_new
 
 	#recipe pages
 	match '/recipes/show' => 'recipes#show'
