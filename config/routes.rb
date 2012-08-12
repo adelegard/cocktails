@@ -1,4 +1,8 @@
 Cocktails::Application.routes.draw do
+  namespace :admin do
+    resources :users
+  end
+
   resources :user_follows
 
 	devise_for :users, :path_names => { :sign_up => "register" }, 

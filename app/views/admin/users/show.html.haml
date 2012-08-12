@@ -1,0 +1,25 @@
+%h1
+  =@user.email
+-unless @user.nickname.nil?
+  %h2
+    = @user.nickname
+%p
+  %h3 stats
+  %ul.stats
+    %li
+      Logged in         
+      = "#{pluralize(@user.sign_in_count, 'time')}, most recently #{time_ago_in_words(@user.current_sign_in_at)} ago"
+      %small
+        = @user.current_sign_in_at
+    %li
+      = "#{pluralize(@user.followers.size, 'follower')}"
+    %li
+      = "#{pluralize(@user.recipes.size, 'recipe')}"
+    %li 
+      Roles
+      %ul
+        -@user.roles.each do |role|
+          %li 
+            = role.name.humanize
+      
+  

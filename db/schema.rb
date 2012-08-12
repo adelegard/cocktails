@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120805011539) do
+ActiveRecord::Schema.define(:version => 20120812174418) do
 
   create_table "authentications", :force => true do |t|
     t.string   "provider"
@@ -69,9 +69,10 @@ ActiveRecord::Schema.define(:version => 20120805011539) do
     t.integer  "recipe_id"
     t.integer  "ingredient_id"
     t.integer  "order"
-    t.datetime "created_at",    :null => false
-    t.datetime "updated_at",    :null => false
+    t.datetime "created_at",                   :null => false
+    t.datetime "updated_at",                   :null => false
     t.string   "amount"
+    t.integer  "recipe_count",  :default => 0
   end
 
   create_table "recipe_photos", :force => true do |t|
@@ -110,9 +111,22 @@ ActiveRecord::Schema.define(:version => 20120805011539) do
     t.integer  "created_by_user_id"
     t.boolean  "delta",                                             :default => true, :null => false
     t.integer  "view_count"
-    t.integer  "servings"
+    t.integer  "servings",                                          :default => 1
     t.text     "inspiration"
     t.integer  "shared"
+  end
+
+  create_table "roles", :force => true do |t|
+    t.string   "name"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "roles", ["name"], :name => "index_roles_on_name", :unique => true
+
+  create_table "roles_users", :id => false, :force => true do |t|
+    t.integer "role_id"
+    t.integer "user_id"
   end
 
   create_table "user_follows", :force => true do |t|

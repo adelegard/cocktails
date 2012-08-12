@@ -1,0 +1,8 @@
+%h1 All Users
+
+%ul
+  -@users.each do |user|
+    %li.striped
+      =link_to(user.email, admin_user_path(user))
+
+= will_paginate @users

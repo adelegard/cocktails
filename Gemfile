@@ -23,6 +23,7 @@ gem 'delayed_job_active_record'
 gem "dynamic_form"
 gem 'gravtastic'
 gem 'fb-channel-file'
+gem 'cancan'
 
 # Gems used only for assets and not required
 # in production environments by default.

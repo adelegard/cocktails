@@ -4,6 +4,8 @@ class User < ActiveRecord::Base
   has_many :recipe, :through => :recipe_users
   has_many :recipe_photos
   has_many :authentications
+  has_and_belongs_to_many :roles
+  
   # Include default devise modules. Others available are:
   # :token_authenticatable, :encryptable, :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
@@ -64,6 +66,18 @@ class User < ActiveRecord::Base
         end
       end
     end
+  end
+  
+  def role?(role)
+    return !!self.roles.find_by_name(role.to_s)
+  end
+  
+  def followers
+    UserFollow.getFollowers(self.id)
+  end
+  
+  def recipes
+    Recipe.where(:created_by_user_id => self.id)
   end
 
 end
