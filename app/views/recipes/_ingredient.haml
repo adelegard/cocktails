@@ -23,5 +23,7 @@
                 %a.toggle_in_lc{:href => "#"}= lc_message
             %li.divider
         %li
+            %a{:href => ingredient_detail_path(ingredient[:id])} View Details
+        %li
             %a.see_other{:href => "/search?spirit=#{ingredient[:ingredient]}"} See other recipes with this
 %br

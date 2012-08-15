@@ -43,17 +43,17 @@ class RecipeUser < ActiveRecord::Base
 		end
 
 		def getRatedRecipesByUserId(params, user_id)
-		    return Recipe.joins("JOIN recipe_users ru ON ru.recipe_id = recipes.id")
-		                      .where('ru.rating is not null AND ru.user_id = ?', user_id)
-		                      .paginate(:order => "rating_count DESC, rating_avg DESC",
+		    return Recipe.joins("JOIN recipe_users ru ON ru.recipe_id = recipes.id").
+		    					where('ru.rating is not null AND ru.user_id = ?', user_id).
+		    					paginate(:order => "rating_count DESC, rating_avg DESC",
 		                                :page => params[:page],
 		                                :per_page => params[:per_page])
 		end
 
 		def getFavoriteRecipesByUserId(params, user_id)
-		    return Recipe.joins('JOIN recipe_users ru ON ru.recipe_id = recipes.id')
-		                      .where('ru.starred = 1 AND ru.user_id = ?', user_id)
-		                      .paginate(:order => "rating_count DESC, rating_avg DESC",
+		    return Recipe.joins('JOIN recipe_users ru ON ru.recipe_id = recipes.id').
+		    					where('ru.starred = 1 AND ru.user_id = ?', user_id).
+		    					paginate(:order => "rating_count DESC, rating_avg DESC",
 		                                :page => params[:page],
 		                                :per_page => params[:per_page])
 		end

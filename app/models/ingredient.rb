@@ -27,7 +27,7 @@ class Ingredient < ActiveRecord::Base
 		      else
 		        in_liquor_cabinet = nil
 		      end
-		      ingredients << {:ingredient => ingredient.ingredient, :order => recipe_ingredient.order, :amount => recipe_ingredient.amount, :in_liquor_cabinet => in_liquor_cabinet}
+		      ingredients << {:id => ingredient.id, :ingredient => ingredient.ingredient, :order => recipe_ingredient.order, :amount => recipe_ingredient.amount, :in_liquor_cabinet => in_liquor_cabinet}
 			  ingredients.sort_by! { |i| [ i[:in_liquor_cabinet] ? 0 : 1, i[:ingredient].downcase ] }
 		    end
 		    return ingredients

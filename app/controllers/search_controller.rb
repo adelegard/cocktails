@@ -29,29 +29,10 @@ class SearchController < BaseRecipesController
     order = "#{params[:sort]} #{params[:direction]}"
     with = {:ingredient_ids => ingredients.collect{|i| i.id}}
 
-    if @q.blank?
-      if ingredients.empty?
-        #return all recipes
-        @recipes = Recipe.paginate(:order => "#{params[:sort]} #{params[:direction]}",
-                                   :page => params[:page], :per_page => params[:per_page])
-      else
-        @recipes = Recipe.search(:field_weights => {:ingredients => 10, :directions => 1},
-                                 :with_all => with,
-                                 :order => order,
-                                 :page => params[:page], :per_page => params[:per_page])
-      end
-    else
-      @recipes = Recipe.search("#{@q}",
-                                :field_weights => {:title => 20, :ingredients => 10, :directions => 1},
-                                :with_all => with,
-                                :order => order,
-                                :page => params[:page], :per_page => params[:per_page])
-    end
-
+    @recipes = Recipe.searchByStringAndIngredientIds(@q, ingredients.collect{|i| i.id}, order, params[:page], params[:per_page])
+    
     if @recipes.size == 1
-      # Then just bring them to the recipe's show page
-      setup_show_with_recipe(@recipes.first)
-      render 'recipes/show'
+      redirect_to @recipes.first
     end
 
     @total_ratings = Recipe.total_ratings(@recipes)

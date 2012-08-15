@@ -1,0 +1,32 @@
+-if photos.length > 0
+    #gallery.content
+        #controls.controls
+        .slideshow-container
+            #loading.loader
+            #slideshow.slideshow
+        #caption.caption-container
+    #thumbs.navigation
+        %ul.thumbs.noscript
+            -photos.each do |p|
+                -disqus_identifier = ""
+                -disqus_url = ""
+                -is_recipe ||= false
+                -is_ingredient ||= false
+                -if is_recipe
+                    -disqus_identifier = "#{p.recipe_id}" + "_" + "#{p.id}"
+                    -disqus_url = recipe_photo_path(p.recipe_id, p.id)
+                -elsif is_ingredient
+                    -disqus_identifier = "#{p.ingredient_id}" + "_" + "#{p.id}"
+                    -disqus_url = ingredient_photo_path(p.ingredient_id, p.id)
+                %li
+                    %a.thumb{:href => p.photo.url(:large), :name => "#{p.id}", :title => "your image title"}
+                        =image_tag p.photo.url(:thumb), :alt => "your image title"
+                    .caption
+                        %input.disqus_identifier{:type => "hidden", :value => disqus_identifier}
+                        %input.disqus_url{:type => "hidden", :value => disqus_url}
+-else
+    %h2
+        No photos uploaded!
+        -add_photo_url ||= false
+        -if add_photo_url
+            %a{:href => add_photo_url} Add a photo!

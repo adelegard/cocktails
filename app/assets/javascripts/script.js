@@ -82,7 +82,7 @@ $(function() {
       });
     },
     close: function(event, ui){
-    	$(this).closest('form').submit();
+      $(this).closest('form').submit();
     },
     minLength: 2,
     delay: 300

@@ -53,4 +53,6 @@
               .popularity{:style => "width:#{percent}%"}
     //= will_paginate full_recipes
   -else
-    %h2 No results found!
+    -hide_no_results_msg ||= false
+    -if !hide_no_results_msg
+      %h2 No results found!

@@ -1,0 +1,7 @@
+// Should the follow button even be displayed?
+-if user_signed_in?
+    -in_cabinet_class = in_cabinet == true ? "dn" : ""
+    -not_in_cabinet_class = in_cabinet == true ? "" : "dn"
+    .btn_container
+        %a.btn.btn-large.btn-danger.cabinet.add{"data-href" => "/cabinet/add", "data-id" => ingredient_id, :class => in_cabinet_class} Add to Cabinet
+        %a.btn.btn-large.btn-danger.cabinet.remove.disabled{"data-href" => "/cabinet/remove", "data-id" => ingredient_id, :class => not_in_cabinet_class} Remove from Cabinet

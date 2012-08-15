@@ -63,6 +63,7 @@ if (typeof(Cocktails.GallerifficHelper) === 'undefined') {
             Cocktails.DisqusHelper.load_disqus(the_caption, ident, url, function() {
               caption.fadeTo('fast', 1.0);
             });
+            //add_pinterest_btn('.photos_tab_content iframe', '.photos_tab_content .controls .ss-controls', 'http://www.pageurltest.com', 'http://img12321.jpg', 'some desc');
           },
           onImageAdded: undefined, // accepts a delegate like such: function(imageData, $li) { ... }
           onImageRemoved: undefined // accepts a delegate like such: function(imageData, $li) { ... }

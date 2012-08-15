@@ -20,7 +20,7 @@ Cocktails::Application.routes.draw do
 
 	#recipe lists
 	match '/recipes/popular' => 'recipes#popular', :as => :recipes_popular
-	match '/recipes/new_recipes' => 'recipes#new_recipes', :as => :recipes_new
+	match '/recipes/recent' => 'recipes#new_recipes', :as => :recipes_new
 
 	#recipe pages
 	match '/recipes/show' => 'recipes#show'
@@ -34,19 +34,22 @@ Cocktails::Application.routes.draw do
 	match '/recipes/rate' => 'recipe_users#rate'
 
 	#recipe photos
-	match '/recipes/uploadphoto' => 'recipes#uploadphoto'
-	match '/recipes/do_upload_photo' => 'recipes#do_upload_photo', :as => :recipe_do_upload_photo, :via => :put
+	match '/recipes/:id/uploadphoto' => 'recipes#uploadphoto', :as => :recipe_upload_photo
+	match '/recipes/:id/do_upload_photo' => 'recipes#do_upload_photo', :as => :recipe_do_upload_photo, :via => :put
+	match '/recipes/:recipe_id/photos/:photo_id' => 'recipes#photos', :as => :recipe_photo
 
 	#user pages
 	match '/settings/password' => 'users/password#edit', :as => :edit_user_pass
 	match '/settings/password/update' => 'users/password#update', :as => :user_pass, :via => :put
 	match '/settings/email' => 'users/email#edit', :as => :edit_user_email
 	match '/settings/email/update' => 'users/email#update', :as => :user_email, :via => :put
-	match '/cabinet' => 'liquor_cabinet#view'
+	match '/cabinet' => 'liquor_cabinet#view', :as => :cabinet
 
 	#user actions
 	match '/cabinet/add' => 'liquor_cabinet#add'
+	match '/cabinet/add_by_id' => 'liquor_cabinet#add_by_id'
 	match '/cabinet/remove' => 'liquor_cabinet#remove'
+	match '/cabinet/remove_by_id' => 'liquor_cabinet#remove_by_id'
 
 	#user follow
 	match '/user/:id/follow' => 'user_follows#follow'
@@ -59,6 +62,13 @@ Cocktails::Application.routes.draw do
 	match '/user/:id/rated' => 'users#profile_rated', :as => :user_profile_rated
 	match '/user/:id/photos' => 'users#profile_photos', :as => :user_profile_photos
 	match '/user/:id/cabinet' => 'users#profile_cabinet', :as => :user_profile_cabinet
+
+	#ingredient pages
+	match '/ingredient/:id' => 'ingredients#detail', :as => :ingredient_detail
+	match '/ingredient/:ingredient_id/photos/:photo_id' => 'ingredients#photos', :as => :ingredient_photo
+
+	match '/ingredient/:id/uploadphoto' => 'ingredients#uploadphoto', :as => :ingredient_upload_photo
+	match '/ingredient/:id/do_upload_photo' => 'ingredients#do_upload_photo', :as => :ingredient_do_upload_photo, :via => :put
 
 	match '/search' => 'search#search'
 	match '/search/autocomplete_recipes' => 'search#autocomplete_recipes'

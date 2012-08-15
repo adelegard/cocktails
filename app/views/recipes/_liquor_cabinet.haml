@@ -6,18 +6,27 @@
     %tbody
         %tr.dn
             %td
-                %l.icon-remove
+                %i.icon-remove
                 -ing = {}
                 -ing[:ingredient] = "place_holder"
+                -ing[:id] = -1
                 .lc_ingredient.dib= render :partial => '/recipes/ingredient', :locals => {:ingredient => ing}
         -ingredients.each do |ingredient|
             %tr
                 %td
                     -if editable
-                        %l.icon-remove
+                        %i.icon-remove
                     .lc_ingredient.dib= render :partial => '/recipes/ingredient', :locals => {:ingredient => ingredient}
-%br
 -disabled = false
 -if ingredients.size == 0
     -disabled = true
-%a.view_makeable_recipes.btn.btn-primary{:href => "/recipes/liquor_cabinet", "data-loading-text" => "Calculating...", :disabled => disabled} View Makeable Recipes
+-if editable || ingredients.size > 0
+    %br
+    %a.view_makeable_recipes.btn.btn-primary{:href => "/recipes/liquor_cabinet", "data-loading-text" => "Calculating...", :disabled => disabled} View Makeable Recipes
+-else
+    %h2
+        Nothing is in here! So sad!
+        %br
+        %small
+            Show them how it's done and
+            %a{:href => cabinet_path} add to your liquor cabinet

@@ -54,6 +54,36 @@ class Recipe < ActiveRecord::Base
       return full_recipe
     end
 
+    def getRecipeCountByIngredient(ingredient_id)
+      return RecipeIngredient.count_by_sql ["select count(*) from recipe_ingredients where ingredient_id = ?", ingredient_id]
+    end
+
+    def searchByStringAndIngredientIds(search_term, ingredient_ids, order, page, per_page)
+        recipes = []
+        if search_term != nil && !search_term.blank?
+          if ingredient_ids != nil && ingredient_ids.length > 0
+            recipes = Recipe.search("#{search_term}",
+                                    :field_weights => {:title => 20, :ingredients => 10, :directions => 1},
+                                    :with_all => {:ingredient_ids => ingredient_ids},
+                                    :order => order,
+                                    :page => page, :per_page => per_page)
+          else
+            recipes = Recipe.search("#{search_term}",
+                                    :field_weights => {:title => 20, :ingredients => 10, :directions => 1},
+                                    :order => order,
+                                    :page => page, :per_page => per_page)
+          end
+        elsif ingredient_ids != nil && ingredient_ids.length > 0
+          recipes = Recipe.search(:field_weights => {:ingredients => 10, :directions => 1},
+                                  :with_all => {:ingredient_ids => ingredient_ids},
+                                  :order => order,
+                                  :page => page, :per_page => per_page)
+        else
+          recipes = Recipe.search(:order => order, :page => page, :per_page => per_page)
+        end
+        return recipes
+    end
+
     def new_recipes(params)
         params[:direction] ||= "DESC"
         order = "created_at #{params[:direction]}"
@@ -65,6 +95,24 @@ class Recipe < ActiveRecord::Base
 
     def total_ratings(recipes)
       recipes.inject(0){|sum, recipe| sum + recipe.rating_count}
+    end
+
+    def getNewRecipesWithIngredients(params, ingredient_ids)
+        params[:direction] ||= "DESC"
+        order = "created_at #{params[:direction]}"
+        return Recipe.search(:field_weights => {:created_at => 10, :title => 1},
+                             :order => order,
+                             :with => {:created_at => 1.month.ago..Time.now, :ingredient_ids => ingredient_ids},
+                             :page => params[:page], :per_page => params[:per_page])
+    end
+
+    def getPopularRecipesWithIngredients(params, ingredient_ids)
+        params[:direction] ||= "DESC"
+        order = "rating_count #{params[:direction]}"
+        return Recipe.search(:field_weights => {:created_at => 10, :title => 1},
+                             :order => order,
+                             :with => {:ingredient_ids => ingredient_ids},
+                             :page => params[:page], :per_page => params[:per_page])
     end
 
     def getPopularRecipes(params)
@@ -92,7 +140,6 @@ class Recipe < ActiveRecord::Base
       recipe.shared = recipe.shared ? recipe.shared + 1 : 1 #increment the shared count by 1
       recipe.save
     end
-
 
     def getAllGlasses
       return Recipe.uniq.pluck(:glass).sort
