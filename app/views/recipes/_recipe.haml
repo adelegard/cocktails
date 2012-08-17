@@ -25,7 +25,7 @@
 %br
 .directions
 	%h3 Directions
-	= @recipe.directions
+	.edit_area{'data-save-url' => recipe_save_attr_path(@recipe.id), 'data-save-name' => 'directions'}= @recipe.directions
 %br
 -if @recipe.alcohol != ""
 	.alcohol_percent

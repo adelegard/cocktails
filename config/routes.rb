@@ -31,7 +31,7 @@ Cocktails::Application.routes.draw do
 	match '/recipes/:id/unfavorite' => 'recipe_users#unfavorite'
 	match '/recipes/:id/like' => 'recipe_users#like'
 	match '/recipes/:id/rate' => 'recipe_users#rate'
-	match '/recipes/rate' => 'recipe_users#rate'
+	match '/recipes/:id/save_attr' => 'recipe_users#save_attr', :as => :recipe_save_attr
 
 	#recipe photos
 	match '/recipes/:id/uploadphoto' => 'recipes#uploadphoto', :as => :recipe_upload_photo

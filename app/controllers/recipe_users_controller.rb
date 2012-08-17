@@ -6,6 +6,17 @@ class RecipeUsersController < BaseRecipesController
     @recipe_user = RecipeUser.create(params[:recipe_user])
   end
 
+  def save_attr
+    recipe = Recipe.find(params[:id])
+    respond_to do |format|
+      if recipe.update_attribute(params[:attr], params[:value])
+        format.js { render :text => params[:value] }
+      else
+        format.js { render :text => recipe[params[:attr]] }
+      end
+    end
+  end
+
   def created
     @recipes = Recipe.getCreatedRecipesByUserId(params, current_user.id)
     @recipe_users = RecipeUser.getRecipeUsers(@recipes, current_user.id)
@@ -73,4 +84,5 @@ class RecipeUsersController < BaseRecipesController
       format.js { render :nothing => true }
     end
   end
+
 end

@@ -285,6 +285,23 @@ form.devise {
 	}
 }
 
+.inline_edit input {
+	font-size: inherit;
+	font-weight: inherit;
+	padding: 5px;
+}
+.edit,
+.edit:active,
+.edit_area,
+.edit_area:active {
+	//padding: 5px;
+	border: 2px solid transparent;
+}
+.edit:hover,
+.edit_area:hover {
+	border: 2px solid #CCC;
+}
+
 ul.recipe_ingredients {
 	list-style-type: none;
 	margin: 0;

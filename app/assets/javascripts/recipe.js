@@ -48,6 +48,31 @@ if (typeof(Cocktails.Recipe) === 'undefined') {
         }, ".vote_container .vote_button:not(.voted)");
         $(".vote_container .vote_button").on("click", this._vote_btn_clicked);
 
+        // editing
+        $('.edit').each(function() {
+          var that = $(this);
+          that.editable(that.attr('data-save-url'), {
+            submitdata : {attr: that.attr('data-save-name')},
+            cssclass      : 'inline_edit',
+            tooltip       : 'Click to edit...',
+            indicator     : 'Saving...'
+            //onblur        : 'ignore' //uncomment this if you want to style it
+          });
+        });
+        $('.edit_area').each(function() {
+          var that = $(this);
+          that.editable(that.attr('data-save-url'), {
+            type          : 'textarea',
+            submitdata    : {attr: that.attr('data-save-name')},
+            cssclass      : 'inline_edit',
+            cancel        : 'Cancel',
+            submit        : 'OK',
+            tooltip       : 'Click to edit...'
+            //onblur        : 'ignore' //uncomment this if you want to style it
+          });
+        });
+
+
         this._initialized = true;
       }
     },

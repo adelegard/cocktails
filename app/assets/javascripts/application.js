@@ -20,6 +20,7 @@
 //= require jquery/jquery.galleriffic
 //= require jquery/jquery.opacityrollover
 //= require jquery/jquery.history
+//= require jquery/jquery.jeditable
 //= require ajax-chosen.min
 //= require chosen-jquery
 //= require gravtastic
