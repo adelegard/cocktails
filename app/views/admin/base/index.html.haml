@@ -1,0 +1,10 @@
+%h1 Dashboard
+%h3
+  Daily Stats
+  %ul
+    %li
+      = link_to pluralize(@new_users, 'new user'), admin_users_path
+    %li
+      = link_to pluralize(@new_recipe, 'new recipe'), admin_recipes_path
+    %li
+      = pluralize(@new_ingredient, 'new ingredient')

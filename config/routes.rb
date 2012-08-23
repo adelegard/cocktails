@@ -1,6 +1,7 @@
 Cocktails::Application.routes.draw do
   namespace :admin do
-    resources :users
+    match '/' => 'base#index'
+    resources :users, :recipes, :ingredients
   end
 
   resources :user_follows
