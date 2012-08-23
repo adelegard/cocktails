@@ -4,7 +4,11 @@ module Admin
 
     private
     def verify_admin
-      redirect_to root_url unless current_user.role?(:admin)
+      if current_user.blank?
+        redirect_to root_url
+      else
+        redirect_to root_url unless current_user.role?(:admin)
+      end
     end
   end
 end

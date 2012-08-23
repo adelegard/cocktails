@@ -10,5 +10,12 @@ module Admin
     def show
       @user = User.find(params[:id])
     end
+    
+    def update_status
+      @user = User.find(params[:id])
+      @user.banned = params[:banned]
+      @user.save!
+    end
+    
   end
 end

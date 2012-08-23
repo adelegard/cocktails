@@ -79,5 +79,9 @@ class User < ActiveRecord::Base
   def recipes
     Recipe.where(:created_by_user_id => self.id)
   end
+  
+  def active_for_authentication?
+    super && !self.banned
+  end
 
 end
