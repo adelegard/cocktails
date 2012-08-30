@@ -5,6 +5,13 @@ $in_liquor_cabinet_background_color_hover: #51a351;
 $not_in_liquor_cabinet_background_color: #EE5F5B;
 $not_in_liquor_cabinet_background_color_hover: #bd362f;
 
+::-webkit-input-placeholder {
+   color: #BBB;
+}
+input:-moz-placeholder {
+   color: #BBB;  
+}
+
 .separatorVert {
 	color: #989898;
 	font-size: 11px;

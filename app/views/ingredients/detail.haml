@@ -61,4 +61,4 @@
                 %h2 Comments
                 %hr
                 %input.disqus_identifier{:type => "hidden", :value => "ing_#{@ingredient.id}"}
-                %input.disqus_url{:type => "hidden", :value => ingredient_detail_path(@ingredient.id)}
+                %input.disqus_url{:type => "hidden", :value => ingredient_path(@ingredient)}

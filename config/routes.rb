@@ -22,9 +22,6 @@ Cocktails::Application.routes.draw do
 	match '/recipes/popular' => 'recipes#popular', :as => :recipes_popular
 	match '/recipes/recent' => 'recipes#new_recipes', :as => :recipes_new
 
-	#recipe pages
-	match '/recipes/show' => 'recipes#show'
-
 	#recipe actions
 	match '/recipes/:id/share' => 'recipes#share'
 	match '/recipes/:id/favorite' => 'recipe_users#favorite'
@@ -56,7 +53,6 @@ Cocktails::Application.routes.draw do
 	match '/user/:id/unfollow' => 'user_follows#unfollow'
 
 	#user pages
-	match '/user/:id' => 'users#profile', :as => :user_profile
 	match '/user/:id/recipes' => 'users#profile_recipes', :as => :user_profile_recipes
 	match '/user/:id/favorites' => 'users#profile_favorites', :as => :user_profile_favorites
 	match '/user/:id/rated' => 'users#profile_rated', :as => :user_profile_rated
@@ -64,7 +60,6 @@ Cocktails::Application.routes.draw do
 	match '/user/:id/cabinet' => 'users#profile_cabinet', :as => :user_profile_cabinet
 
 	#ingredient pages
-	match '/ingredient/:id' => 'ingredients#detail', :as => :ingredient_detail
 	match '/ingredient/:ingredient_id/photos/:photo_id' => 'ingredients#photos', :as => :ingredient_photo
 
 	match '/ingredient/:id/uploadphoto' => 'ingredients#uploadphoto', :as => :ingredient_upload_photo
@@ -77,6 +72,8 @@ Cocktails::Application.routes.draw do
 
 	resources :recipes
 	resources :recipe_users
+	resources :users
+	resources :ingredients
 
 	unless Rails.application.config.consider_all_requests_local
 		match '*not_found', to: 'errors#error_404'

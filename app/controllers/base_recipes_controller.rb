@@ -7,7 +7,8 @@ class BaseRecipesController < ApplicationController
   end
 
   def setup_show
-    params.delete(:id) unless params[:id].to_i > 0
+    # notsure what to do here now that params[:id] can be either an integer or a string. Commenting out for now.
+    #params.delete(:id) unless params[:id].to_i > 0
     recipe = Recipe.find(params[:id])
     user_id = current_user != nil && current_user.id ? current_user.id : nil
     @full_recipe = Recipe.getFullRecipe(recipe, user_id)

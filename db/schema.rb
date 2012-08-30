@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120814012350) do
+ActiveRecord::Schema.define(:version => 20120830205423) do
 
   create_table "authentications", :force => true do |t|
     t.string   "provider"
@@ -37,6 +37,17 @@ ActiveRecord::Schema.define(:version => 20120814012350) do
 
   add_index "delayed_jobs", ["priority", "run_at"], :name => "delayed_jobs_priority"
 
+  create_table "friendly_id_slugs", :force => true do |t|
+    t.string   "slug",                         :null => false
+    t.integer  "sluggable_id",                 :null => false
+    t.string   "sluggable_type", :limit => 40
+    t.datetime "created_at"
+  end
+
+  add_index "friendly_id_slugs", ["slug", "sluggable_type"], :name => "index_friendly_id_slugs_on_slug_and_sluggable_type", :unique => true
+  add_index "friendly_id_slugs", ["sluggable_id"], :name => "index_friendly_id_slugs_on_sluggable_id"
+  add_index "friendly_id_slugs", ["sluggable_type"], :name => "index_friendly_id_slugs_on_sluggable_type"
+
   create_table "ingredient_photos", :force => true do |t|
     t.string   "photo_file_name"
     t.string   "photo_content_type"
@@ -56,7 +67,10 @@ ActiveRecord::Schema.define(:version => 20120814012350) do
     t.datetime "created_at",                   :null => false
     t.datetime "updated_at",                   :null => false
     t.boolean  "delta",      :default => true, :null => false
+    t.string   "slug"
   end
+
+  add_index "ingredients", ["slug"], :name => "index_ingredients_on_slug", :unique => true
 
   create_table "liquor_cabinets", :id => false, :force => true do |t|
     t.integer  "user_id"
@@ -113,7 +127,10 @@ ActiveRecord::Schema.define(:version => 20120814012350) do
     t.integer  "servings"
     t.text     "inspiration"
     t.integer  "shared"
+    t.string   "slug"
   end
+
+  add_index "recipes", ["slug"], :name => "index_recipes_on_slug"
 
   create_table "user_follows", :force => true do |t|
     t.integer  "user_id"
@@ -140,9 +157,13 @@ ActiveRecord::Schema.define(:version => 20120814012350) do
     t.string   "url"
     t.string   "location"
     t.text     "about_me"
+    t.string   "slug"
+    t.string   "profile_page"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
+  add_index "users", ["profile_page"], :name => "index_users_on_profile_page", :unique => true
   add_index "users", ["reset_password_token"], :name => "index_users_on_reset_password_token", :unique => true
+  add_index "users", ["slug"], :name => "index_users_on_slug", :unique => true
 
 end

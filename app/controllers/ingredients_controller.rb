@@ -2,7 +2,7 @@ class IngredientsController < ApplicationController
 
   before_filter :authenticate_user!, :except => [:detail]
 
-  def detail
+  def show
     params[:direction] ||= "DESC"
     params[:page] ||= 1
     params[:per_page] ||= 20
@@ -52,9 +52,9 @@ class IngredientsController < ApplicationController
 
     respond_to do |format|
       if ingredient_photo.save
-        format.html { redirect_to ingredient_detail_path(ingredient.id), notice: 'Photo was successfully added!' }
+        format.html { redirect_to ingredient_path(ingredient), notice: 'Photo was successfully added!' }
       else
-        format.html { redirect_to ingredient_detail_path(ingredient.id), error: 'Error uploading photo :(' }
+        format.html { redirect_to ingredient_path(ingredient), error: 'Error uploading photo :(' }
       end
     end
   end

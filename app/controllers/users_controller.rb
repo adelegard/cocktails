@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
 
-  def profile
+  def show
     @user = User.find(params[:id])
     @lc_ingredients = LiquorCabinet.getByUserId(@user.id)
     @photos = RecipePhoto.where(:user_id => @user.id)

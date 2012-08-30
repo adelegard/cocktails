@@ -118,7 +118,7 @@
                 %hr
                 -@following_users.each do |f|
                     .follow_container
-                        %a{:href => user_profile_path(f.id)}
+                        %a{:href => user_path(f)}
                             %img.fl.avatar_medium{"data-email" => f.email}
                         %span.tac=f.name
                         =render :partial => '/users/follow_btn', :locals => {:is_following => true, :user_id => f.id}

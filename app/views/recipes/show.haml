@@ -22,7 +22,7 @@
         -if @recipe_creator
             %small
                 by
-                = link_to @recipe_creator.name, user_profile_path(@recipe_creator.id)
+                = link_to(@recipe_creator.name, @recipe_creator)
     .cl
 %ul.nav.nav-tabs
     %li{:class => @active_tab == nil ? "active" : ""}

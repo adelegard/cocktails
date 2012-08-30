@@ -68,11 +68,15 @@ $(function() {
     new_recipe_directions: {
       required: true,
       minlength: 5
+    },
+    f_user_profile_page: {
+      required: true,
+      minlength: 4
     }
   });
 
   // validate signup form on keyup and submit
-  $("form#new_recipe").validate({
+  $("form.validate").validate({
     errorClass: "help-inline",
     errorElement: "span",
     highlight:function(element, errorClass, validClass) {
