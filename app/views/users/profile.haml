@@ -2,13 +2,13 @@
 
 .page-header.profile
     %img.fl.avatar_large{"data-email" => @user.email}
-    .top_details
+    .top_details.span6
         %h1
             = @user.name
             %small=@user.location
         %br
-        %span.muted=@user.about_me
         %a.url{:href => @user.url}=@user.url
+        .expandable.muted=@user.about_me
         =render :partial => '/users/follow_btn', :locals => {:is_following => @is_following, :user_id => @user.id}
     .stats
         %a.left

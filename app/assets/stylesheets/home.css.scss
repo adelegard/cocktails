@@ -12,6 +12,10 @@ input:-moz-placeholder {
    color: #BBB;  
 }
 
+.expandable {
+	display: none;
+}
+
 .separatorVert {
 	color: #989898;
 	font-size: 11px;
@@ -529,15 +533,12 @@ ul.recipe_ingredients {
 
 .profile img {
 	float: left;
-	margin-right: 15px;
 }
 .profile .top_details {
 	float: left;
 	text-align: left;
-	width: 450px;
 	position: relative;
 	height: 150px;
-	overflow: hidden;
 
 	.btn_container {
 		position: absolute;

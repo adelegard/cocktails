@@ -1,6 +1,6 @@
 class IngredientsController < ApplicationController
 
-  before_filter :authenticate_user!, :except => [:detail]
+  before_filter :authenticate_user!, :except => [:show]
 
   def show
     params[:direction] ||= "DESC"

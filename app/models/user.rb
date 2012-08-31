@@ -3,7 +3,14 @@ class User < ActiveRecord::Base
   extend FriendlyId
   friendly_id :friendly_name, use: [:slugged, :history]
   def friendly_name
-    profile_page ? "#{profile_page}" : "#{id}"
+    if profile_page
+      "#{profile_page}"
+    elsif name
+      # lower case and remove space(s)
+      "#{name.downcase.gsub(/\s+/, "")}"
+    else
+      "#{id}"
+    end
   end
 
   has_many :recipe_users

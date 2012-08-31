@@ -17,8 +17,9 @@
             %a{:href => recipe_upload_photo_path(@recipe.id)}
                 %i.icon-upload
                 %span Add a Photo
-    .dib
+    .span6
         %h1.recipe_title= @recipe.title
+        .inspiration.expandable.muted= @recipe.inspiration
         -if @recipe_creator
             %small
                 by

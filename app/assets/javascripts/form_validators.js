@@ -70,7 +70,7 @@ $(function() {
       minlength: 5
     },
     f_user_profile_page: {
-      required: true,
+      required: false,
       minlength: 4
     }
   });
