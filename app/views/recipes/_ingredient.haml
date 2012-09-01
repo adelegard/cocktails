@@ -1,6 +1,8 @@
+// ugh this file is confusing as shit. sorry
 -remove_message = "Remove from Liquor Cabinet"
 -add_message = "Add to Liquor Cabinet"
--the_ingredient = ingredient[:ingredient][:ingredient] != nil ? ingredient[:ingredient] : ingredient
+// if ingredient is a Hash then we know it was built up in Ingredient.ingredients_for_recipe and contains additional information
+-the_ingredient = ingredient.is_a?(Hash) ? ingredient[:ingredient] : ingredient
 -if ingredient[:in_liquor_cabinet]
     -ingredient_icon = "icon-ok"
     -ingredient_class = "in_liquor_cabinet"

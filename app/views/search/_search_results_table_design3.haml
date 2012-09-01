@@ -34,7 +34,7 @@
               = link_to(@the_recipe.title, @the_recipe, :class => "recipe_title")
               .ingredient_list{:class => !user_signed_in? ? "not_signed_in" : "" }
                 -full_recipe[:ingredients].each_with_index do |i, index|
-                  %span{:class => "in_lc_#{i[:in_liquor_cabinet]}"}=i[:ingredient]
+                  %span{:class => "in_lc_#{i[:in_liquor_cabinet]}"}=i[:ingredient][:ingredient]
                   -if index < full_recipe[:ingredients].size - 1
                     ,
             %td.wsnw
