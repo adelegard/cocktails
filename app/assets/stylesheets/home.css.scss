@@ -14,6 +14,21 @@ input:-moz-placeholder {
 
 .expandable {
 	display: none;
+	border-top: 3px solid transparent;
+	margin-top: 2px;
+}
+.expandable.expanded {
+	position: relative;
+	border: 1px solid #CCC;
+	border-left: 0px solid #CCC;
+	padding: 3px;
+	margin: -3px;
+	margin-top: 1px;
+	background-color: white;
+	@include border-radius(3px);
+  -webkit-box-shadow: 0 3px 3px #CCC, 2px 3px 3px #CCC, 0px 3px 3px #CCC;
+     -moz-box-shadow: 0 3px 3px #CCC, 2px 3px 3px #CCC, 0px 3px 3px #CCC;
+          box-shadow: 0 3px 3px #CCC, 2px 3px 3px #CCC, 0px 3px 3px #CCC;
 }
 
 .separatorVert {
@@ -266,6 +281,10 @@ form.devise {
 	&:hover {
 		background: transparent asset-url("star-hover.png", image) no-repeat center left;
 	}
+}
+
+.top_recipe_details {
+	height: 75px;
 }
 
 #recipe_actions,

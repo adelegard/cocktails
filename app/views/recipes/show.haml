@@ -17,13 +17,13 @@
             %a{:href => recipe_upload_photo_path(@recipe.id)}
                 %i.icon-upload
                 %span Add a Photo
-    .span6
+    .span6.top_recipe_details
         %h1.recipe_title= @recipe.title
         .inspiration.expandable.muted= @recipe.inspiration
-        -if @recipe_creator
-            %small
-                by
-                = link_to(@recipe_creator.name, @recipe_creator)
+    -if @recipe_creator
+        %small.span6
+            by
+            = link_to(@recipe_creator.name, @recipe_creator)
     .cl
 %ul.nav.nav-tabs
     %li{:class => @active_tab == nil ? "active" : ""}
