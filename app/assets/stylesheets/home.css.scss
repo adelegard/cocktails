@@ -25,6 +25,7 @@ input:-moz-placeholder {
 	margin: -3px;
 	margin-top: 1px;
 	background-color: white;
+	z-index: 1;
 	@include border-radius(3px);
   -webkit-box-shadow: 0 3px 3px #CCC, 2px 3px 3px #CCC, 0px 3px 3px #CCC;
      -moz-box-shadow: 0 3px 3px #CCC, 2px 3px 3px #CCC, 0px 3px 3px #CCC;

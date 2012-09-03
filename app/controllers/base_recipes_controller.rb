@@ -30,6 +30,11 @@ class BaseRecipesController < ApplicationController
     @num_liked = full_recipe[:num_liked]
     @num_rated = full_recipe[:num_rated]
     @avg_rating = full_recipe[:avg_rating]
+
+    # friendly_id magic that redirects users with an old url to the current one
+    if request.path != recipe_path(@recipe)
+      redirect_to @recipe, :status => :moved_permanently
+    end
   end
 
 end

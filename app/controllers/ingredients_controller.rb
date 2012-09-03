@@ -34,7 +34,12 @@ class IngredientsController < ApplicationController
       @recipe_users_new = RecipeUser.getRecipeUsers(@recipes_new, current_user.id)
     end
 
-    render 'ingredients/detail'
+    # friendly_id magic that redirects users with an old url to the current one
+    if request.path != ingredient_path(@ingredient)
+      redirect_to @ingredient, :status => :moved_permanently
+    else
+      render 'ingredients/detail'
+    end
   end
 
   def uploadphoto
