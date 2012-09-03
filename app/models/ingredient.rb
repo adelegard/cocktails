@@ -1,6 +1,6 @@
 class Ingredient < ActiveRecord::Base
 	extend FriendlyId
-	friendly_id :ingredient, use: [:slugged]
+	friendly_id :ingredient, use: [:slugged, :history]
 
 	has_many :recipe_ingredients
 	has_many :recipe, :through => :recipe_ingredients
