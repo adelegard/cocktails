@@ -18,30 +18,34 @@
                 %i.icon-upload
                 %span Add a Photo
     .span6.top_recipe_details
-        %h1.recipe_title= @recipe.title
+        %h1.recipe_title
+            = @recipe.title
+            -if @recipe_creator
+                %small
+                    by
+                    = link_to(@recipe_creator.name, @recipe_creator)
+        -user_rating = @recipe_user != nil ? @recipe_user.rating : nil
+        =render :partial => '/recipes/rating_links', :locals => {:recipe_id => @recipe.id, :user_rating => user_rating, :avg_rating => @avg_rating, :num_rated => @num_rated}
         .inspiration.expandable.muted= @recipe.inspiration
-    -if @recipe_creator
-        %small.span6
-            by
-            = link_to(@recipe_creator.name, @recipe_creator)
     .cl
-%ul.nav.nav-tabs
-    %li{:class => @active_tab == nil ? "active" : ""}
-        %a{:href => "#recipe", "data-toggle" => "tab"} Recipe
-    %li.comments_tab{:class => @active_tab == "comments" ? "active" : ""}
-        %a{:href => "#{request.fullpath}#disqus_thread#comments", "data-toggle" => "tab", "data-disqus-identifier" => "#{@recipe.id}"}
-    %li.photos_tab{:class => @active_tab == nil ? "photos" : ""}
-        %a{:href => "#photos", "data-toggle" => "tab"}
-            =@recipe_photos.length
-            Photos
-.tab-content
-    .tab-pane.fade.in#recipe{:class => @active_tab == nil ? "active" : ""}
-        =render :partial => 'recipes/recipe'
-    .tab-pane.fade.comments_tab_content#comments{:class => @active_tab == "comments" ? "active" : ""}
-        %input.disqus_identifier{:type => "hidden", :value => "#{@recipe.id}"}
-        %input.disqus_url{:type => "hidden", :value => recipes_path(@recipe.id)}
-    .tab-pane.fade.photos_tab_content#photos{:class => @active_tab == "photos" ? "active" : ""}
-        =render :partial => 'widgets/photos', :locals => {:photos => @recipe_photos, :is_recipe => true, :add_photo_url => recipe_upload_photo_path(@recipe.id)}
+.tabbable.tabs-left
+    %ul.nav.nav-tabs
+        %li{:class => @active_tab == nil ? "active" : ""}
+            %a{:href => "#recipe", "data-toggle" => "tab"} Recipe
+        %li.comments_tab{:class => @active_tab == "comments" ? "active" : ""}
+            %a{:href => "#{request.fullpath}#disqus_thread#comments", "data-toggle" => "tab", "data-disqus-identifier" => "#{@recipe.id}"}
+        %li.photos_tab{:class => @active_tab == nil ? "photos" : ""}
+            %a{:href => "#photos", "data-toggle" => "tab"}
+                =@recipe_photos.length
+                Photos
+    .tab-content
+        .tab-pane.fade.in#recipe{:class => @active_tab == nil ? "active" : ""}
+            =render :partial => 'recipes/recipe'
+        .tab-pane.fade.comments_tab_content#comments{:class => @active_tab == "comments" ? "active" : ""}
+            %input.disqus_identifier{:type => "hidden", :value => "#{@recipe.id}"}
+            %input.disqus_url{:type => "hidden", :value => recipes_path(@recipe.id)}
+        .tab-pane.fade.photos_tab_content#photos{:class => @active_tab == "photos" ? "active" : ""}
+            =render :partial => 'widgets/photos', :locals => {:photos => @recipe_photos, :is_recipe => true, :add_photo_url => recipe_upload_photo_path(@recipe.id)}
 #photos_modal.modal.hide
     .modal-header
         %button.close{:type => "button", "data-dismiss" => "modal"} ×

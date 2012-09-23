@@ -36,6 +36,7 @@ Cocktails::Application.routes.draw do
 	match '/recipes/:recipe_id/photos/:photo_id' => 'recipes#photos', :as => :recipe_photo
 
 	#user pages
+	match '/settings/update' => 'users/settings#update', :as => :update_user_settings
 	match '/settings/password' => 'users/password#edit', :as => :edit_user_pass
 	match '/settings/password/update' => 'users/password#update', :as => :user_pass, :via => :put
 	match '/settings/email' => 'users/email#edit', :as => :edit_user_email
