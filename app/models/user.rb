@@ -4,12 +4,12 @@ class User < ActiveRecord::Base
   friendly_id :friendly_name, use: [:slugged, :history]
   def friendly_name
     if profile_page
-      "#{profile_page}"
+      profile_page
     elsif name
       # lower case and remove space(s)
-      "#{name.downcase.gsub(/\s+/, "")}"
+      name.downcase.gsub(/\s+/, "")
     else
-      "#{id}"
+      id
     end
   end
 

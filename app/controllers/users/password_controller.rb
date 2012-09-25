@@ -15,19 +15,15 @@ class Users::PasswordController < ApplicationController
       @user.update_with_password(params[:user])
     end
 
-    respond_to do |format|
-      if !current_valid_password
-        flash[:error] = 'Current password is incorrect'
-        format.html { redirect_to edit_user_pass_path }
-      elsif !successfully_updated.nil? && successfully_updated
-        flash[:success] = 'Password was successfully updated!'
-        sign_in(@user, :bypass => true)
-        format.html { redirect_to edit_user_pass_path }
-      else
-        flash[:error] = 'Error updating password'
-        format.html { redirect_to edit_user_pass_path }
-      end
+    if !current_valid_password
+      flash[:error] = 'Current password is incorrect'
+    elsif !successfully_updated.nil? && successfully_updated
+      flash[:success] = 'Password was successfully updated!'
+      sign_in(@user, :bypass => true)
+    else
+      flash[:error] = 'Error updating password'
     end
+    redirect_to edit_user_pass_path
   end
 
 end
