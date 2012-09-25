@@ -7,9 +7,10 @@
         %tr.dn
             %td
                 %i.icon-remove
-                -ing = {}
-                -ing[:ingredient] = "place_holder"
-                -ing[:id] = -1
+                -ing = Ingredient.new
+                -ing.ingredient = "place_holder"
+                -ing.id = -1
+                -ing.slug = "placeholder"
                 .lc_ingredient.dib= render :partial => '/recipes/ingredient', :locals => {:ingredient => ing}
         -ingredients.each do |ingredient|
             %tr

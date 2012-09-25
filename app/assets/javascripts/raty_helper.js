@@ -58,9 +58,8 @@ if (typeof(Cocktails.RatyHelper) === 'undefined') {
     rateRecipe: function(recipe_id, rating) {
       $.ajax({
         type: "POST",
-        url: '/recipes/rate',
-        data: {recipe_id: recipe_id,
-               rating: rating},
+        url: '/recipes/' + recipe_id + '/rate',
+        data: {rating: rating},
         success: function(data) {
           $(".stars").unbind("mouseenter");
           $(".stars").unbind("mouseleave");

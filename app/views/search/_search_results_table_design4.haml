@@ -33,7 +33,7 @@
           %tr
             %td
               -if @creator != nil
-                %a{:href => user_profile_path(@creator.id)}
+                %a{:href => user_path(@creator)}
                   %img.avatar_tiny{"data-email" => @creator.email}
             %td.tal
               = link_to(@the_recipe.title, @the_recipe, :class => "recipe_title")
