@@ -19,6 +19,10 @@ class RecipesController < BaseRecipesController
 
   def show
     setup_show
+    # friendly_id magic that redirects users with an old url to the current one
+    if request.path != recipe_path(@recipe)
+      redirect_to @recipe, :status => :moved_permanently
+    end
   end
 
   def comments

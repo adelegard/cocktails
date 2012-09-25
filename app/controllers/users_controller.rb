@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
 
-  def profile
+  def show
     @user = User.find(params[:id])
     @lc_ingredients = LiquorCabinet.getByUserId(@user.id)
     @photos = RecipePhoto.where(:user_id => @user.id)
@@ -30,7 +30,12 @@ class UsersController < ApplicationController
         @is_following = UserFollow.where(:user_id => current_user.id, :follow_user_id => @user.id).length == 1
     end
 
-    render 'users/profile'
+    # friendly_id magic that redirects users with an old url to the current one
+    if request.path != user_path(@user)
+        redirect_to @user, :status => :moved_permanently
+    else
+        render 'users/profile'
+    end
   end
 
 end
