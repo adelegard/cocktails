@@ -18,15 +18,15 @@ module Cocktails
     config.action_mailer.smtp_settings = {
       :address              => "smtp.gmail.com",
       :port                 => 587,
-      :domain               => "yourdomain.dev",
-      :user_name            => "from@yourdomain.dev",
-      :password             => "Super-Secure-Password",
+      :domain               => "gmail.com",
+      :user_name            => "emailtester147@gmail.com",
+      :password             => "emailtest",
       :authentication       => :plain,
       :enable_starttls_auto => true
     }
 
     config.action_mailer.default_url_options = {
-      :host => "yourdomain.dev"
+      :host => "yourdomain.dev" #we need to make sure to update this once a domain has been chosen
     }
 
     # Custom directories with classes and modules you want to be autoloadable.
