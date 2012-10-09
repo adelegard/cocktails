@@ -1,4 +1,7 @@
 class Ingredient < ActiveRecord::Base
+	extend FriendlyId
+	friendly_id :ingredient, use: [:slugged, :history]
+
 	has_many :recipe_ingredients
 	has_many :recipe, :through => :recipe_ingredients
 
@@ -17,7 +20,7 @@ class Ingredient < ActiveRecord::Base
 
   	class << self
 
-		def get_ingredients(recipe_id, user_signed_in, liquor_cabinet_ingredients)
+		def ingredients_for_recipe(recipe_id, user_signed_in, liquor_cabinet_ingredients)
 		    ingredients = []
 		    recipe_ingredients = RecipeIngredient.where(:recipe_id => recipe_id)
 		    recipe_ingredients.each do |recipe_ingredient|
@@ -27,8 +30,8 @@ class Ingredient < ActiveRecord::Base
 		      else
 		        in_liquor_cabinet = nil
 		      end
-		      ingredients << {:id => ingredient.id, :ingredient => ingredient.ingredient, :order => recipe_ingredient.order, :amount => recipe_ingredient.amount, :in_liquor_cabinet => in_liquor_cabinet}
-			  ingredients.sort_by! { |i| [ i[:in_liquor_cabinet] ? 0 : 1, i[:ingredient].downcase ] }
+		      ingredients << {:ingredient => ingredient, :order => recipe_ingredient.order, :amount => recipe_ingredient.amount, :in_liquor_cabinet => in_liquor_cabinet}
+			  ingredients.sort_by! { |i| [ i[:in_liquor_cabinet] ? 0 : 1, i[:ingredient][:ingredient].downcase ] }
 		    end
 		    return ingredients
 		end

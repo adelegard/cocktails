@@ -1,11 +1,14 @@
 class Recipe < ActiveRecord::Base
+  extend FriendlyId
+  friendly_id :title, use: [:slugged, :history]
+
 	has_many :recipe_ingredients
 	has_many :recipe_users
   has_many :recipe_photos
 	has_many :ingredients, :through => :recipe_ingredients
 	has_many :users, :through => :recipe_users
 
-  validates :title, :presence => true, :length => { :in => 4..100 }, :uniqueness => true
+  validates :title, :presence => true, :length => { :in => 4..100 }
   validates :servings, :presence => true
   validates_associated :ingredients
 
@@ -44,7 +47,7 @@ class Recipe < ActiveRecord::Base
         full_recipe[:recipe_user] = RecipeUser.where(:recipe_id => recipe.id, :user_id => current_user_id).first_or_create
         liquor_cabinet_ingredients = LiquorCabinet.where(:user_id => current_user_id).collect{|ingredient| ingredient.ingredient_id}
       end
-      full_recipe[:ingredients] = Ingredient.get_ingredients(recipe.id, !current_user_id.nil?, liquor_cabinet_ingredients)
+      full_recipe[:ingredients] = Ingredient.ingredients_for_recipe(recipe.id, !current_user_id.nil?, liquor_cabinet_ingredients)
 
       user_data = RecipeUser.getUserData(recipe.id)
       full_recipe[:num_starred] = user_data[:num_starred]

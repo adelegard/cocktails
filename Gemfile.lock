@@ -75,6 +75,7 @@ GEM
     font-awesome-sass-rails (2.0.0.0)
       railties (>= 3.1.1)
       sass-rails (>= 3.1.1)
+    friendly_id (4.0.8)
     gravtastic (3.2.6)
     haml (3.1.6)
     haml-rails (0.3.4)
@@ -240,6 +241,7 @@ DEPENDENCIES
   factory_girl_rails
   fb-channel-file
   font-awesome-sass-rails
+  friendly_id (~> 4.0.1)
   gravtastic
   haml-rails
   hpricot

@@ -5,6 +5,33 @@ $in_liquor_cabinet_background_color_hover: #51a351;
 $not_in_liquor_cabinet_background_color: #EE5F5B;
 $not_in_liquor_cabinet_background_color_hover: #bd362f;
 
+::-webkit-input-placeholder {
+   color: #BBB;
+}
+input:-moz-placeholder {
+   color: #BBB;  
+}
+
+.expandable {
+	display: none;
+	border-top: 3px solid transparent;
+	margin-top: 2px;
+}
+.expandable.expanded {
+	position: relative;
+	border: 1px solid #CCC;
+	border-left: 0px solid #CCC;
+	padding: 3px;
+	margin: -3px;
+	margin-top: 1px;
+	background-color: white;
+	z-index: 1;
+	@include border-radius(3px);
+  -webkit-box-shadow: 0 3px 3px #CCC, 2px 3px 3px #CCC, 0px 3px 3px #CCC;
+     -moz-box-shadow: 0 3px 3px #CCC, 2px 3px 3px #CCC, 0px 3px 3px #CCC;
+          box-shadow: 0 3px 3px #CCC, 2px 3px 3px #CCC, 0px 3px 3px #CCC;
+}
+
 .separatorVert {
 	color: #989898;
 	font-size: 11px;
@@ -254,6 +281,14 @@ form.devise {
 
 	&:hover {
 		background: transparent asset-url("star-hover.png", image) no-repeat center left;
+	}
+}
+
+.top_recipe_details {
+	height: 75px;
+
+	.rating_links {
+		margin-top: 10px;
 	}
 }
 
@@ -522,21 +557,19 @@ ul.recipe_ingredients {
 
 .profile img {
 	float: left;
-	margin-right: 15px;
 }
 .profile .top_details {
 	float: left;
 	text-align: left;
-	width: 450px;
 	position: relative;
 	height: 150px;
-	overflow: hidden;
 
 	.btn_container {
 		position: absolute;
 		bottom: 0px;
 		left: 0px;
 		font-size: 18px;
+		white-space: nowrap;
 	}
 
 	a.url {

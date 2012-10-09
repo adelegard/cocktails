@@ -1,8 +1,8 @@
 class IngredientsController < ApplicationController
 
-  before_filter :authenticate_user!, :except => [:detail]
+  before_filter :authenticate_user!, :except => [:show]
 
-  def detail
+  def show
     params[:direction] ||= "DESC"
     params[:page] ||= 1
     params[:per_page] ||= 20
@@ -34,7 +34,12 @@ class IngredientsController < ApplicationController
       @recipe_users_new = RecipeUser.getRecipeUsers(@recipes_new, current_user.id)
     end
 
-    render 'ingredients/detail'
+    # friendly_id magic that redirects users with an old url to the current one
+    if request.path != ingredient_path(@ingredient)
+      redirect_to @ingredient, :status => :moved_permanently
+    else
+      render 'ingredients/detail'
+    end
   end
 
   def uploadphoto
@@ -52,9 +57,9 @@ class IngredientsController < ApplicationController
 
     respond_to do |format|
       if ingredient_photo.save
-        format.html { redirect_to ingredient_detail_path(ingredient.id), notice: 'Photo was successfully added!' }
+        format.html { redirect_to ingredient_path(ingredient), notice: 'Photo was successfully added!' }
       else
-        format.html { redirect_to ingredient_detail_path(ingredient.id), error: 'Error uploading photo :(' }
+        format.html { redirect_to ingredient_path(ingredient), error: 'Error uploading photo :(' }
       end
     end
   end
