@@ -7,10 +7,7 @@ class RecipeUsersController < BaseRecipesController
   end
 
   def created
-    @recipes = Recipe.where(:created_by_user_id => current_user.id).
-                  paginate(:order => "rating_count DESC, rating_avg DESC",
-                                    :page => params[:page],
-                                    :per_page => params[:per_page])
+    @recipes = Recipe.created_by_user_id(params, current_user.id)
     @recipe_users = RecipeUser.getRecipeUsers(@recipes, current_user.id)
     @total_ratings = RecipeUser.getTotalRatings(@recipes)
 
