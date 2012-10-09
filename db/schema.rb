@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120831215726) do
+ActiveRecord::Schema.define(:version => 20121004115750) do
 
   create_table "authentications", :force => true do |t|
     t.string   "provider"
@@ -106,10 +106,12 @@ ActiveRecord::Schema.define(:version => 20120831215726) do
     t.integer  "recipe_id"
     t.integer  "user_id"
     t.boolean  "starred"
-    t.decimal  "rating",     :precision => 10, :scale => 0
-    t.datetime "created_at",                                :null => false
-    t.datetime "updated_at",                                :null => false
+    t.decimal  "rating",          :precision => 10, :scale => 0
+    t.datetime "created_at",                                     :null => false
+    t.datetime "updated_at",                                     :null => false
     t.boolean  "liked"
+    t.text     "note"
+    t.datetime "note_updated_at"
   end
 
   create_table "recipes", :force => true do |t|

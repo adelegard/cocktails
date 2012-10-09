@@ -134,6 +134,12 @@ class Recipe < ActiveRecord::Base
                                       :page => params[:page], :per_page => params[:per_page])
     end
 
+    def created_by_user_id(user_id)
+      Recipe.where(:created_by_user_id => current_user.id)
+            .paginate(:page => params[:page],
+                      :per_page => params[:per_page])
+    end
+
     def share(params)
       recipe = Recipe.find(params[:id])
       recipe.shared = recipe.shared ? recipe.shared + 1 : 1 #increment the shared count by 1

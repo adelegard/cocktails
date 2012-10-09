@@ -320,6 +320,24 @@ form.devise {
 	}
 }
 
+.note_container {
+	padding: 10px;
+	border: 1px solid #DDD;
+	width: 400px;
+	border-radius: 3px;
+	margin-bottom: 10px;
+
+	h4 {
+		border-bottom: 1px solid #DDD;
+
+		a {
+			font-size: 12px;
+			font-weight: normal;
+			margin-left: 10px;
+		}
+	}
+}
+
 ul.recipe_ingredients {
 	list-style-type: none;
 	margin: 0;

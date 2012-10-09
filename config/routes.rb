@@ -9,8 +9,8 @@ Cocktails::Application.routes.draw do
 
 	root :to => "recipes#index"
 
-    match '/about' => 'about#about'
-    match '/contact' => 'contact#contact'
+  match '/about' => 'about#about'
+  match '/contact' => 'contact#contact'
 
     #recipe [user] lists
 	match '/recipes/favorites' => 'recipe_users#favorites', :as => :recipes_favorites
@@ -25,9 +25,9 @@ Cocktails::Application.routes.draw do
 	#recipe actions
 	match '/recipes/:id/share' => 'recipes#share'
 	match '/recipes/:id/favorite' => 'recipe_users#favorite'
-	match '/recipes/:id/unfavorite' => 'recipe_users#unfavorite'
 	match '/recipes/:id/like' => 'recipe_users#like'
 	match '/recipes/:id/rate' => 'recipe_users#rate'
+	match '/recipes/:id/set_note' => 'recipe_users#set_note'
 	match '/recipes/rate' => 'recipe_users#rate'
 
 	#recipe photos

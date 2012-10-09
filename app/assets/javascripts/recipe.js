@@ -28,6 +28,11 @@ if (typeof(Cocktails.Recipe) === 'undefined') {
         $("a.showFullPageView").on("click", this._show_fullpage_view);
         $("#fullPageView a.close_circle").on("click", this._hide_fullpage_view);
 
+        // private note
+        $(".set_private_note").on("click", this._show_private_note_dialog);
+        $(".note_container .note").on("click", this._show_private_note_dialog);
+        $(".note_container form.delete_note .delete").on("click", this._submit_private_note_form);
+
         // favoriting
         $(document).on("click", ".favorite", this._recipe_favorite);
         $(document).on("click", ".unfavorite", this._recipe_unfavorite);
@@ -104,6 +109,15 @@ if (typeof(Cocktails.Recipe) === 'undefined') {
     },
     _hide_fullpage_view: function() {
       $("#fullPageView").fadeOut("slow");
+    },
+
+    /* Private Recipe Note */
+    _show_private_note_dialog: function() {
+      $('.recipe_note_dialog').modal();
+    },
+
+    _submit_private_note_form: function() {
+      $(this).closest("form").submit();
     },
 
     /* Favoriting */

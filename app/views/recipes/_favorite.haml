@@ -8,7 +8,7 @@
 			-if include_text == nil || include_text == true
 				%span Add to Favorites
 	.unfavorite-container{:class => "#{unfavorite_class}"}
-		%a.unfavorite{:href => "/recipes/#{recipe_id}/unfavorite"}
+		%a.unfavorite{:href => "/recipes/#{recipe_id}/favorite"}
 			-if include_text == nil || include_text == true
 				%span Remove from Favorites
 %br

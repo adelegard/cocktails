@@ -1,13 +1,16 @@
 class RecipeUsersController < BaseRecipesController
 	before_filter :authenticate_user!
-  before_filter :display_search_sidebar, :except => [:create, :created, :rate, :favorite, :unfavorite]
+  before_filter :display_search_sidebar, :except => [:create]
 
   def create
     @recipe_user = RecipeUser.create(params[:recipe_user])
   end
 
   def created
-    @recipes = Recipe.getCreatedRecipesByUserId(params, current_user.id)
+    @recipes = Recipe.where(:created_by_user_id => current_user.id).
+                  paginate(:order => "rating_count DESC, rating_avg DESC",
+                                    :page => params[:page],
+                                    :per_page => params[:per_page])
     @recipe_users = RecipeUser.getRecipeUsers(@recipes, current_user.id)
     @total_ratings = RecipeUser.getTotalRatings(@recipes)
 
@@ -42,6 +45,8 @@ class RecipeUsersController < BaseRecipesController
     render 'search/search'
   end
 
+  # User Actions
+
   def rate
     RecipeUser.rate(params[:id], current_user.id, params[:rating])
 
@@ -58,14 +63,6 @@ class RecipeUsersController < BaseRecipesController
     end
   end
 
-  def unfavorite
-    RecipeUser.unfavorite(params[:id], current_user.id)
-
-    respond_to do |format|
-      format.js   { render :nothing => true }
-    end
-  end
-
   def like
     RecipeUser.like(params[:id], current_user.id)
 
@@ -73,4 +70,12 @@ class RecipeUsersController < BaseRecipesController
       format.js { render :nothing => true }
     end
   end
+
+  def set_note
+    params[:note] ||= nil
+    RecipeUser.set_note(params[:id], current_user.id, params[:note])
+    @recipe = Recipe.find(params[:id])
+    redirect_to @recipe
+  end
+
 end

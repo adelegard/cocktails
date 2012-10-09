@@ -1,11 +1,14 @@
 #recipe_actions.well.span2.pull-right.wsnw
 	=render :partial => '/recipes/favorite', :locals => {:recipe_id => @recipe.id, :include_text => true}
-	%div
-		%i.icon-list-alt
-		%a.showFullPageView{:href => "#"} Full Page View
+	%i.icon-pencil
+	%a.set_private_note{:href => "#"} Add Private Note
+	%br
 	%i.icon-picture
 	%a{:href => recipe_upload_photo_path(@recipe.id)} Add Photo
 	%br
+	%div
+		%i.icon-list-alt
+		%a.showFullPageView{:href => "#"} Full Page View
 	%i.icon-print
 	%a{:href => "#"} Print
 	%hr
@@ -13,6 +16,14 @@
 	.social
 		=render :partial => '/widgets/twitter'
 =render :partial => '/widgets/vote_tastes'
+-if @recipe_user.note
+	.note_container
+		%h4
+			Your Private Note
+			%form.fr.dib.delete_note{:action => "/recipes/#{@recipe.id}/set_note", :method => :put}
+				%a.delete{:href => "#"} Delete
+			%small.fr= @recipe_user.note_updated_at
+		%em.note= @recipe_user.note
 -if @ingredients.size > 0
 	%h3.ingredients_heading Ingredients
 	%ul.recipe_ingredients
@@ -31,3 +42,15 @@
 	.serve_in
 		%b Serve in:
 		= @recipe.glass
+
+.modal.recipe_note_dialog.hide.fade
+	.modal-header
+		%button.close{"aria-hidden" => "true", "data-dismiss" => "modal", :type => "button"} ×
+		%h3 Add Private Note
+	%form{:action => "/recipes/#{@recipe.id}/set_note", :method => :put}
+		.modal-body
+			%textarea{:name => "note", :placeholder => "Enter a private note for this recipe"}
+				=@recipe_user.note
+		.modal-footer
+			%a.btn{:href => "#"} Close
+			%button.btn.btn-primary{:type => "submit"} Save changes
