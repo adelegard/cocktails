@@ -15,20 +15,6 @@ module Cocktails
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
 
-    config.action_mailer.smtp_settings = {
-      :address              => "smtp.gmail.com",
-      :port                 => 587,
-      :domain               => "gmail.com",
-      :user_name            => "emailtester147@gmail.com",
-      :password             => "emailtest",
-      :authentication       => :plain,
-      :enable_starttls_auto => true
-    }
-
-    config.action_mailer.default_url_options = {
-      :host => "yourdomain.dev" #we need to make sure to update this once a domain has been chosen
-    }
-
     # Custom directories with classes and modules you want to be autoloadable.
     # config.autoload_paths += %W(#{config.root}/extras)
 
