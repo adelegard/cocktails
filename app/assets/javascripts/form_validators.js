@@ -43,6 +43,20 @@ $(function() {
   });
 
   $.validator.addClassRules({
+
+    v_required: {
+      required: true
+    },
+    v_min_2: {
+      minlength: 2
+    },
+    v_range_1_100: {
+      range: [1, 100]
+    },
+    v_email: {
+      email: true
+    },
+
     recipe_title: {
       required: true,
       minlength: 3
