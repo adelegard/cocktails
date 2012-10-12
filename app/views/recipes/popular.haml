@@ -1,6 +1,8 @@
 -@pageTitle = "Popular Cocktails"
 
 .page-header
-    %h1 Popular Cocktails
+  %h1
+    =render :partial => '/icons/popular'
+    =@pageTitle
 
-= render :partial => '/search/search_results_table', :locals => {:recipes => @recipes_popular, :recipe_users => @recipe_users_popular, :total_ratings => @total_ratings_popular}
+= render :partial => '/search/search_results_table_design5', :locals => {:full_recipes => @full_recipes_popular}

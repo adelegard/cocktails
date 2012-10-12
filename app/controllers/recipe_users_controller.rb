@@ -1,54 +1,44 @@
 class RecipeUsersController < BaseRecipesController
 	before_filter :authenticate_user!
-  before_filter :display_search_sidebar, :except => [:create, :created, :rate, :favorite, :unfavorite]
+  before_filter :display_search_sidebar, :except => [:create]
 
   def create
     @recipe_user = RecipeUser.create(params[:recipe_user])
   end
 
   def created
-    @recipes = Recipe.getCreatedRecipesByUserId(params, current_user.id)
-    @recipe_users = RecipeUser.getRecipeUsers(@recipes, current_user.id)
-    @total_ratings = RecipeUser.getTotalRatings(@recipes)
-
-    @title = "My Created Recipes"
-    render 'search/search'
+    recipes = Recipe.created_by_user_id(params, current_user.id)
+    @full_recipes = Recipe.getFullRecipes(recipes, current_user.id)
+    render 'recipes/created'
   end
 
-  def rated
-    @recipes = RecipeUser.getRatedRecipesByUserId(params, current_user.id)
-    @recipe_users = RecipeUser.getRecipeUsers(@recipes, current_user.id)
-    @total_ratings = RecipeUser.getTotalRatings(@recipes)
+  def liked
+    recipes = RecipeUser.getLikedRecipesByUserId(params, current_user.id)
+    @full_recipes = Recipe.getFullRecipes(recipes, current_user.id)
+    render 'recipes/liked'
+  end
 
-    @title = "My Rated Recipes"
-    render 'search/search'
+  def disliked
+    recipes = RecipeUser.getDislikedRecipesByUserId(params, current_user.id)
+    @full_recipes = Recipe.getFullRecipes(recipes, current_user.id)
+    render 'recipes/disliked'
   end
 
   def favorites
-    @recipes = RecipeUser.getFavoriteRecipesByUserId(params, current_user.id)
-    @recipe_users = RecipeUser.getRecipeUsers(@recipes, current_user.id)
-    @total_ratings = RecipeUser.getTotalRatings(@recipes)
-
-    @title = "My Favorite Cocktails"
-    render 'search/search'
+    recipes = RecipeUser.getFavoriteRecipesByUserId(params, current_user.id)
+    @full_recipes = Recipe.getFullRecipes(recipes, current_user.id)
+    render 'recipes/favorites'
   end
 
   def liquor_cabinet_recipes
-    @recipes = LiquorCabinet.getAvailableRecipes(params, current_user.id)
-    @recipe_users = RecipeUser.getRecipeUsers(@recipes, current_user.id)
-    @total_ratings = RecipeUser.getTotalRatings(@recipes)
+    recipes = LiquorCabinet.getAvailableRecipes(params, current_user.id)
+    @full_recipes = Recipe.getFullRecipes(recipes, current_user.id)
 
     @title = "Cocktails I Can Make!"
     render 'search/search'
   end
 
-  def rate
-    RecipeUser.rate(params[:id], current_user.id, params[:rating])
-
-    respond_to do |format|
-      format.js { render :nothing => true }
-    end
-  end
+  # Actions
 
   def favorite
     RecipeUser.favorite(params[:id], current_user.id)
@@ -58,8 +48,8 @@ class RecipeUsersController < BaseRecipesController
     end
   end
 
-  def unfavorite
-    RecipeUser.unfavorite(params[:id], current_user.id)
+  def share
+    RecipeUser.share(params[:id], current_user.id)
 
     respond_to do |format|
       format.js   { render :nothing => true }
@@ -68,6 +58,14 @@ class RecipeUsersController < BaseRecipesController
 
   def like
     RecipeUser.like(params[:id], current_user.id)
+
+    respond_to do |format|
+      format.js { render :nothing => true }
+    end
+  end
+
+  def dislike
+    RecipeUser.dislike(params[:id], current_user.id)
 
     respond_to do |format|
       format.js { render :nothing => true }

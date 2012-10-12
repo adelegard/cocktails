@@ -21,24 +21,20 @@ class SearchController < BaseRecipesController
       ingredients << found_ing if found_ing != nil
     }
     
-    params[:sort] ||= "rating_count"
-    params[:direction] ||= "DESC"
     spirit_ingredient = Ingredient.find_by_ingredient(params[:spirit]) if !params[:spirit].blank?
     ingredients << spirit_ingredient if spirit_ingredient != nil
 
-    order = "#{params[:sort]} #{params[:direction]}"
+    order = params[:sort] ? "#{params[:sort]} #{params[:direction]}" : ""
     with = {:ingredient_ids => ingredients.collect{|i| i.id}}
 
-    @recipes = Recipe.searchByStringAndIngredientIds(@q, ingredients.collect{|i| i.id}, order, params[:page], params[:per_page])
-    
+    recipes = Recipe.searchByStringAndIngredientIds(@q, ingredients.collect{|i| i.id}, order, params[:page], params[:per_page])
+    user_id = current_user != nil && current_user.id ? current_user.id : nil
+    @full_recipes = Recipe.getFullRecipes(recipes, user_id)
+
     if @recipes.size == 1
       redirect_to @recipes.first
     end
 
-    @total_ratings = RecipeUser.getTotalRatings(@recipes)
-    if user_signed_in?
-      @recipe_users = RecipeUser.getRecipeUsers(@recipes, current_user.id)
-    end
     @display_search_sidebar = true
   end
 

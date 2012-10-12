@@ -1,15 +1,16 @@
 $(function() {
 
-	$(".chzn-select").chosen();
+  $(".chzn-select").chosen();
   $('#new_recipe_directions').NobleCount('.characters_remaining:first', {max_chars:2000, on_negative: 'go_red'});
   $('#new_recipe_inspiration').NobleCount('.characters_remaining:last', {max_chars:2000, on_negative: 'go_red'});
 
   $.expander.defaults.slicePoint = 180;
   $.expander.defaults.expandSpeed = 100;
-  $('.expandable').expander({
+  $('.expandable.header_details').expander({
     onSlice: function() {
       // change from display 'none' to 'block' so the onSlice method
       // doesn't make the overflowing element make the page jump
+      // HOWEVER, for some reason this isn't working on the recipe show page
       $(this).css('display', 'block');
     },
     beforeExpand: function() {

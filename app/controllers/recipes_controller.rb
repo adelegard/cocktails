@@ -4,9 +4,13 @@ class RecipesController < BaseRecipesController
   before_filter :display_search_sidebar, :except => [:show, :new, :uploadphoto]
 
   def index
-    setup_new_recipes
     setup_popular_recipes
-    @most_used = Ingredient.getMostUsed(params)
+    setup_new_recipes
+    setup_liked_recipes
+    setup_disliked_recipes
+    setup_favorited_recipes
+    setup_created_recipes
+    #@most_used = Ingredient.getMostUsed(params)
   end
 
   def new_recipes
@@ -102,34 +106,41 @@ class RecipesController < BaseRecipesController
     end
   end
 
-  def share
-    Recipe.share(params)
-
-    respond_to do |format|
-      format.js { render :nothing => true }
-    end
-  end
-
   private
 
   def setup_popular_recipes
-    @recipes_popular = Recipe.getPopularRecipes(params)
-    @total_ratings_popular = RecipeUser.getTotalRatings(@recipes_popular)
+    recipes_popular = Recipe.getPopularRecipes(params)
     user_id = current_user != nil && current_user.id ? current_user.id : nil
-    @full_recipes_popular = Recipe.getFullRecipes(@recipes_popular, user_id)
-    if user_signed_in?
-      @recipe_users_popular = RecipeUser.getRecipeUsers(@recipes_popular, current_user.id)
-    end
+    @full_recipes_popular = Recipe.getFullRecipes(recipes_popular, user_id)
   end
 
   def setup_new_recipes
-    @recipes_new = Recipe.getNewRecipes(params)
-    @total_ratings_new = RecipeUser.getTotalRatings(@recipes_new)
+    recipes_new = Recipe.getNewRecipes(params)
     user_id = current_user != nil && current_user.id ? current_user.id : nil
-    @full_recipes_new = Recipe.getFullRecipes(@recipes_new, user_id)
-    if user_signed_in?
-      @recipe_users_new = RecipeUser.getRecipeUsers(@recipes_new, current_user.id)
-    end
+    @full_recipes_new = Recipe.getFullRecipes(recipes_new, user_id)
   end
 
+  def setup_liked_recipes
+    return if !user_signed_in?
+    recipes = RecipeUser.getLikedRecipesByUserId(params, current_user.id)
+    @full_recipes_liked = Recipe.getFullRecipes(recipes, current_user.id)
+  end
+
+  def setup_disliked_recipes
+    return if !user_signed_in?
+    recipes = RecipeUser.getDislikedRecipesByUserId(params, current_user.id)
+    @full_recipes_disliked = Recipe.getFullRecipes(recipes, current_user.id)
+  end
+
+  def setup_favorited_recipes
+    return if !user_signed_in?
+    recipes = RecipeUser.getFavoriteRecipesByUserId(params, current_user.id)
+    @full_recipes_favorited = Recipe.getFullRecipes(recipes, current_user.id)
+  end
+
+  def setup_created_recipes
+    return if !user_signed_in?
+    recipes = Recipe.created_by_user_id(params, current_user.id)
+    @full_recipes_created = Recipe.getFullRecipes(recipes, current_user.id)
+  end
 end

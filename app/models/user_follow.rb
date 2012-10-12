@@ -18,7 +18,9 @@ class UserFollow < ActiveRecord::Base
 
         def getFollowing(user_id)
             user_follows = UserFollow.where(:user_id => user_id)
-            return User.find(user_follows.collect{|u|u.follow_user_id})
+            # safe from user_ids that are no longer in the user table
+            # TODO: delete these records when a user delete's their account.
+            users = User.where("id IN (?)", user_follows.collect{|u|u.follow_user_id}.join(","))
         end
     end
 end

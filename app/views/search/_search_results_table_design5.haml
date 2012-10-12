@@ -1,0 +1,39 @@
+-hide_no_results_msg ||= false
+#search_results_design5.search_results
+  -if full_recipes.length > 0 then
+    %table.table.table-striped
+      %thead
+        %tr
+          %th User
+          %th.tal
+            = sortable "title", "Title"
+            .asc.dn
+            .desc.dn
+          %th
+          %th
+      %tbody
+        -full_recipes.each do |full_recipe|
+          - @creator = full_recipe[:recipe_creator]
+          - @the_recipe = full_recipe[:recipe]
+          %tr
+            %td
+              -if @creator != nil
+                %a{:href => user_path(@creator)}
+                  %img.avatar_tiny{"data-email" => @creator.email}
+            %td.tal
+              = link_to(@the_recipe.title, @the_recipe, :class => "recipe_title")
+              .dn.ingredient_list.expandable{:class => !user_signed_in? ? "not_signed_in" : "" }
+                -full_recipe[:ingredients].each_with_index do |i, index|
+                  %span{:class => "in_lc_#{i[:in_liquor_cabinet]}"}=i[:ingredient][:ingredient]
+                  -if index < full_recipe[:ingredients].size - 1
+                    ,
+            %td
+              .photos
+                -full_recipe[:recipe_photos].each_with_index do |photo,index|
+                  -if index < 3
+                    =image_tag(photo.photo.url(:icon), :class => "icon")
+            %td.tar
+              =render :partial => 'recipes/actions', :locals => {:full_recipe => full_recipe}
+    //= will_paginate full_recipes
+  -elsif !hide_no_results_msg
+    %h2 No results found!

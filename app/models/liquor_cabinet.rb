@@ -56,7 +56,7 @@ class LiquorCabinet < ActiveRecord::Base
     end
 
     def getAvailableRecipes(params, user_id)
-      params[:sort] ||= "rating_count"
+      params[:sort] ||= "created_at"
       params[:direction] ||= "DESC"
       ingredients = LiquorCabinet.where(:user_id => user_id)
       return Recipe.search(:field_weights => {:ingredients => 10, :directions => 1},

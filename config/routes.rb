@@ -9,12 +9,13 @@ Cocktails::Application.routes.draw do
 
 	root :to => "recipes#index"
 
-    match '/about' => 'about#about'
-    match '/contact' => 'contact#contact'
+  match '/about' => 'about#about'
+  match '/contact' => 'contact#contact'
 
-    #recipe [user] lists
+	#recipe [user] lists
 	match '/recipes/favorites' => 'recipe_users#favorites', :as => :recipes_favorites
-	match '/recipes/rated' => 'recipe_users#rated', :as => :recipes_rated
+	match '/recipes/liked' => 'recipe_users#liked', :as => :recipes_liked
+	match '/recipes/disliked' => 'recipe_users#disliked', :as => :recipes_disliked
 	match '/recipes/created' => 'recipe_users#created', :as => :recipes_created
 	match '/recipes/liquor_cabinet' => 'recipe_users#liquor_cabinet_recipes', :as => :recipes_lc
 
@@ -23,12 +24,11 @@ Cocktails::Application.routes.draw do
 	match '/recipes/recent' => 'recipes#new_recipes', :as => :recipes_new
 
 	#recipe actions
-	match '/recipes/:id/share' => 'recipes#share'
+	match '/recipes/:id/share' => 'recipe_users#share'
 	match '/recipes/:id/favorite' => 'recipe_users#favorite'
 	match '/recipes/:id/unfavorite' => 'recipe_users#unfavorite'
 	match '/recipes/:id/like' => 'recipe_users#like'
-	match '/recipes/:id/rate' => 'recipe_users#rate'
-	match '/recipes/rate' => 'recipe_users#rate'
+	match '/recipes/:id/dislike' => 'recipe_users#dislike'
 
 	#recipe photos
 	match '/recipes/:id/uploadphoto' => 'recipes#uploadphoto', :as => :recipe_upload_photo
@@ -56,7 +56,7 @@ Cocktails::Application.routes.draw do
 	#user pages
 	match '/user/:id/recipes' => 'users#profile_recipes', :as => :user_profile_recipes
 	match '/user/:id/favorites' => 'users#profile_favorites', :as => :user_profile_favorites
-	match '/user/:id/rated' => 'users#profile_rated', :as => :user_profile_rated
+	match '/user/:id/liked' => 'users#profile_liked', :as => :user_profile_liked
 	match '/user/:id/photos' => 'users#profile_photos', :as => :user_profile_photos
 	match '/user/:id/cabinet' => 'users#profile_cabinet', :as => :user_profile_cabinet
 

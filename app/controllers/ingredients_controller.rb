@@ -19,20 +19,12 @@ class IngredientsController < ApplicationController
     @lc_count = LiquorCabinet.getCountByIngredientId(@ingredient.id)
     @recipe_count = Recipe.getRecipeCountByIngredient(@ingredient.id)
 
-    @recipes_popular = Recipe.getPopularRecipesWithIngredients(params, [@ingredient.id])
-    @recipes_new = Recipe.getNewRecipesWithIngredients(params, [@ingredient.id])
-
-    @total_ratings_popular = RecipeUser.getTotalRatings(@recipes_popular)
-    @total_ratings_new = RecipeUser.getTotalRatings(@recipes_new)
+    recipes_popular = Recipe.getPopularRecipesWithIngredients(params, [@ingredient.id])
+    recipes_new = Recipe.getNewRecipesWithIngredients(params, [@ingredient.id])
 
     user_id = user_signed_in? ? current_user.id : nil
-    @full_recipes_popular = Recipe.getFullRecipes(@recipes_popular, user_id)
-    @full_recipes_new = Recipe.getFullRecipes(@recipes_new, user_id)
-
-    if user_signed_in?
-      @recipe_users_popular = RecipeUser.getRecipeUsers(@recipes_popular, current_user.id)
-      @recipe_users_new = RecipeUser.getRecipeUsers(@recipes_new, current_user.id)
-    end
+    @full_recipes_popular = Recipe.getFullRecipes(recipes_popular, user_id)
+    @full_recipes_new = Recipe.getFullRecipes(recipes_new, user_id)
 
     # friendly_id magic that redirects users with an old url to the current one
     if request.path != ingredient_path(@ingredient)
