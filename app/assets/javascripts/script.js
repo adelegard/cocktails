@@ -6,6 +6,9 @@ $(function() {
 
   $.expander.defaults.slicePoint = 180;
   $.expander.defaults.expandSpeed = 100;
+  $.expander.defaults.expandText = '+';
+  $.expander.defaults.expandPrefix = '';
+  $.expander.defaults.userCollapseText = '-';
   $('.expandable.header_details').expander({
     onSlice: function() {
       // change from display 'none' to 'block' so the onSlice method
@@ -35,6 +38,14 @@ $(function() {
       $('html').off('click');
       $(document).off('keydown');// This kills all keydown's. Not ideal.
       $('.expandable.expanded').off('click');
+    }
+  });
+  $('.expandable.ingredient_list').expander({
+    onSlice: function(e) {
+      // change from display 'none' to 'block' so the onSlice method
+      // doesn't make the overflowing element make the page jump
+      // HOWEVER, for some reason this isn't working on the recipe show page
+      $(this).css('visibility', 'visible');
     }
   });
 

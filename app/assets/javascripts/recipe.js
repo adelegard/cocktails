@@ -99,7 +99,7 @@ if (typeof(Cocktails.Recipe) === 'undefined') {
     },
     _load_icon_fullsize_img: function(e) {
       $("#photo_modal").modal('show');
-      $('img.main_img').attr('src',$(e.target).attr('src').replace('icon','large'));
+      $('img.main_img').attr('src',$(e.target).attr('src').replace('tiny','large'));
     },
     _close_modal: function(e) {
       $(e.target).closest('.modal').modal('hide');

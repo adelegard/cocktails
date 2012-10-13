@@ -176,11 +176,23 @@ input:-moz-placeholder {
 
 #search_results_design3,
 #search_results_design5 {
+	.table th,
+	.table td {
+		padding: 5px;
+	}
+	.table th.user {
+		width: 37px;
+	}
+	.table td.user {
+		border-right: 1px dashed #ccc;
+	}
+	.recipe_title {
+		font-size: 18px;
+	}
 	.ingredient_list {
-		margin-top: 5px;
 		font-size: 11px;
 		color: white;
-		width: 370px;
+		width: 420px;
 
 		span {
 			padding: 2px;
@@ -189,15 +201,40 @@ input:-moz-placeholder {
 
 
 		.in_lc_true {
-			background-color: $in_liquor_cabinet_background_color;
+			color: $in_liquor_cabinet_background_color;
 		}
 		.in_lc_false {
-			background-color: $not_in_liquor_cabinet_background_color;
+			color: $not_in_liquor_cabinet_background_color;
 		}
 	}
 	.ingredient_list.not_signed_in {
 		color: #000
 	}
+}
+
+.read-more,
+.read-less {
+	font-weight: bold;
+	font-size: 18px;
+	line-height: 7px;
+
+	a {
+		height: 11px;
+		display: inline-block;
+		padding: 2px;
+	}
+	a:hover {
+		text-decoration: none;
+		color: white;
+		background-color: #08C;
+		@include border-radius(2px);
+	}
+}
+
+.gravatar_container {
+	height: 38px;
+	float: left;
+	margin-right: 5px;
 }
 
 .popularity {

@@ -47,12 +47,10 @@ class IngredientsController < ApplicationController
     ingredient_photo.update_attributes(params[:ingredient_photo])
     params[:id] = params[:ingredient_id]
 
-    respond_to do |format|
-      if ingredient_photo.save
-        format.html { redirect_to ingredient_path(ingredient), notice: 'Photo was successfully added!' }
-      else
-        format.html { redirect_to ingredient_path(ingredient), error: 'Error uploading photo :(' }
-      end
+    if ingredient_photo.save
+      redirect_to ingredient_path(ingredient), :notice => 'Photo was successfully added!'
+    else
+      redirect_to ingredient_path(ingredient), :error => 'Error uploading photo :('
     end
   end
 

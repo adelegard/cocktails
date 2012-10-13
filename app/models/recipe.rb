@@ -33,7 +33,7 @@ class Recipe < ActiveRecord::Base
       recipes.each do |recipe|
         full_recipes << getFullRecipe(recipe, user_id)
       end
-      full_recipes
+      full_recipes.sort { |a,b| b[:sort_value] <=> a[:sort_value]}
     end
 
     def getFullRecipe(recipe, user_id)
@@ -54,7 +54,20 @@ class Recipe < ActiveRecord::Base
       full_recipe[:num_liked] = user_data[:num_liked]
       full_recipe[:num_disliked] = user_data[:num_disliked]
       full_recipe[:num_shared] = user_data[:num_shared]
+      full_recipe[:sort_value] = ci_lower_bound(user_data[:num_liked], user_data[:num_liked] + user_data[:num_disliked], 0.95)
       full_recipe
+    end
+
+    # Calculate the Lower bound of the Wilson score confidence interval for a Bernoulli parameter
+    # http://www.evanmiller.org/how-not-to-sort-by-average-rating.html
+    def ci_lower_bound(pos, n, confidence)
+      if n == 0
+        return 0
+      end
+      z = 1.96
+      phat = 1.0*pos/n
+      result = (phat + z*z/(2*n) - z * Math.sqrt((phat*(1-phat)+z*z/(4*n))/n))/(1+z*z/n)
+      (result * 100).floor / 10.0 #round it
     end
 
     def getRecipeCountByIngredient(ingredient_id)

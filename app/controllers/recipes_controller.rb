@@ -44,21 +44,10 @@ class RecipesController < BaseRecipesController
   def new
     @recipe = Recipe.new
     @glasses = Recipe.getAllGlasses
-
-    respond_to do |format|
-      format.html # new.html.erb
-      format.json { render json: @recipe }
-    end
   end
 
   def create
-    @recipe = Recipe.create(:title => params[:recipe][:title], 
-                            :directions => params[:recipe][:directions],
-                            :inspiration => params[:recipe][:inspiration], 
-                            :glass => params[:glass], 
-                            :alcohol => params[:recipe][:alcohol],
-                            :servings => params[:servings],
-                            :created_by_user_id => current_user.id)
+    @recipe = Recipe.create(params[:recipe])
     if params[:recipe_photo] != nil
       recipe_photo = RecipePhoto.create(:recipe_id => @recipe.id,
                                         :user_id => current_user.id)
@@ -66,22 +55,18 @@ class RecipesController < BaseRecipesController
     end
 
     order = 1
-    params[:recipe][:ing].each do |key, val|
+    params[:recipe_ing].each do |key, val|
       ingredient = Ingredient.find_or_create_by_ingredient(val[:liquor])
       RecipeIngredient.create(:recipe_id => @recipe.id, :ingredient_id => ingredient.id, 
                            :order => order, :amount => "#{val[:val]} #{val[:amt]}")
       order = order + 1
     end
 
-    respond_to do |format|
-      if @recipe.save
-        format.html { redirect_to @recipe, notice: 'Recipe was successfully created.' }
-        format.json { render json: @recipe, status: :created, location: @recipe }
-      else
-        @glasses = Recipe.getAllGlasses
-        format.html { render action: "new" }
-        format.json { render json: @recipe.errors, status: :unprocessable_entity }
-      end
+    if @recipe.save
+      redirect_to @recipe, :notice => 'Recipe was successfully created.'
+    else
+      @glasses = Recipe.getAllGlasses
+      render :action => "new"
     end
   end
 
@@ -97,12 +82,10 @@ class RecipesController < BaseRecipesController
     recipe_photo.update_attributes(params[:recipe_photo])
     params[:id] = params[:recipe_id]
     setup_show
-    respond_to do |format|
-      if @recipe.save
-        format.html { redirect_to @recipe, notice: 'Photo was successfully added!' }
-      else
-        format.html { redirect_to @recipe, error: 'Error uploading photo :(' }
-      end
+    if @recipe.save
+      redirect_to @recipe, :notice => 'Photo was successfully added!'
+    else
+      redirect_to @recipe, :error => 'Error uploading photo :('
     end
   end
 
