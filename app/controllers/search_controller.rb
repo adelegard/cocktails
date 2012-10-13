@@ -28,9 +28,9 @@ class SearchController < BaseRecipesController
     order = params[:sort] ? "#{params[:sort]} #{params[:direction]}" : ""
     with = {:ingredient_ids => ingredients.collect{|i| i.id}}
 
-    recipes = Recipe.searchByStringAndIngredientIds(@q, ingredients.collect{|i| i.id}, order, params[:page], params[:per_page])
+    recipes = Recipe.search_by_string_and_ingredient_ids(@q, ingredients.collect{|i| i.id}, order, params[:page], params[:per_page])
     user_id = current_user != nil && current_user.id ? current_user.id : nil
-    @full_recipes = Recipe.getFullRecipes(recipes, user_id)
+    @full_recipes = Recipe.full_recipes(recipes, user_id)
 
     if @recipes.size == 1
       redirect_to @recipes.first
@@ -73,7 +73,7 @@ class SearchController < BaseRecipesController
   def search_ingredients(params)
     term = "^" + params[:q] + "*"
     per_page = params[:per_page] ? params[:per_page] : 10
-    return Ingredient.search term,
+    Ingredient.search term,
       :match_mode => :extended,
       :ignore_errors => true,
       :per_page => per_page,

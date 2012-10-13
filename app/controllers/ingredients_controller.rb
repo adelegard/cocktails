@@ -12,20 +12,20 @@ class IngredientsController < ApplicationController
 
     @in_cabinet = false
     if user_signed_in?
-      @in_cabinet = LiquorCabinet.inCabinet(@ingredient.id, current_user.id)
+      @in_cabinet = LiquorCabinet.in_cabinet(@ingredient.id, current_user.id)
     end
 
     @ingredient_photos = IngredientPhoto.where(:ingredient_id => @ingredient.id)
 
-    @lc_count = LiquorCabinet.getCountByIngredientId(@ingredient.id)
-    @recipe_count = Recipe.getRecipeCountByIngredient(@ingredient.id)
+    @lc_count = LiquorCabinet.count_by_ingredient_id(@ingredient.id)
+    @recipe_count = Recipe.count_by_ingredient_id(@ingredient.id)
 
-    recipes_popular = Recipe.getPopularRecipesWithIngredients(params, [@ingredient.id])
-    recipes_new = Recipe.getNewRecipesWithIngredients(params, [@ingredient.id])
+    recipes_popular = Recipe.popular_with_ingredient_ids(params, [@ingredient.id])
+    recipes_new = Recipe.newly_created_with_ingredient_ids(params, [@ingredient.id])
 
     user_id = user_signed_in? ? current_user.id : nil
-    @full_recipes_popular = Recipe.getFullRecipes(recipes_popular, user_id)
-    @full_recipes_new = Recipe.getFullRecipes(recipes_new, user_id)
+    @full_recipes_popular = Recipe.full_recipes(recipes_popular, user_id)
+    @full_recipes_new = Recipe.full_recipes(recipes_new, user_id)
 
     # friendly_id magic that redirects users with an old url to the current one
     if request.path != ingredient_path(@ingredient)

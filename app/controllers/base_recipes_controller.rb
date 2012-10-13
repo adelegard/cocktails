@@ -9,7 +9,7 @@ class BaseRecipesController < ApplicationController
   def setup_show
     recipe = Recipe.find(params[:id])
     user_id = current_user != nil && current_user.id ? current_user.id : nil
-    @full_recipe = Recipe.getFullRecipe(recipe, user_id)
+    @full_recipe = Recipe.full_recipe(recipe, user_id)
     setup_show_with_recipe(@full_recipe)
   end
 

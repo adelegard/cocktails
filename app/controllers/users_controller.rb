@@ -3,27 +3,27 @@ class UsersController < ApplicationController
   # GET /users/:id
   def show
     @user = User.find(params[:id])
-    @lc_ingredients = LiquorCabinet.getByUserId(@user.id)
+    @lc_ingredients = LiquorCabinet.by_user_id(@user.id)
     @photos = RecipePhoto.where(:user_id => @user.id)
 
-    liked_recipes = RecipeUser.getLikedRecipesByUserId(params, @user.id)
-    @full_recipes_liked = Recipe.getFullRecipes(liked_recipes, @user.id)
+    liked_recipes = RecipeUser.liked_recipes_by_user_id(params, @user.id)
+    @full_recipes_liked = Recipe.full_recipes(liked_recipes, @user.id)
 
-    disliked_recipes = RecipeUser.getDislikedRecipesByUserId(params, @user.id)
-    @full_recipes_disliked = Recipe.getFullRecipes(disliked_recipes, @user.id)
+    disliked_recipes = RecipeUser.disliked_recipes_by_user_id(params, @user.id)
+    @full_recipes_disliked = Recipe.full_recipes(disliked_recipes, @user.id)
 
-    favorite_recipes = RecipeUser.getFavoriteRecipesByUserId(params, @user.id)
-    @full_recipes_favorites = Recipe.getFullRecipes(favorite_recipes, @user.id)
+    favorite_recipes = RecipeUser.favorite_recipes_by_user_id(params, @user.id)
+    @full_recipes_favorites = Recipe.full_recipes(favorite_recipes, @user.id)
 
-    created_recipes = RecipeUser.getCreatedRecipesByUserId(params, @user.id)
-    @full_recipes_created = Recipe.getFullRecipes(created_recipes, @user.id)
+    created_recipes = RecipeUser.created_recipes_by_user_id(params, @user.id)
+    @full_recipes_created = Recipe.full_recipes(created_recipes, @user.id)
 
-    @num_liked = RecipeUser.getNumLikedCreatedRecipesByUserId(@user.id)
-    @num_disliked = RecipeUser.getNumDislikedCreatedRecipesByUserId(@user.id)
-    @num_favorited = RecipeUser.getNumFavoritedCreatedRecipesByUserId(@user.id)
+    @num_liked = RecipeUser.num_liked_created_recipes_by_user_id(@user.id)
+    @num_disliked = RecipeUser.num_disliked_created_recipes_by_user_id(@user.id)
+    @num_favorited = RecipeUser.num_favorited_created_recipes_by_user_id(@user.id)
 
-    @follower_users = UserFollow.getFollowers(@user.id)
-    @following_users = UserFollow.getFollowing(@user.id)
+    @follower_users = UserFollow.followers(@user.id)
+    @following_users = UserFollow.following(@user.id)
 
     @is_current_user = false
     @is_following = false

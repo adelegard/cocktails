@@ -5,35 +5,35 @@ class RecipeUsersController < BaseRecipesController
   # GET /recipes/created
   def created
     recipes = Recipe.created_by_user_id(params, current_user.id)
-    @full_recipes = Recipe.getFullRecipes(recipes, current_user.id)
+    @full_recipes = Recipe.full_recipes(recipes, current_user.id)
     render 'recipes/created'
   end
 
   # GET /recipes/liked
   def liked
-    recipes = RecipeUser.getLikedRecipesByUserId(params, current_user.id)
-    @full_recipes = Recipe.getFullRecipes(recipes, current_user.id)
+    recipes = RecipeUser.liked_recipes_by_user_id(params, current_user.id)
+    @full_recipes = Recipe.full_recipes(recipes, current_user.id)
     render 'recipes/liked'
   end
 
   # GET /recipes/disliked
   def disliked
-    recipes = RecipeUser.getDislikedRecipesByUserId(params, current_user.id)
-    @full_recipes = Recipe.getFullRecipes(recipes, current_user.id)
+    recipes = RecipeUser.disliked_recipes_by_user_id(params, current_user.id)
+    @full_recipes = Recipe.full_recipes(recipes, current_user.id)
     render 'recipes/disliked'
   end
 
   # GET /recipes/favorites
   def favorites
-    recipes = RecipeUser.getFavoriteRecipesByUserId(params, current_user.id)
-    @full_recipes = Recipe.getFullRecipes(recipes, current_user.id)
+    recipes = RecipeUser.favorite_recipes_by_user_id(params, current_user.id)
+    @full_recipes = Recipe.full_recipes(recipes, current_user.id)
     render 'recipes/favorites'
   end
 
   # GET /recipes/liquor_cabinet
   def liquor_cabinet_recipes
-    recipes = LiquorCabinet.getAvailableRecipes(params, current_user.id)
-    @full_recipes = Recipe.getFullRecipes(recipes, current_user.id)
+    recipes = LiquorCabinet.available_recipes(params, current_user.id)
+    @full_recipes = Recipe.full_recipes(recipes, current_user.id)
 
     @title = "Cocktails I Can Make!"
     render 'search/search'

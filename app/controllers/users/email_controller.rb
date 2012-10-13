@@ -2,7 +2,7 @@ class Users::EmailController < ApplicationController
   before_filter :authenticate_user!
 
   def edit
-    @user = User.where(:id => current_user.id).first
+    @user = User.find(current_user.id)
     @resource = @user
     render 'users/edit_email'
   end
