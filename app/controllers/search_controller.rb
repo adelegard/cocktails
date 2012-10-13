@@ -35,7 +35,7 @@ class SearchController < BaseRecipesController
       redirect_to @recipes.first
     end
 
-    @total_ratings = RecipeUser.getTotalRatings(@recipes)
+    @total_ratings = Recipe.total_ratings(@recipes)
     if user_signed_in?
       @recipe_users = RecipeUser.getRecipeUsers(@recipes, current_user.id)
     end

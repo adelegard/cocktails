@@ -82,16 +82,6 @@ class RecipeUser < ActiveRecord::Base
 		    return recipe_users
 		end
 
-		def getTotalRatings(recipes)
-		    total_ratings = 0
-		    recipes.each do |recipe|
-		      if recipe.rating_count != nil
-		        total_ratings += recipe.rating_count
-		      end
-		    end
-		    return total_ratings
-		end
-
 		def getUserData(recipe_id)
 			recipe_users = RecipeUser.where(:recipe_id => recipe_id)
 

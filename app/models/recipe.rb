@@ -87,13 +87,17 @@ class Recipe < ActiveRecord::Base
         return recipes
     end
 
-    def getNewRecipes(params)
+    def new_recipes(params)
         params[:direction] ||= "DESC"
         order = "created_at #{params[:direction]}"
-        return Recipe.search(:field_weights => {:created_at => 10, :title => 1},
-                             :order => order,
-                             :with => {:created_at => 1.month.ago..Time.now},
-                             :page => params[:page], :per_page => params[:per_page])
+        Recipe.search(:field_weights => {:created_at => 10, :title => 1},
+                      :order => order,
+                      :with => {:created_at => 1.month.ago..Time.now},
+                      :page => params[:page], :per_page => params[:per_page])
+    end
+
+    def total_ratings(recipes)
+      recipes.inject(0){|sum, recipe| sum + recipe.rating_count}
     end
 
     def getNewRecipesWithIngredients(params, ingredient_ids)
