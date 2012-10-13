@@ -7,13 +7,13 @@ class LiquorCabinet < ActiveRecord::Base
     # Add an ingredient to a users liquor cabinet
   	def addIngredient(ingredient_name, user_id)
   	  ingredient = Ingredient.where(:ingredient => ingredient_name).first
-      @liquor_cabinet = LiquorCabinet.find_or_initialize_by_user_id_and_ingredient_id(user_id, ingredient.id)
-      @liquor_cabinet.save
+      liquor_cabinet = LiquorCabinet.find_or_initialize_by_user_id_and_ingredient_id(user_id, ingredient.id)
+      liquor_cabinet.save
   	end
 
     def addIngredientById(ingredient_id, user_id)
-      @liquor_cabinet = LiquorCabinet.find_or_initialize_by_user_id_and_ingredient_id(user_id, ingredient_id)
-      @liquor_cabinet.save
+      liquor_cabinet = LiquorCabinet.find_or_initialize_by_user_id_and_ingredient_id(user_id, ingredient_id)
+      liquor_cabinet.save
     end
 
     # remove an ingredient from a users liquor cabinet
@@ -44,25 +44,25 @@ class LiquorCabinet < ActiveRecord::Base
   	    ingredients << Ingredient.where(:id => lci.ingredient_id).first
   	  end
       ingredients.sort_by! { |i| i.ingredient.downcase }
-  	  return ingredients
+  	  ingredients
     end
 
     def inCabinet(ingredient_id, user_id)
-      return LiquorCabinet.where(:ingredient_id => ingredient_id, :user_id => user_id).size == 1
+      LiquorCabinet.where(:ingredient_id => ingredient_id, :user_id => user_id).size == 1
     end
 
     def getCountByIngredientId(ingredient_id)
-      return LiquorCabinet.where(:ingredient_id => ingredient_id).size
+      LiquorCabinet.where(:ingredient_id => ingredient_id).size
     end
 
     def getAvailableRecipes(params, user_id)
       params[:sort] ||= "created_at"
       params[:direction] ||= "DESC"
       ingredients = LiquorCabinet.where(:user_id => user_id)
-      return Recipe.search(:field_weights => {:ingredients => 10, :directions => 1},
-                           :with => {:ingredient_ids => ingredients.collect{|i| i.ingredient_id}},
-                           :order => "#{params[:sort]} #{params[:direction]}",
-                           :page => params[:page], :per_page => params[:per_page])
+      Recipe.search(:field_weights => {:ingredients => 10, :directions => 1},
+                    :with => {:ingredient_ids => ingredients.collect{|i| i.ingredient_id}},
+                    :order => "#{params[:sort]} #{params[:direction]}",
+                    :page => params[:page], :per_page => params[:per_page])
     end
   end
 end

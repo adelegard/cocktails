@@ -3,6 +3,7 @@ class SearchController < BaseRecipesController
   before_filter :set_default_params, :only => %w(simple_results advanced_results)
   before_filter :display_search_sidebar
 
+  # GET /search
   def search
     @spirit = params[:spirit]
     @q = params[:q]
@@ -38,6 +39,7 @@ class SearchController < BaseRecipesController
     @display_search_sidebar = true
   end
 
+  # GET /search/autocomplete_recipes.json
   def autocomplete_recipes
     term = "^" + params[:q] + "*"
     per_page = params[:per_page] ? params[:per_page] : 10
@@ -47,27 +49,23 @@ class SearchController < BaseRecipesController
       :per_page => per_page,
       :order => "@relevance DESC"
     names = recipes.collect{|i| i.title}
-    respond_to do |format|
-      format.js {render_json names.to_json}
-    end
+    render_json names.to_json
   end
 
+  # GET /search/autocomplete_ingredients.json
   def autocomplete_ingredients
     ingredients = search_ingredients(params)
     names_and_ids = Hash.new {|h, k| h[k] = []}
     ingredients.each{|i| names_and_ids[i.id] = i.ingredient}
-    respond_to do |format|
-      format.js {render_json names_and_ids.to_json}
-    end
+    render_json names_and_ids.to_json
   end
 
+  # GET /search/autocomplete_ingredients_titles.json
   def autocomplete_ingredients_titles
     ingredients = search_ingredients(params)
     names_and_ids = Hash.new {|h, k| h[k] = []}
     names = ingredients.collect{|i| i[:ingredient]}
-    respond_to do |format|
-      format.js {render_json names.to_json}
-    end
+    render_json names.to_json
   end
 
   private

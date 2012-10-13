@@ -2,7 +2,7 @@
 	%h1
 		Post a New Cocktail
 		%small Fill out all fields below
-=form_for @recipe, :html => { :multipart => true, :class => "form-horizontal validate"} do |f|
+=form_for @recipe, :method => :post, :html => { :multipart => true, :class => "form-horizontal validate"} do |f|
 	%input{:type => "hidden", :name => "recipe[created_by_user_id]", :value => "#{current_user.id}"}
 	= f.error_messages
 	%fieldset.new_recipe_ingredients

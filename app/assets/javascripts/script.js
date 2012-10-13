@@ -25,7 +25,7 @@ $(function() {
         $('.read-less a').trigger('click');
       });
       $(document).on('keydown', function(e) {
-        if (e.which === 27) { // escape key
+        if (e.keyCode === 27) { // escape key
            $('.read-less a').trigger('click');
          }
       });
@@ -190,7 +190,7 @@ $(function() {
   });
 
   $('.sidebar-nav.search input.add_ingredient').keydown(function(e) {
-    if (e.which !== 13) return; //enter
+    if (e.keyCode !== 13) return; //enter
     var val = $(this).val();
     if (!addSidebarIngredient(val)) return false;
 

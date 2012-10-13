@@ -33,7 +33,6 @@ if (typeof(Cocktails.Recipe) === 'undefined') {
         // favoriting
         $(document).on("click", ".recipe_actions .favorite-button[data-action='favorite']", this._recipe_favorited);
         $(document).on("click", ".recipe_actions .favorite-button[data-action='unfavorite']", this._recipe_unfavorited);
-
         // like
         $(document).on("click", ".recipe_actions .like-button[data-action='like']", this._recipe_liked);
         $(document).on("click", ".recipe_actions .like-button[data-action='unlike']", this._recipe_unliked);
@@ -76,12 +75,12 @@ if (typeof(Cocktails.Recipe) === 'undefined') {
     /* Photos Modal functions */
     _show_photos_modal: function(e) {
       $(document).on("keyup.photo_key", function(e) {
-        if (e.which == 37) { /* left arrow */
+        if (e.keyCode == 37) { /* left arrow */
           var active_thumb = $(".thumbs .thumb.active");
           if (active_thumb.prev(".thumb").length === 1) {
             active_thumb.removeClass("active").prev(".thumb").addClass("active").trigger("click");
           }
-        } else if (e.which == 39) { /* right arrow */
+        } else if (e.keyCode == 39) { /* right arrow */
           var active_thumb = $(".thumbs .thumb.active");
           if (active_thumb.next(".thumb").length === 1) {
             active_thumb.removeClass("active").next(".thumb").addClass("active").trigger("click");
@@ -107,7 +106,14 @@ if (typeof(Cocktails.Recipe) === 'undefined') {
 
     /* Full page view */
     _show_fullpage_view: function() {
-      $("#fullPageView").fadeIn("slow");
+      $("#fullPageView").fadeIn("slow", function() {
+        $(document).on("keyup.esc_fullpage", function(e) {
+          if (e.keyCode == 27) { /* esc key */
+            Cocktails.Recipe._hide_fullpage_view();
+            $(document).off("keyup.esc_fullpage");
+          }
+        });
+      });
     },
     _hide_fullpage_view: function() {
       $("#fullPageView").fadeOut("slow");

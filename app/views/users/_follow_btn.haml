@@ -3,5 +3,5 @@
     -follow_class = is_following == true ? "dn" : ""
     -unfollow_class = is_following == true ? "" : "dn"
     .btn_container
-        %a.btn.btn-large.btn-danger.follow{"data-href" => "/user/#{user_id}/follow", :class => follow_class} Follow
-        %a.btn.btn-large.btn-danger.follow.unfollow.disabled{"data-href" => "/user/#{user_id}/unfollow", :class => unfollow_class} Following
+        %a.btn.btn-large.btn-danger.follow{"data-id" => "#{user_id}", :class => follow_class} Follow
+        %a.btn.btn-large.btn-danger.unfollow.disabled{"data-id" => "#{user_id}", :class => unfollow_class} Following

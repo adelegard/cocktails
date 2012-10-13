@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
 
+  # GET /users/:id
   def show
     @user = User.find(params[:id])
     @lc_ingredients = LiquorCabinet.getByUserId(@user.id)
@@ -35,7 +36,7 @@ class UsersController < ApplicationController
     if request.path != user_path(@user)
         redirect_to @user, :status => :moved_permanently
     else
-        render 'users/profile'
+        render :profile
     end
   end
 

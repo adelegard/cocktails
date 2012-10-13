@@ -261,6 +261,22 @@ form.navbar-search .icon-search {
 	width: 100px;
 }
 
+.sidebar-nav.search .reset {
+	display: inline-block;
+	position: relative;
+	width: 100%;
+	border: 1px solid #CCC;
+	padding: 2px 0px;
+	margin-bottom: 7px;
+	text-align: center;
+	@include border-radius(2px);
+}
+.sidebar-nav.search .reset:hover {
+	text-decoration: none;
+//	background-color: #08C;
+//	color: #FFF;
+}
+
 form.devise {
 	text-align: center;
 

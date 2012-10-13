@@ -3,6 +3,7 @@ class RecipesController < BaseRecipesController
   before_filter :authenticate_user!, :except => [:index, :new_recipes, :popular, :show]
   before_filter :display_search_sidebar, :except => [:show, :new, :uploadphoto]
 
+  # GET /
   def index
     setup_popular_recipes
     setup_new_recipes
@@ -13,14 +14,17 @@ class RecipesController < BaseRecipesController
     #@most_used = Ingredient.getMostUsed(params)
   end
 
-  def new_recipes
+  # GET /recipes/recent
+  def recent
     setup_new_recipes
   end
 
+  # GET /recipes/popular
   def popular
     setup_popular_recipes
   end
 
+  # GET /recipes/:id
   def show
     setup_show
     # friendly_id magic that redirects users with an old url to the current one
@@ -32,20 +36,22 @@ class RecipesController < BaseRecipesController
   def comments
     setup_show
     @active_tab = "comments"
-    render 'recipes/show'
+    render :show
   end
 
   def photos
     setup_show
     @active_tab = "photos"
-    render 'recipes/show'
+    render :show
   end
 
+  # GET /recipes/new
   def new
     @recipe = Recipe.new
     @glasses = Recipe.getAllGlasses
   end
 
+  # POST /recipes/
   def create
     @recipe = Recipe.create(params[:recipe])
     if params[:recipe_photo] != nil
@@ -70,12 +76,13 @@ class RecipesController < BaseRecipesController
     end
   end
 
+  # GET /recipes/:id/uploadphoto
   def uploadphoto
-      @recipe = Recipe.where(:id => params[:id]).first
-      @recipe_photo = RecipePhoto.new(:recipe_id => @recipe.id, :user_id => current_user.id)
-      render 'recipes/upload_photo'
+    @recipe = Recipe.where(:id => params[:id]).first
+    @recipe_photo = RecipePhoto.new(:recipe_id => @recipe.id, :user_id => current_user.id)
   end
 
+  # POST /recipes/:id/do_upload_photo
   def do_upload_photo
     recipe_photo = RecipePhoto.create(:recipe_id => params[:recipe_id],
                                       :user_id => current_user.id)

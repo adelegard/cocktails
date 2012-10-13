@@ -2,6 +2,7 @@ class IngredientsController < ApplicationController
 
   before_filter :authenticate_user!, :except => [:show]
 
+  # GET /ingredients/:id
   def show
     params[:direction] ||= "DESC"
     params[:page] ||= 1
@@ -30,16 +31,17 @@ class IngredientsController < ApplicationController
     if request.path != ingredient_path(@ingredient)
       redirect_to @ingredient, :status => :moved_permanently
     else
-      render 'ingredients/detail'
+      render :detail
     end
   end
 
+  # GET /ingredients/:id/uploadphoto
   def uploadphoto
-      @ingredient = Ingredient.find(params[:id])
-      @ingredient_photo = IngredientPhoto.new(:ingredient_id => @ingredient.id, :user_id => current_user.id)
-      render 'ingredients/upload_photo'
+    @ingredient = Ingredient.find(params[:id])
+    @ingredient_photo = IngredientPhoto.new(:ingredient_id => @ingredient.id, :user_id => current_user.id)
   end
 
+  # POST /ingredients/:id/do_upload_photo
   def do_upload_photo
     ingredient = Ingredient.find(params[:ingredient_id])
     ingredient_photo = IngredientPhoto.create(:ingredient_id => params[:ingredient_id],
