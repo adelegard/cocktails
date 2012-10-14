@@ -25,7 +25,7 @@ class SearchController < BaseRecipesController
     spirit_ingredient = Ingredient.find_by_ingredient(params[:spirit]) if !params[:spirit].blank?
     ingredients << spirit_ingredient if spirit_ingredient != nil
 
-    order = params[:sort] ? "#{params[:sort]} #{params[:direction]}" : ""
+    order = params[:sort] ? "#{params[:sort]} #{params[:direction]}" : nil
     with = {:ingredient_ids => ingredients.collect{|i| i.id}}
 
     recipes = Recipe.search_by_string_and_ingredient_ids(@q, ingredients.collect{|i| i.id}, order, params[:page], params[:per_page])
