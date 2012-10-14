@@ -18,9 +18,9 @@ class UsersController < ApplicationController
     created_recipes = RecipeUser.created_recipes_by_user_id(params, @user.id)
     @full_recipes_created = Recipe.full_recipes(created_recipes, @user.id)
 
-    @num_liked = RecipeUser.num_liked_created_recipes_by_user_id(@user.id)
-    @num_disliked = RecipeUser.num_disliked_created_recipes_by_user_id(@user.id)
-    @num_favorited = RecipeUser.num_favorited_created_recipes_by_user_id(@user.id)
+    @num_liked = RecipeUser.num_liked_recipes_created_by_user_id(@user.id)
+    @num_disliked = RecipeUser.num_disliked_recipes_created_by_user_id(@user.id)
+    @num_favorited = RecipeUser.num_favorited_recipes_created_by_user_id(@user.id)
 
     @follower_users = UserFollow.followers(@user.id)
     @following_users = UserFollow.following(@user.id)

@@ -72,13 +72,13 @@ class RecipeUser < ActiveRecord::Base
                                                                          :per_page => params[:per_page])
 		end
 
-		def num_liked_created_recipes_by_user_id(user_id)
+		def num_liked_recipes_created_by_user_id(user_id)
 			RecipeUser.count_by_sql ["select count(liked) from recipe_users where recipe_id IN(select id from recipes where created_by_user_id = ?)", user_id]
 		end
-		def num_disliked_created_recipes_by_user_id(user_id)
+		def num_disliked_recipes_created_by_user_id(user_id)
 			RecipeUser.count_by_sql ["select count(disliked) from recipe_users where recipe_id IN(select id from recipes where created_by_user_id = ?)", user_id]
 		end
-		def num_favorited_created_recipes_by_user_id(user_id)
+		def num_favorited_recipes_created_by_user_id(user_id)
 			RecipeUser.count_by_sql ["select count(starred) from recipe_users where recipe_id IN(select id from recipes where created_by_user_id = ?)", user_id]
 		end
 
