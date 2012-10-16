@@ -231,8 +231,59 @@ if (typeof(Cocktails.Recipe) === 'undefined') {
           btn.addClass('btn-info');
           var count = parseInt(btn.children('span.shared-count').html(), 10);
           btn.children('span.shared-count').html(count + 1);
+
+          Cocktails.Recipe._open_share_dialog(btn.find(".share_attr .title").val(),
+                                              btn.find(".share_attr .url").val(),
+                                              btn.find(".share_attr .photo_url").val());
         }
       });
+    },
+
+    _open_share_dialog: function(recipe_title, recipe_url, photo_url) {
+      var share_dialog = $(".recipe_share.modal.template").clone();
+      share_dialog.removeClass("template");
+      share_dialog.find(".modal-header h3 small").text(recipe_title);
+      share_dialog.find(".modal-body .socialicons li a").each(function() {
+        var anchor = $(this);
+
+        // data-href
+        var data_href = anchor.attr("data-href");
+        if (typeof(data_href) !== 'undefined') {
+          data_href = data_href.replace("RECIPE_TITLE", recipe_title)
+                               .replace("RECIPE_URL", recipe_url)
+                               .replace("PHOTO_URL", photo_url);
+          anchor.attr("data-href", data_href);
+        }
+        // href
+        var href = anchor.attr("href");
+        if (typeof(href) !== 'undefined') {
+          href = href.replace("RECIPE_TITLE", recipe_title)
+                     .replace("RECIPE_URL", recipe_url)
+                     .replace("PHOTO_URL", photo_url);
+          anchor.attr("href", href);
+        }
+        // data-url
+        var data_url = anchor.attr("data-url");
+        if (typeof(data_url) !== 'undefined') {
+          data_url = data_url.replace("RECIPE_URL", recipe_url);
+          anchor.attr("data-url", data_url);
+        }
+        // data-photo-url
+        var data_photo_url = anchor.attr("data-photo-url");
+        if (typeof(data_photo_url) !== 'undefined') {
+          data_photo_url = data_photo_url.replace("PHOTO_URL", photo_url);
+          anchor.attr("data-photo-url", data_photo_url);
+        }
+        // data-title
+        var data_title = anchor.attr("data-title");
+        if (typeof(data_title) !== 'undefined') {
+          data_title = data_title.replace("RECIPE_TITLE", recipe_title);
+          anchor.attr("data-title", data_title);
+        }
+      });
+
+      $("body").append(share_dialog);
+      share_dialog.modal("show");
     },
 
     /* social buttons */

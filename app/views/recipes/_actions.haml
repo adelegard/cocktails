@@ -21,3 +21,9 @@
   %button.btn.share-button{:class => shared ? "btn-info" : "", "data-action" => "share", "data-id" => "#{id}", "data-original-title" => "Share", :rel => "tooltip"}
     %i.icon-share-alt
     %span.shared-count= num_shared
+    .share_attr.dn
+      %input.title{:type => "hidden", :value => "#{full_recipe[:recipe].title}"}
+      %input.url{:type => "hidden", :value => "'#{url_for(full_recipe[:recipe])}'"}
+      -first_photo = full_recipe[:recipe_photos].first
+      -if first_photo
+        %input.photo_url{:type => "hidden", :value => "'#{first_photo.photo.url(:medium)}'"}

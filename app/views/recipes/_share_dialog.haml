@@ -1,0 +1,18 @@
+.recipe_share.template.modal.lightbox.hide
+    .lb_container
+        .modal-header
+            %button.close{:type => "button", "data-dismiss" => "modal"} ×
+            %h3
+                Share this cocktail!
+                %small
+        .modal-body
+            %span.fl Click to share:
+            %ul.dib.color.socialicons
+                %li
+                    %a.facebook{"data-url" => "RECIPE_URL", "data-photo-url" => "PHOTO_URL", "data-title" => "RECIPE_TITLE"}
+                    %a.gpluslight{"data-href" => "https://plus.google.com/share?url=RECIPE_URL"}
+                    %a.twitter{:href => "https://twitter.com/intent/tweet?text=Check out this great recipe! RECIPE_TITLE"}
+                    %a.stumbleupon{:href => "http://www.stumbleupon.com/submit?url=RECIPE_URL"}
+                    %a.delicious
+                    %a.pinterest{"data-href" => "http://pinterest.com/pin/create/button/?url=RECIPE_URL&media=PHOTO_URL&description=RECIPE_TITLE"}
+                    %a.email
