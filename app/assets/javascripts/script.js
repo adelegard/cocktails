@@ -1,15 +1,19 @@
 $(function() {
 
-	$(".chzn-select").chosen();
+  $(".chzn-select").chosen();
   $('#new_recipe_directions').NobleCount('.characters_remaining:first', {max_chars:2000, on_negative: 'go_red'});
   $('#new_recipe_inspiration').NobleCount('.characters_remaining:last', {max_chars:2000, on_negative: 'go_red'});
 
   $.expander.defaults.slicePoint = 180;
   $.expander.defaults.expandSpeed = 100;
-  $('.expandable').expander({
+  $.expander.defaults.expandText = '+';
+  $.expander.defaults.expandPrefix = '';
+  $.expander.defaults.userCollapseText = '-';
+  $('.expandable.header_details').expander({
     onSlice: function() {
       // change from display 'none' to 'block' so the onSlice method
       // doesn't make the overflowing element make the page jump
+      // HOWEVER, for some reason this isn't working on the recipe show page
       $(this).css('display', 'block');
     },
     beforeExpand: function() {
@@ -21,7 +25,7 @@ $(function() {
         $('.read-less a').trigger('click');
       });
       $(document).on('keydown', function(e) {
-        if (e.which === 27) { // escape key
+        if (e.keyCode === 27) { // escape key
            $('.read-less a').trigger('click');
          }
       });
@@ -34,6 +38,14 @@ $(function() {
       $('html').off('click');
       $(document).off('keydown');// This kills all keydown's. Not ideal.
       $('.expandable.expanded').off('click');
+    }
+  });
+  $('.expandable.ingredient_list').expander({
+    onSlice: function(e) {
+      // change from display 'none' to 'block' so the onSlice method
+      // doesn't make the overflowing element make the page jump
+      // HOWEVER, for some reason this isn't working on the recipe show page
+      $(this).css('visibility', 'visible');
     }
   });
 
@@ -178,7 +190,7 @@ $(function() {
   });
 
   $('.sidebar-nav.search input.add_ingredient').keydown(function(e) {
-    if (e.which !== 13) return; //enter
+    if (e.keyCode !== 13) return; //enter
     var val = $(this).val();
     if (!addSidebarIngredient(val)) return false;
 

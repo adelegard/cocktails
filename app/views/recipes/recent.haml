@@ -1,0 +1,8 @@
+-@pageTitle = "Newly Added Cocktails"
+
+.page-header
+  %h1
+    =render :partial => '/icons/new'
+    =@pageTitle
+
+= render :partial => '/search/search_results_table_design5', :locals => {:full_recipes => @full_recipes_new}

@@ -16,18 +16,36 @@
                             %ul.dropdown-menu
                                 %li.nav-header Views
                                 %li
-                                    %a{:href => recipes_popular_path} Popular
+                                    %a{:href => recipes_popular_path}
+                                        =render :partial => '/icons/popular'
+                                        Popular
                                 %li
-                                    %a{:href => recipes_new_path} Newly Added
+                                    %a{:href => recipes_new_path}
+                                        =render :partial => '/icons/new'
+                                        Newly Added
                                 -if user_signed_in?
                                     %li.divider
                                     %li.nav-header My Recipes
                                     %li
-                                        %a{:href => recipes_favorites_path} Favorites
+                                        %a{:href => recipes_lc_path}
+                                            =render :partial => '/icons/cabinet'
+                                            Makeable
                                     %li
-                                        %a{:href => recipes_rated_path} Rated
+                                        %a{:href => recipes_favorites_path}
+                                            =render :partial => '/icons/favorite'
+                                            Favorites
                                     %li
-                                        %a{:href => recipes_created_path} Created
+                                        %a{:href => recipes_liked_path}
+                                            =render :partial => '/icons/like'
+                                            Liked
+                                    %li
+                                        %a{:href => recipes_disliked_path}
+                                            =render :partial => '/icons/dislike'
+                                            Disliked
+                                    %li
+                                        %a{:href => recipes_created_path}
+                                            =render :partial => '/icons/create'
+                                            Created
                                 %li.divider
                                 %li.nav-header Liquor Types
                                 - default_spirits.each do |s|
@@ -43,7 +61,9 @@
                 %ul.nav.pull-right
                     -if !@hide_topnav_items
                         %li
-                            %a.btn.btn-small.btn-danger{:href => new_recipe_path} Add Recipe
+                            %a.btn.btn-small.btn-danger{:href => new_recipe_path}
+                                =render :partial => '/icons/create'
+                                Add Recipe
                     - if user_signed_in?
                         %li.dropdown
                             %a.dropdown-toggle{"data-toggle" => "dropdown", :href => "#"}
@@ -54,8 +74,6 @@
                                 %li= link_to "My Account", edit_user_registration_path
                                 %li
                                     %a{:href => "/cabinet"} Liquor Cabinet
-                                %li
-                                    %a{:href => "/recipes/favorites"} Favorites
                                 %li.divider
                                 %li= link_to "Sign out", destroy_user_session_path, :method => :delete
                         %li.avatar

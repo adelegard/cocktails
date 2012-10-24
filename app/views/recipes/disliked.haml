@@ -1,0 +1,8 @@
+-@pageTitle = "My Disliked Cocktails"
+
+.page-header
+  %h1
+    =render :partial => '/icons/dislike'
+    =@pageTitle
+
+= render :partial => '/search/search_results_table_design5', :locals => {:full_recipes => @full_recipes}

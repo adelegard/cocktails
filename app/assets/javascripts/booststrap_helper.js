@@ -9,7 +9,7 @@ $(function() {
 
   function addTooltipToElement(elem) {
     elem.tooltip({
-      delay: { show: 1000, hide: 50 },
+      delay: { show: 500 },
       placement: typeof(elem.attr("data-placement")) !== 'undefined' ? elem.attr("data-placement") : "top"
     });
   }

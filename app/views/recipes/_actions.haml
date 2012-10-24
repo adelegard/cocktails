@@ -1,22 +1,29 @@
-.btn-group.pull-right.recipe-actions
-	%a.btn.btn-primary.dropdown-toggle{"data-toggle" => "dropdown", :href => "#"}
-		Actions
-		%span.caret
-	%ul.dropdown-menu
-		%li
-			%a{:href => "#"}
-				%i.icon-star-empty
-				Favorite
-		%li
-			%a{:href => "#"}
-				%i.icon-envelope
-				Email
-		%li
-			%a{:href => "#"}
-				%i.icon-pencil
-				Share
-		%li.divider
-		%li
-			%a{:href => "#"}
-				%i.icon-print
-				Print
+-id = full_recipe[:recipe].id
+-user = full_recipe[:recipe_user]
+-favorited = user ? user.starred : false
+-liked = user ? user.liked : false
+-disliked = user ? user.disliked : false
+-shared = user ? user.shared : false
+-num_starred = full_recipe[:num_starred]
+-num_liked = full_recipe[:num_liked]
+-num_disliked = full_recipe[:num_disliked]
+-num_shared = full_recipe[:num_shared]
+.btn-group.recipe_actions.fr
+  %button.btn.like-button{:class => liked ? "btn-success" : "", "data-action" => liked ? "unlike" : "like", "data-id" => "#{id}", "data-original-title" => "Like", :disabled => disliked, :rel => "tooltip"}
+    =render :partial => '/icons/like'
+    %span.like-count= num_liked
+  %button.btn.dislike-button{:class => disliked ? "btn-danger" : "", "data-action" => disliked ? "undislike" : "dislike", "data-id" => "#{id}", "data-original-title" => "Dislike", :disabled => liked, :rel => "tooltip"}
+    =render :partial => '/icons/dislike'
+    %span.dislike-count= num_disliked
+  %button.btn.favorite-button{:class => favorited ? "btn-warning" : "", "data-action" => favorited ? "unfavorite" : "favorite", "data-id" => "#{id}", "data-original-title" => "Favorite", :rel => "tooltip"}
+    =render :partial => '/icons/favorite'
+    %span.favorite-count= num_starred
+  %button.btn.share-button{:class => shared ? "btn-info" : "", "data-action" => "share", "data-id" => "#{id}", "data-original-title" => "Share", :rel => "tooltip"}
+    %i.icon-share-alt
+    %span.shared-count= num_shared
+    .share_attr.dn
+      %input.title{:type => "hidden", :value => "#{full_recipe[:recipe].title}"}
+      %input.url{:type => "hidden", :value => "'#{url_for(full_recipe[:recipe])}'"}
+      -first_photo = full_recipe[:recipe_photos].first
+      -if first_photo
+        %input.photo_url{:type => "hidden", :value => "'#{first_photo.photo.url(:medium)}'"}
