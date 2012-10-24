@@ -48,6 +48,20 @@ Cocktails::Application.configure do
   # Precompile additional assets (application.js, application.css, and all non-JS/CSS are already added)
   # config.assets.precompile += %w( search.js )
 
+  config.action_mailer.smtp_settings = {
+    :address              => "smtp.gmail.com",
+    :port                 => 587,
+    :domain               => "gmail.com",
+    :user_name            => "emailtester147@gmail.com",
+    :password             => "emailtest",
+    :authentication       => :plain,
+    :enable_starttls_auto => true
+  }
+
+  config.action_mailer.default_url_options = {
+    :host => "yourdomain.dev" #we need to make sure to update this once a domain has been chosen
+  }
+
   # Disable delivery errors, bad email addresses will be ignored
   # config.action_mailer.raise_delivery_errors = false
 

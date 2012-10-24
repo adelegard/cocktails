@@ -12,7 +12,7 @@ Cocktails::Application.routes.draw do
   match '/about' => 'about#about'
   match '/contact' => 'contact#contact'
 
-	#recipe [user] lists
+  #recipe [user] lists
 	match '/recipes/favorites' => 'recipe_users#favorites', :as => :recipes_favorites
 	match '/recipes/liked' => 'recipe_users#liked', :as => :recipes_liked
 	match '/recipes/disliked' => 'recipe_users#disliked', :as => :recipes_disliked
@@ -69,6 +69,10 @@ Cocktails::Application.routes.draw do
 	match '/search/autocomplete_recipes' => 'search#autocomplete_recipes'
 	match '/search/autocomplete_ingredients' => 'search#autocomplete_ingredients'
 	match '/search/autocomplete_ingredients_titles' => 'search#autocomplete_ingredients_titles'
+
+	#contact
+	match 'contact' => 'contact#new', :as => 'contact', :via => :get
+	match 'contact' => 'contact#create', :as => 'contact', :via => :post
 
 	resources :recipes
 	resources :recipe_users
