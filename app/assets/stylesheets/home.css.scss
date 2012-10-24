@@ -621,8 +621,11 @@ ul.recipe_ingredients {
 	}
 }
 
-.profile img {
+.profile .gravatar {
 	float: left;
+	display: inline-block;
+	padding: 2px;
+	border: 2px solid #ccc;
 }
 .profile .top_details {
 	float: left;

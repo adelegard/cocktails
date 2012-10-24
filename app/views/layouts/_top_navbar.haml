@@ -27,6 +27,10 @@
                                     %li.divider
                                     %li.nav-header My Recipes
                                     %li
+                                        %a{:href => recipes_lc_path}
+                                            =render :partial => '/icons/cabinet'
+                                            Makeable
+                                    %li
                                         %a{:href => recipes_favorites_path}
                                             =render :partial => '/icons/favorite'
                                             Favorites
@@ -70,8 +74,6 @@
                                 %li= link_to "My Account", edit_user_registration_path
                                 %li
                                     %a{:href => "/cabinet"} Liquor Cabinet
-                                %li
-                                    %a{:href => "/recipes/favorites"} Favorites
                                 %li.divider
                                 %li= link_to "Sign out", destroy_user_session_path, :method => :delete
                         %li.avatar

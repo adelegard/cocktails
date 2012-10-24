@@ -48,21 +48,32 @@ class LiquorCabinet < ActiveRecord::Base
     end
 
     def in_cabinet(ingredient_id, user_id)
-      LiquorCabinet.where(:ingredient_id => ingredient_id, :user_id => user_id).size == 1
+      LiquorCabinet.where(:ingredient_id => ingredient_id, :user_id => user_id).count == 1
     end
 
     def count_by_ingredient_id(ingredient_id)
-      LiquorCabinet.where(:ingredient_id => ingredient_id).size
+      LiquorCabinet.where(:ingredient_id => ingredient_id).count
     end
 
+    # this method totally sucks and needs to be vastly optimized
     def available_recipes(params, user_id)
       params[:sort] ||= "created_at"
       params[:direction] ||= "DESC"
       ingredients = LiquorCabinet.where(:user_id => user_id)
-      Recipe.search(:field_weights => {:ingredients => 10, :directions => 1},
-                    :with => {:ingredient_ids => ingredients.collect{|i| i.ingredient_id}},
+      lc_ingredient_ids = ingredients.collect(&:ingredient_id)
+      recipes = Recipe.search(:field_weights => {:ingredients => 10, :directions => 1},
+                    :with => {:ingredient_ids => lc_ingredient_ids},
                     :order => "#{params[:sort]} #{params[:direction]}",
                     :page => params[:page], :per_page => params[:per_page])
+      result_recipes = []
+      full_recipes = Recipe.full_recipes(recipes, user_id)
+      full_recipes.each do |recipe|
+        ingredient_ids = recipe[:ingredients].collect{|r| r[:ingredient][:id]}
+        if (ingredient_ids - lc_ingredient_ids).empty?
+          result_recipes << recipe
+        end
+      end
+      result_recipes
     end
   end
 end

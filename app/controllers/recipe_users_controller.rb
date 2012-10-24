@@ -32,8 +32,7 @@ class RecipeUsersController < BaseRecipesController
 
   # GET /recipes/liquor_cabinet
   def liquor_cabinet_recipes
-    recipes = LiquorCabinet.available_recipes(params, current_user.id)
-    @full_recipes = Recipe.full_recipes(recipes, current_user.id)
+    @full_recipes = LiquorCabinet.available_recipes(params, current_user.id)
 
     @title = "Cocktails I Can Make!"
     render 'search/search'

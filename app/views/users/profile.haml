@@ -1,8 +1,12 @@
 -@pageTitle = "Profile"
 
 .page-header.profile
-    %img.fl.avatar_large{"data-email" => @user.email}
-    .top_details.span6
+    -if @is_current_user
+        %a.gravatar{:href => "http://gravatar.com/emails/", :rel => "tooltip", "data-placement" => "bottom", "data-original-title" => "Change your avatar at gravatar.com"}
+            %img.avatar_large{"data-email" => @user.email}
+    -else
+        %img.avatar_large.gravatar{"data-email" => @user.email}
+    .top_details.span5
         %h1
             = @user.name
             %small=@user.location
