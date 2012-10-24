@@ -17,4 +17,4 @@
                     -if @q.include? " "
                         -word = "words"
                     with the #{word}: #{@q}
-= render :partial => '/search/search_results_table', :locals => {:recipes => @recipes, :recipe_users => @recipe_users, :total_ratings => @total_ratings}
+= render :partial => '/search/search_results_table_design5', :locals => {:full_recipes => @full_recipes}

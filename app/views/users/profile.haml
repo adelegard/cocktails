@@ -1,14 +1,18 @@
 -@pageTitle = "Profile"
 
 .page-header.profile
-    %img.fl.avatar_large{"data-email" => @user.email}
-    .top_details.span6
+    -if @is_current_user
+        %a.gravatar{:href => "http://gravatar.com/emails/", :rel => "tooltip", "data-placement" => "bottom", "data-original-title" => "Change your avatar at gravatar.com"}
+            %img.avatar_large{"data-email" => @user.email}
+    -else
+        %img.avatar_large.gravatar{"data-email" => @user.email}
+    .top_details.span5
         %h1
             = @user.name
             %small=@user.location
         %br
         %a.url{:href => @user.url}=@user.url
-        .expandable.muted=@user.about_me
+        .expandable.header_details.muted=@user.about_me
         =render :partial => '/users/follow_btn', :locals => {:is_following => @is_following, :user_id => @user.id}
     .stats
         %a.left
@@ -19,43 +23,58 @@
             %span
                 %strong=@num_favorited
                 Favorites
-        %a.right
+        %a.middle
             %span
                 %strong=@num_liked
                 Likes
+        %a.right
+            %span
+                %strong=@num_disliked
+                Dislikes
     .cb
 .profile_tabs
     .tabbable.tabs-left
         %ul.nav.nav-tabs.span2
             %li.active
                 %a{:href => "#recipes_tab", "data-toggle" => "tab"}
+                    =render :partial => '/icons/create'
                     Created Recipes
                     %span.muted.fr=@full_recipes_created.size
             %li
                 %a{:href => "#favorites_tab", "data-toggle" => "tab"}
+                    =render :partial => '/icons/favorite'
                     Favorites
                     %span.muted.fr=@full_recipes_favorites.size
             %li
-                %a{:href => "#rated_tab", "data-toggle" => "tab"}
-                    Rated
-                    %span.muted.fr=@full_recipes_rated.size
+                %a{:href => "#liked_tab", "data-toggle" => "tab"}
+                    =render :partial => '/icons/like'
+                    Liked
+                    %span.muted.fr=@full_recipes_liked.size
+            %li
+                %a{:href => "#disliked_tab", "data-toggle" => "tab"}
+                    =render :partial => '/icons/dislike'
+                    Disliked
+                    %span.muted.fr=@full_recipes_disliked.size
             %li
                 %a{:href => "#photos_tab", "data-toggle" => "tab"}
+                    =render :partial => '/icons/photo'
                     Photos
                     %span.muted.fr=@photos.size
             %li
                 %a{:href => "#following_tab", "data-toggle" => "tab"}
+                    =render :partial => '/icons/follow'
                     Following
                     %span.muted.fr=@following_users.size
             %li
                 %a{:href => "#cabinet_tab", "data-toggle" => "tab"}
+                    =render :partial => '/icons/cabinet'
                     Liquor Cabinet
                     %span.muted.fr=@lc_ingredients.size
         .tab-content.span10
             #recipes_tab.tab-pane.fade.in.active
                 %h2 Created Recipes
                 %hr
-                = render :partial => '/search/search_results_table_design2', :locals => {:full_recipes => @full_recipes_created, :total_ratings => @total_ratings_created, :hide_no_results_msg => true}
+                = render :partial => '/search/search_results_table_design5', :locals => {:full_recipes => @full_recipes_created, :hide_no_results_msg => true}
                 -if @full_recipes_created.length == 0
                     %h2
                         -if @is_current_user
@@ -71,7 +90,7 @@
             #favorites_tab.tab-pane.fade.in
                 %h2 Favorite Recipes
                 %hr
-                = render :partial => '/search/search_results_table_design2', :locals => {:full_recipes => @full_recipes_favorites, :total_ratings => @total_ratings_favorites, :hide_no_results_msg => true}
+                = render :partial => '/search/search_results_table_design5', :locals => {:full_recipes => @full_recipes_favorites, :hide_no_results_msg => true}
                 -if @full_recipes_favorites.length == 0
                     %h2
                         -if @is_current_user
@@ -85,19 +104,43 @@
                         %small
                             %a{:href => recipes_popular_path} Click here
                             =small_msg
-            #rated_tab.tab-pane.fade.in
-                %h2 Rated Recipes
+            #liked_tab.tab-pane.fade.in
+                %h2 Liked Recipes
                 %hr
-                = render :partial => '/search/search_results_table_design2', :locals => {:full_recipes => @full_recipes_rated, :total_ratings => @total_ratings_rated, :hide_no_results_msg => true}
-                -if @full_recipes_rated.length == 0
+                = render :partial => '/search/search_results_table_design5', :locals => {:full_recipes => @full_recipes_liked, :hide_no_results_msg => true}
+                -if @full_recipes_liked.length == 0
                     %h2
                         -if @is_current_user
-                            You haven't rated any recipes!
-                            -small_msg = "to view some popular recipes. Find some you love and rate away!"
+                            You haven't liked any recipes!
+                            -small_msg = "to view some popular recipes. Find some you love and like away!"
                         -else
                             =render :partial => 'users/user_name', :locals => {:user => @user}
-                            hasn't rated any recipes!
-                            -small_msg = "to view some popular recipes, rate away, and show them how it's done!"
+                            hasn't liked any recipes!
+                            -small_msg = "to view some popular recipes, like away, and show them how it's done!"
+                        %br
+                        %small
+                            %a{:href => recipes_popular_path} Click here
+                            =small_msg
+                    %br
+                    %h3
+                        %small
+                            p.s. To rate a recipe, simply click on the star that you think a given recipe deserves!
+                            %br
+                            Try it here: 
+                            =render :partial => '/recipes/rating_links', :locals => {:recipe_id => -1, :user_rating => 4, :avg_rating => 4, :num_rated => 23}
+            #disliked_tab.tab-pane.fade.in
+                %h2 Disliked Recipes
+                %hr
+                = render :partial => '/search/search_results_table_design5', :locals => {:full_recipes => @full_recipes_disliked, :hide_no_results_msg => true}
+                -if @full_recipes_disliked.length == 0
+                    %h2
+                        -if @is_current_user
+                            You haven't disliked any recipes!
+                            -small_msg = "to view some popular recipes. Find some you hate and dislike away!"
+                        -else
+                            =render :partial => 'users/user_name', :locals => {:user => @user}
+                            hasn't disliked any recipes!
+                            -small_msg = "to view some popular recipes, dislike away, and show them how it's done!"
                         %br
                         %small
                             %a{:href => recipes_popular_path} Click here

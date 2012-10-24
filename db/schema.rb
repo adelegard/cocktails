@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120831215726) do
+ActiveRecord::Schema.define(:version => 20121012021959) do
 
   create_table "authentications", :force => true do |t|
     t.string   "provider"
@@ -106,10 +106,13 @@ ActiveRecord::Schema.define(:version => 20120831215726) do
     t.integer  "recipe_id"
     t.integer  "user_id"
     t.boolean  "starred"
-    t.decimal  "rating",     :precision => 10, :scale => 0
-    t.datetime "created_at",                                :null => false
-    t.datetime "updated_at",                                :null => false
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
     t.boolean  "liked"
+    t.text     "note"
+    t.datetime "note_updated_at"
+    t.boolean  "disliked"
+    t.integer  "shared"
   end
 
   create_table "recipes", :force => true do |t|
@@ -117,16 +120,13 @@ ActiveRecord::Schema.define(:version => 20120831215726) do
     t.text     "directions"
     t.string   "glass"
     t.string   "alcohol"
-    t.datetime "created_at",                                                          :null => false
-    t.datetime "updated_at",                                                          :null => false
-    t.decimal  "rating_avg",         :precision => 10, :scale => 0
-    t.integer  "rating_count"
+    t.datetime "created_at",                           :null => false
+    t.datetime "updated_at",                           :null => false
     t.integer  "created_by_user_id"
-    t.boolean  "delta",                                             :default => true, :null => false
+    t.boolean  "delta",              :default => true, :null => false
     t.integer  "view_count"
     t.integer  "servings"
     t.text     "inspiration"
-    t.integer  "shared"
     t.string   "slug"
   end
 

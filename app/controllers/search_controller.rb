@@ -3,6 +3,7 @@ class SearchController < BaseRecipesController
   before_filter :set_default_params, :only => %w(simple_results advanced_results)
   before_filter :display_search_sidebar
 
+  # GET /search
   def search
     @spirit = params[:spirit]
     @q = params[:q]
@@ -21,27 +22,24 @@ class SearchController < BaseRecipesController
       ingredients << found_ing if found_ing != nil
     }
     
-    params[:sort] ||= "rating_count"
-    params[:direction] ||= "DESC"
     spirit_ingredient = Ingredient.find_by_ingredient(params[:spirit]) if !params[:spirit].blank?
     ingredients << spirit_ingredient if spirit_ingredient != nil
 
-    order = "#{params[:sort]} #{params[:direction]}"
+    order = params[:sort] ? "#{params[:sort]} #{params[:direction]}" : nil
     with = {:ingredient_ids => ingredients.collect{|i| i.id}}
 
-    @recipes = Recipe.searchByStringAndIngredientIds(@q, ingredients.collect{|i| i.id}, order, params[:page], params[:per_page])
-    
+    recipes = Recipe.search_by_string_and_ingredient_ids(@q, ingredients.collect{|i| i.id}, order, params[:page], params[:per_page])
+    user_id = current_user != nil && current_user.id ? current_user.id : nil
+    @full_recipes = Recipe.full_recipes(recipes, user_id)
+
     if @recipes.size == 1
       redirect_to @recipes.first
     end
 
-    @total_ratings = RecipeUser.getTotalRatings(@recipes)
-    if user_signed_in?
-      @recipe_users = RecipeUser.getRecipeUsers(@recipes, current_user.id)
-    end
     @display_search_sidebar = true
   end
 
+  # GET /search/autocomplete_recipes.json
   def autocomplete_recipes
     term = "^" + params[:q] + "*"
     per_page = params[:per_page] ? params[:per_page] : 10
@@ -51,27 +49,23 @@ class SearchController < BaseRecipesController
       :per_page => per_page,
       :order => "@relevance DESC"
     names = recipes.collect{|i| i.title}
-    respond_to do |format|
-      format.js {render_json names.to_json}
-    end
+    render_json names.to_json
   end
 
+  # GET /search/autocomplete_ingredients.json
   def autocomplete_ingredients
     ingredients = search_ingredients(params)
     names_and_ids = Hash.new {|h, k| h[k] = []}
     ingredients.each{|i| names_and_ids[i.id] = i.ingredient}
-    respond_to do |format|
-      format.js {render_json names_and_ids.to_json}
-    end
+    render_json names_and_ids.to_json
   end
 
+  # GET /search/autocomplete_ingredients_titles.json
   def autocomplete_ingredients_titles
     ingredients = search_ingredients(params)
     names_and_ids = Hash.new {|h, k| h[k] = []}
     names = ingredients.collect{|i| i[:ingredient]}
-    respond_to do |format|
-      format.js {render_json names.to_json}
-    end
+    render_json names.to_json
   end
 
   private
@@ -79,7 +73,7 @@ class SearchController < BaseRecipesController
   def search_ingredients(params)
     term = "^" + params[:q] + "*"
     per_page = params[:per_page] ? params[:per_page] : 10
-    return Ingredient.search term,
+    Ingredient.search term,
       :match_mode => :extended,
       :ignore_errors => true,
       :per_page => per_page,

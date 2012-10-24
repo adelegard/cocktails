@@ -21,7 +21,7 @@ if (typeof(Cocktails.LC) === 'undefined') {
     },
 
     add_ingredient_via_enterkey: function(e) {
-      if (e.which !== 13) return;
+      if (e.keyCode !== 13) return;
       var val = $(e.target).val();
       if (Cocktails.LC._can_add(val) === false) return;
       Cocktails.LC._add_ingredient_via_name(val, Cocktails.LC._add_ingredient_callback(val));
@@ -83,6 +83,7 @@ if (typeof(Cocktails.LC) === 'undefined') {
     _add_ingredient_via_name: function(val, callback) {
       $.ajax({
         url: '/cabinet/add',
+        type: 'POST',
         data: {q: val},
         success: function(data) {
           if (typeof(callback) !== 'undefined') callback();
@@ -92,6 +93,7 @@ if (typeof(Cocktails.LC) === 'undefined') {
     _remove_ingredient_via_name: function(val, callback) {
       $.ajax({
         url: '/cabinet/remove',
+        type: 'DELETE',
         data: {q: val},
         success: function(data) {
           if (typeof(callback) !== 'undefined') callback();
@@ -101,8 +103,8 @@ if (typeof(Cocktails.LC) === 'undefined') {
 
     _add_ingredient_via_id: function(ingredient_id, callback) {
       $.ajax({
-        url: '/cabinet/add_by_id',
-        data: {id: ingredient_id},
+        url: '/cabinet/' + ingredient_id + '/add_by_id',
+        type: 'POST',
         success: function(data) {
           if (typeof(callback) !== 'undefined') callback();
         }
@@ -110,8 +112,8 @@ if (typeof(Cocktails.LC) === 'undefined') {
     },
     _remove_ingredient_via_id: function(ingredient_id, callback) {
       $.ajax({
-        url: '/cabinet/remove_by_id',
-        data: {id: ingredient_id},
+        url: '/cabinet/' + ingredient_id + '/remove_by_id',
+        type: 'DELETE',
         success: function(data) {
           if (typeof(callback) !== 'undefined') callback();
         }

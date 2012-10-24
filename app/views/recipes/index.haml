@@ -3,52 +3,41 @@
 .row-fluid
   %ul.nav.nav-tabs
     %li.active
-      %a{:href => "#design0", "data-toggle" => "tab"} Popular (Design 0)
+      %a{:href => "#popular_recipes", "data-toggle" => "tab"}
+        =render :partial => '/icons/popular'
+        Popular Recipes
     %li
-      %a{:href => "#design1", "data-toggle" => "tab"} Popular (Design 1)
-    %li
-      %a{:href => "#design2", "data-toggle" => "tab"} Popular (Design 2)
-    %li
-      %a{:href => "#design3", "data-toggle" => "tab"} Popular (Design 3)
-    %li
-      %a{:href => "#featured", "data-toggle" => "tab"} Featured
-    %li
-      %a{:href => "#new", "data-toggle" => "tab"} New (Design 4)
+      %a{:href => "#new_recipes", "data-toggle" => "tab"}
+        =render :partial => '/icons/new'
+        New
+    -if user_signed_in?
+      %li
+        %a{:href => "#liked_recipes", "data-toggle" => "tab"}
+          =render :partial => '/icons/like'
+          Liked
+      %li
+        %a{:href => "#disliked_recipes", "data-toggle" => "tab"}
+          =render :partial => '/icons/dislike'
+          Disliked
+      %li
+        %a{:href => "#favorited_recipes", "data-toggle" => "tab"}
+          =render :partial => '/icons/favorite'
+          Favorited
+      %li
+        %a{:href => "#created_recipes", "data-toggle" => "tab"}
+          =render :partial => '/icons/create'
+          Created
   .tab-content
-    .tab-pane.fade.in.active#design0
-      = render :partial => '/search/search_results_table', :locals => {:recipes => @recipes_popular, :recipe_users => @recipe_users_popular, :total_ratings => @total_ratings_popular}
-    .tab-pane.fade.in#design1
-      = render :partial => '/search/search_results_table_design1', :locals => {:full_recipes => @full_recipes_popular, :total_ratings => @total_ratings_popular}
-    .tab-pane.fade#featured
-      .hero-unit
-        #myCarousel.carousel.slide
-          .carousel-inner
-            .item.active
-              %a{:href => "/recipes/7946"}
-                %img.cocktail-green{:alt => ""}
-                  .carousel-caption
-                    %h4 Green Demon Cocktail
-                    %a.btn.btn-primary.btn-large.fr{:href => "/recipes/7946"} View Recipe »
-                    %p Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.
-            .item
-              %a{:href => "/recipes/6405"}
-                %img.cocktail-fall{:alt => ""}
-                  .carousel-caption
-                    %h4 Fall Spice Cordial Cocktail
-                    %a.btn.btn-primary.btn-large.fr{:href => "/recipes/6405"} View Recipe »
-                    %p Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.
-            .item
-              %a{:href => "/recipes/7946"}
-                %img.cocktail-glasses{:alt => ""}
-                  .carousel-caption
-                    %h4 Some Other Cocktails
-                    %a.btn.btn-primary.btn-large.fr{:href => "/recipes/7946"} View Recipe »
-                    %p Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.
-          %a.left.carousel-control{"data-slide" => "prev", :href => "#myCarousel"} ‹
-          %a.right.carousel-control{"data-slide" => "next", :href => "#myCarousel"} ›
-    .tab-pane.fade.in#design2
-      = render :partial => '/search/search_results_table_design2', :locals => {:full_recipes => @full_recipes_popular, :total_ratings => @total_ratings_popular}
-    .tab-pane.fade.in#design3
-      = render :partial => '/search/search_results_table_design3', :locals => {:full_recipes => @full_recipes_popular, :total_ratings => @total_ratings_popular}
-    .tab-pane.fade#new
-      = render :partial => '/search/search_results_table_design4', :locals => {:full_recipes => @full_recipes_new, :total_ratings => @total_ratings_new}
+    .tab-pane.fade.in.active#popular_recipes
+      = render :partial => '/search/search_results_table_design5', :locals => {:full_recipes => @full_recipes_popular}
+    .tab-pane.fade.in#new_recipes
+      = render :partial => '/search/search_results_table_design5', :locals => {:full_recipes => @full_recipes_new}
+    -if user_signed_in?
+      .tab-pane.fade.in#liked_recipes
+        = render :partial => '/search/search_results_table_design5', :locals => {:full_recipes => @full_recipes_liked}
+      .tab-pane.fade.in#disliked_recipes
+        = render :partial => '/search/search_results_table_design5', :locals => {:full_recipes => @full_recipes_disliked}
+      .tab-pane.fade.in#favorited_recipes
+        = render :partial => '/search/search_results_table_design5', :locals => {:full_recipes => @full_recipes_favorited}
+      .tab-pane.fade.in#created_recipes
+        = render :partial => '/search/search_results_table_design5', :locals => {:full_recipes => @full_recipes_created}

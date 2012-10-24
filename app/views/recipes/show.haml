@@ -1,11 +1,11 @@
 -@pageTitle = "Recipe - #{@recipe.title}"
 
 .cb
-=render :partial => '/recipes/full_page_view'
 .page-header
-    #recipe_social.well.span2.fr
+    .recipe_stats.well.fr
         -photo_url = !@recipe_photos.empty? ? @recipe_photos.first.photo.url(:large) : nil
-        =render :partial => '/recipes/social', :locals => {:recipe => @recipe, :recipe_user => @recipe_user, :photo_url => photo_url, :num_shared => @recipe.shared ||= 0, :num_liked => @num_liked, :num_saved => @num_starred}
+        //=render :partial => '/recipes/social', :locals => {:recipe => @recipe, :recipe_user => @recipe_user, :photo_url => photo_url, :num_shared => @num_shared, :num_liked => @num_liked, :num_saved => @num_starred}
+        =render :partial => 'recipes/actions', :locals => {:full_recipe => @full_recipe}
     .photo_thumb
         -if @recipe_photos.empty?
             .default_thumb_photo
@@ -24,9 +24,7 @@
                 %small
                     by
                     = link_to(@recipe_creator.name, @recipe_creator)
-        -user_rating = @recipe_user != nil ? @recipe_user.rating : nil
-        =render :partial => '/recipes/rating_links', :locals => {:recipe_id => @recipe.id, :user_rating => user_rating, :avg_rating => @avg_rating, :num_rated => @num_rated}
-        .inspiration.expandable.muted= @recipe.inspiration
+        .expandable.header_details.muted=@recipe.inspiration
     .cl
 .tabbable.tabs-left
     %ul.nav.nav-tabs
@@ -59,3 +57,4 @@
                 -if index == 0
                     -cssClass = "active"
                 =image_tag photo.photo.url(:tiny), :class => "#{cssClass} thumb"
+=render :partial => '/recipes/full_page_view'

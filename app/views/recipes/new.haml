@@ -2,7 +2,8 @@
 	%h1
 		Post a New Cocktail
 		%small Fill out all fields below
-=form_for @recipe, :html => { :multipart => true, :class => "form-horizontal validate"} do |f|
+=form_for @recipe, :method => :post, :html => { :multipart => true, :class => "form-horizontal validate"} do |f|
+	%input{:type => "hidden", :name => "recipe[created_by_user_id]", :value => "#{current_user.id}"}
 	= f.error_messages
 	%fieldset.new_recipe_ingredients
 		.control-group
@@ -24,7 +25,7 @@
 		.control-group
 			= f.label :glass, :class => "control-label"
 			.controls
-				%select.chzn-select{"data-placeholder" => "Choose a glass...", :style => "width:200px;", :name => "glass"}
+				%select.chzn-select{"data-placeholder" => "Choose a glass...", :style => "width:200px;", :name => "recipe[glass]"}
 					-@glasses.each do |glass|
 						%option= glass
 		.control-group
@@ -36,7 +37,7 @@
 		.control-group
 			= f.label :servings, :class => "control-label"
 			.controls
-				%select.chzn-select{:name => "servings", :style => "width:45px;"}
+				%select.chzn-select{:name => "recipe[servings]", :style => "width:45px;"}
 					-(1..12).each do |i|
 						%option= i
 		.control-group

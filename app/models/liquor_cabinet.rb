@@ -5,19 +5,19 @@ class LiquorCabinet < ActiveRecord::Base
   class << self
 
     # Add an ingredient to a users liquor cabinet
-  	def addIngredient(ingredient_name, user_id)
+  	def add(ingredient_name, user_id)
   	  ingredient = Ingredient.where(:ingredient => ingredient_name).first
-      @liquor_cabinet = LiquorCabinet.find_or_initialize_by_user_id_and_ingredient_id(user_id, ingredient.id)
-      @liquor_cabinet.save
+      liquor_cabinet = LiquorCabinet.find_or_initialize_by_user_id_and_ingredient_id(user_id, ingredient.id)
+      liquor_cabinet.save
   	end
 
-    def addIngredientById(ingredient_id, user_id)
-      @liquor_cabinet = LiquorCabinet.find_or_initialize_by_user_id_and_ingredient_id(user_id, ingredient_id)
-      @liquor_cabinet.save
+    def add_by_id(ingredient_id, user_id)
+      liquor_cabinet = LiquorCabinet.find_or_initialize_by_user_id_and_ingredient_id(user_id, ingredient_id)
+      liquor_cabinet.save
     end
 
     # remove an ingredient from a users liquor cabinet
-  	def removeIngredient(ingredient_name, user_id)
+  	def remove(ingredient_name, user_id)
   	  ingredient = Ingredient.where(:ingredient => ingredient_name).first
   	  if ingredient == nil
   	    render :nothing => false
@@ -30,39 +30,50 @@ class LiquorCabinet < ActiveRecord::Base
   	  end
   	end
 
-    def removeIngredientById(ingredient_id, user_id)
+    def remove_by_id(ingredient_id, user_id)
       liquor_cabinet = LiquorCabinet.where(:user_id => user_id, :ingredient_id => ingredient_id).first
       if liquor_cabinet != nil
         LiquorCabinet.delete_all(["user_id = ? AND ingredient_id = ?", user_id, ingredient_id])
       end
     end
 
-    def getByUserId(user_id)
+    def by_user_id(user_id)
   	  liquor_cabinet_ingredients = LiquorCabinet.where(:user_id => user_id)
   	  ingredients = []
   	  liquor_cabinet_ingredients.each do |lci|
   	    ingredients << Ingredient.where(:id => lci.ingredient_id).first
   	  end
       ingredients.sort_by! { |i| i.ingredient.downcase }
-  	  return ingredients
+  	  ingredients
     end
 
-    def inCabinet(ingredient_id, user_id)
-      return LiquorCabinet.where(:ingredient_id => ingredient_id, :user_id => user_id).size == 1
+    def in_cabinet(ingredient_id, user_id)
+      LiquorCabinet.where(:ingredient_id => ingredient_id, :user_id => user_id).count == 1
     end
 
-    def getCountByIngredientId(ingredient_id)
-      return LiquorCabinet.where(:ingredient_id => ingredient_id).size
+    def count_by_ingredient_id(ingredient_id)
+      LiquorCabinet.where(:ingredient_id => ingredient_id).count
     end
 
-    def getAvailableRecipes(params, user_id)
-      params[:sort] ||= "rating_count"
+    # this method totally sucks and needs to be vastly optimized
+    def available_recipes(params, user_id)
+      params[:sort] ||= "created_at"
       params[:direction] ||= "DESC"
       ingredients = LiquorCabinet.where(:user_id => user_id)
-      return Recipe.search(:field_weights => {:ingredients => 10, :directions => 1},
-                           :with => {:ingredient_ids => ingredients.collect{|i| i.ingredient_id}},
-                           :order => "#{params[:sort]} #{params[:direction]}",
-                           :page => params[:page], :per_page => params[:per_page])
+      lc_ingredient_ids = ingredients.collect(&:ingredient_id)
+      recipes = Recipe.search(:field_weights => {:ingredients => 10, :directions => 1},
+                    :with => {:ingredient_ids => lc_ingredient_ids},
+                    :order => "#{params[:sort]} #{params[:direction]}",
+                    :page => params[:page], :per_page => params[:per_page])
+      result_recipes = []
+      full_recipes = Recipe.full_recipes(recipes, user_id)
+      full_recipes.each do |recipe|
+        ingredient_ids = recipe[:ingredients].collect{|r| r[:ingredient][:id]}
+        if (ingredient_ids - lc_ingredient_ids).empty?
+          result_recipes << recipe
+        end
+      end
+      result_recipes
     end
   end
 end
