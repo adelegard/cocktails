@@ -54,6 +54,10 @@ if (typeof(Cocktails.Recipe) === 'undefined') {
         }, ".vote_container .vote_button:not(.voted)");
         $(".vote_container .vote_button").on("click", this._vote_btn_clicked);
 
+        // new recipe page
+        $(document).on("click", ".new_recipe_ingredient_add", this._new_recipe_ingredient_add);
+        $(document).on("click", ".new_recipe_ingredient_remove", this._new_recipe_ingredient_remove);
+
         this._initialized = true;
       }
     },
@@ -121,103 +125,80 @@ if (typeof(Cocktails.Recipe) === 'undefined') {
 
     /* Favoriting */
     _recipe_favorited: function(e) {
-      e.preventDefault();
-      var btn = $(e.currentTarget);
-      $.ajax({
-        url: "/recipes/" + btn.attr("data-id") + "/favorite",
-        type: "POST",
-        success: function(){
-          btn.addClass('btn-warning');
-          btn.attr('data-action', 'unfavorite');
-          btn.attr('data-original-title', 'Unfavorite');
-          var count = parseInt(btn.children('span.favorite-count').html(), 10);
-          btn.children('span.favorite-count').html(count + 1);
-        }
-      });
+      var p = {};
+      p["event"] = e;
+      p["action"] = "favorite";
+      p["add_class"] = "btn-warning";
+      p["data-action"] = "unfavorite";
+      p["title"] = "Unfavorite";
+      p["count_class"] = "span.favorite-count";
+      p["count_op"] = "plus";
+      Cocktails.Recipe._recipe_action(p);
     },
     _recipe_unfavorited: function(e) {
-      e.preventDefault();
-      var btn = $(e.currentTarget);
-      $.ajax({
-        url: "/recipes/" + btn.attr("data-id") + "/favorite",
-        type: "POST",
-        success: function(){
-          btn.removeClass('btn-warning');
-          btn.attr('data-action', 'favorite');
-          btn.attr('data-original-title', 'Favorite');
-          var count = parseInt(btn.children('span.favorite-count').html(), 10);
-          btn.children('span.favorite-count').html(count - 1);
-        }
-      });
+      var p = {};
+      p["event"] = e;
+      p["action"] = "favorite";
+      p["remove_class"] = "btn-warning";
+      p["data-action"] = "favorite";
+      p["title"] = "Favorite";
+      p["count_class"] = "span.favorite-count";
+      Cocktails.Recipe._recipe_action(p);
     },
 
     /* Liking */
     _recipe_liked: function(e) {
-      e.preventDefault();
-      var btn = $(e.currentTarget);
-      $.ajax({
-        url: "/recipes/" + btn.attr("data-id") + "/like",
-        type: "POST",
-        success: function(){
-          btn.addClass('btn-success');
-          btn.attr('data-action', 'unlike');
-          btn.attr('data-original-title', 'Unlike');
-          var count = parseInt(btn.children('span.like-count').html(), 10);
-          btn.children('span.like-count').html(count + 1);
-          btn.siblings(".dislike-button").prop('disabled', true);
-        }
-      });
+      var p = {};
+      p["event"] = e;
+      p["action"] = "like";
+      p["add_class"] = "btn-success";
+      p["data-action"] = "unlike";
+      p["title"] = "Unlike";
+      p["count_class"] = "span.like-count";
+      p["count_op"] = "plus";
+      p["btn_class"] = ".dislike-button";
+      p["btn_disabled"] = true;
+      Cocktails.Recipe._recipe_action(p);
     },
     _recipe_unliked: function(e) {
-      e.preventDefault();
-      var btn = $(e.currentTarget);
-      $.ajax({
-        url: "/recipes/" + btn.attr("data-id") + "/like",
-        type: "POST",
-        success: function(){
-          btn.removeClass('btn-success');
-          btn.attr('data-action', 'like');
-          btn.attr('data-original-title', 'Like');
-          var count = parseInt(btn.children('span.like-count').html(), 10);
-          btn.children('span.like-count').html(count - 1);
-          btn.siblings(".dislike-button").prop('disabled', false);
-        }
-      });
+      var p = {};
+      p["event"] = e;
+      p["action"] = "like";
+      p["remove_class"] = "btn-success";
+      p["data-action"] = "like";
+      p["title"] = "Like";
+      p["count_class"] = "span.like-count";
+      p["btn_class"] = ".dislike-button";
+      p["btn_disabled"] = false;
+      Cocktails.Recipe._recipe_action(p);
     },
 
 
     /* Disliking */
     _recipe_disliked: function(e) {
-      e.preventDefault();
-      var btn = $(e.currentTarget);
-      $.ajax({
-        url: "/recipes/" + btn.attr("data-id") + "/dislike",
-        type: "POST",
-        success: function(){
-          btn.addClass('btn-danger');
-          btn.attr('data-action', 'undislike');
-          btn.attr('data-original-title', 'Undislike');
-          var count = parseInt(btn.children('span.dislike-count').html(), 10);
-          btn.children('span.dislike-count').html(count + 1);
-          btn.siblings(".like-button").prop('disabled', true);
-        }
-      });
+      var p = {};
+      p["event"] = e;
+      p["action"] = "dislike";
+      p["add_class"] = "btn-danger";
+      p["data-action"] = "undislike";
+      p["title"] = "Undislike";
+      p["count_class"] = "span.dislike-count";
+      p["count_op"] = "plus";
+      p["btn_class"] = ".like-button";
+      p["btn_disabled"] = true;
+      Cocktails.Recipe._recipe_action(p);
     },
     _recipe_undisliked: function(e) {
-      e.preventDefault();
-      var btn = $(e.currentTarget);
-      $.ajax({
-        url: "/recipes/" + btn.attr("data-id") + "/dislike",
-        type: "POST",
-        success: function(){
-          btn.removeClass('btn-danger');
-          btn.attr('data-action', 'dislike');
-          btn.attr('data-original-title', 'Dislike');
-          var count = parseInt(btn.children('span.dislike-count').html(), 10);
-          btn.children('span.dislike-count').html(count - 1);
-          btn.siblings(".like-button").prop('disabled', false);
-        }
-      });
+      var p = {};
+      p["event"] = e;
+      p["action"] = "dislike";
+      p["remove_class"] = "btn-danger";
+      p["data-action"] = "dislike";
+      p["title"] = "Dislike";
+      p["count_class"] = "span.dislike-count";
+      p["btn_class"] = ".like-button";
+      p["btn_disabled"] = false;
+      Cocktails.Recipe._recipe_action(p);
     },
 
     /* Shared */
@@ -228,13 +209,33 @@ if (typeof(Cocktails.Recipe) === 'undefined') {
         url: "/recipes/" + btn.attr("data-id") + "/share",
         type: "POST",
         success: function(){
-          btn.addClass('btn-info');
           var count = parseInt(btn.children('span.shared-count').html(), 10);
-          btn.children('span.shared-count').html(count + 1);
+          if (!count.toString().endsWith("k")) btn.children('span.shared-count').html(count + 1);
 
           Cocktails.Recipe._open_share_dialog(btn.find(".share_attr .title").val(),
                                               btn.find(".share_attr .url").val(),
                                               btn.find(".share_attr .photo_url").val());
+        }
+      });
+    },
+
+    _recipe_action: function(p) {
+      p["event"].preventDefault();
+      var btn = $(p["event"].currentTarget);
+      $.ajax({
+        url: "/recipes/" + btn.attr("data-id") + "/" + p["action"],
+        type: "POST",
+        success: function(){
+          if (typeof(p['remove_class']) !== 'undefined') btn.removeClass(p['remove_class']);
+          if (typeof(p['add_class']) !== 'undefined') btn.addClass(p['add_class']);
+          btn.attr('data-action', p['data-action']);
+          btn.attr('data-original-title', p['title']);
+          var count = btn.children(p['count_class']).html();
+          if (count !== null && !count.toString().endsWith("k")) {
+            count = parseInt(count, 10);
+            btn.children(p['count_class']).html(p["count_op"] == "plus" ? (count + 1) : (count - 1));
+          }
+          btn.siblings(p['btn_class']).prop('disabled', p['btn_disabled']);
         }
       });
     },
@@ -314,6 +315,35 @@ if (typeof(Cocktails.Recipe) === 'undefined') {
       vote_btn.find("input:checkbox").attr("checked", true);
       vote_btn.addClass("voted");
       return false;
+    },
+
+    /* new recipe page - add ingredient button clicked */
+    _new_recipe_ingredient_add: function() {
+      var new_ingredient = $(".new_recipe_ingredient").first().clone();
+      var num = $(".the_ingredients .ingredient").length;
+
+      Cocktails.Recipe._setNewIngredientName("input.val", new_ingredient, num);
+      Cocktails.Recipe._setNewIngredientName("select.amt", new_ingredient, num);
+      Cocktails.Recipe._setNewIngredientName("input.ingredients_ac", new_ingredient, num);
+
+      new_ingredient.removeClass("dn new_recipe_ingredient");
+      new_ingredient.find("select").addClass("chzn-select");
+      new_ingredient.appendTo(".the_ingredients");
+      $(".chzn-select").chosen();
+      Cocktails.Utility.setupAjaxChosenIngredients();
+      new_ingredient.find("input.val").focus();
+      return false;
+    },
+    _new_recipe_ingredient_remove: function() {
+      var ingredients = $(".the_ingredients .ingredient");
+      if (ingredients.length <= 1) return false;
+      $(this).closest(".ingredient").remove();
+    },
+    _setNewIngredientName: function(selector, new_ingredient, num) {
+      var the_title = new_ingredient.find(selector);
+      var input_name = the_title.attr("name");
+      input_name = input_name.replace("0", num);
+      the_title.attr("name", input_name);
     }
 
   };

@@ -12,12 +12,12 @@
         -else
             %a{:href => "#", "data-toggle" => "modal", "data-target" => "#photos_modal"}
                 = image_tag @recipe_photos.first.photo.url(:thumb)
-            .num_photos 1 of #{@recipe_photos.size}
+            //.num_photos 1 of #{@recipe_photos.size}
         .add_photo
             %a{:href => recipe_upload_photo_path(@recipe.id)}
                 %i.icon-upload
                 %span Add a Photo
-    .span6.top_recipe_details
+    .span5.top_recipe_details
         %h1.recipe_title
             = @recipe.title
             -if @recipe_creator

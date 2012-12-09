@@ -29,15 +29,15 @@
           Created
   .tab-content
     .tab-pane.fade.in.active#popular_recipes
-      = render :partial => '/search/search_results_table_design5', :locals => {:full_recipes => @full_recipes_popular}
+      = render :partial => '/search/search_results', :locals => {:full_recipes => @full_recipes_popular}
     .tab-pane.fade.in#new_recipes
-      = render :partial => '/search/search_results_table_design5', :locals => {:full_recipes => @full_recipes_new}
+      = render :partial => '/search/search_results', :locals => {:full_recipes => @full_recipes_new}
     -if user_signed_in?
       .tab-pane.fade.in#liked_recipes
-        = render :partial => '/search/search_results_table_design5', :locals => {:full_recipes => @full_recipes_liked}
+        = render :partial => '/search/search_results', :locals => {:full_recipes => @full_recipes_liked}
       .tab-pane.fade.in#disliked_recipes
-        = render :partial => '/search/search_results_table_design5', :locals => {:full_recipes => @full_recipes_disliked}
+        = render :partial => '/search/search_results', :locals => {:full_recipes => @full_recipes_disliked}
       .tab-pane.fade.in#favorited_recipes
-        = render :partial => '/search/search_results_table_design5', :locals => {:full_recipes => @full_recipes_favorited}
+        = render :partial => '/search/search_results', :locals => {:full_recipes => @full_recipes_favorited}
       .tab-pane.fade.in#created_recipes
-        = render :partial => '/search/search_results_table_design5', :locals => {:full_recipes => @full_recipes_created}
+        = render :partial => '/search/search_results', :locals => {:full_recipes => @full_recipes_created}

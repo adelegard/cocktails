@@ -1,6 +1,6 @@
 class RecipesController < BaseRecipesController
 
-  before_filter :authenticate_user!, :except => [:index, :new_recipes, :popular, :show]
+  before_filter :authenticate_user!, :except => [:index, :recent, :popular, :show]
   before_filter :display_search_sidebar, :except => [:show, :new, :uploadphoto]
 
   # GET /

@@ -18,11 +18,11 @@
     .stats
         %a.left
             %span
-                %strong.cabinets=@lc_count
+                %strong.cabinets= round_k @lc_count
                 ="Cabinet".pluralize(@lc_count)
         %a.right
             %span
-                %strong=@recipe_count
+                %strong= round_k @recipe_count
                 ="Recipe".pluralize(@recipe_count)
     .cb
 .profile_tabs
@@ -54,13 +54,13 @@
                     =render :partial => '/icons/popular'
                     Popular Recipes
                 %hr
-                = render :partial => '/search/search_results_table_design5', :locals => {:full_recipes => @full_recipes_popular}
+                = render :partial => '/search/search_results', :locals => {:full_recipes => @full_recipes_popular}
             #new_recipes_tab.tab-pane.fade.in
                 %h2
                     =render :partial => '/icons/new'
                     New Recipes
                 %hr
-                = render :partial => '/search/search_results_table_design5', :locals => {:full_recipes => @full_recipes_new}
+                = render :partial => '/search/search_results', :locals => {:full_recipes => @full_recipes_new}
             #photos_tab.photos_tab_content.tab-pane.fade.in
                 %h2
                     =render :partial => '/icons/photo'
