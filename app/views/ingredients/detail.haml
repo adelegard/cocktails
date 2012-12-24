@@ -4,7 +4,7 @@
     -if @ingredient_photos.empty?
         %a.img_container.no_img.icon-lemon{:href => ingredient_upload_photo_path(@ingredient.id), "data-original-title" => "Add Photo", :rel => "tooltip", "data-placement" => "bottom"}
     -else
-        %a{:href => "#", "data-toggle" => "modal", "data-target" => "#photos_modal"}
+        %a.img_container{:href => "#", "data-toggle" => "modal", "data-target" => "#photos_modal"}
             = image_tag @ingredient_photos.first.photo.url(:thumb)
     .top_details.span5
         %h1.fl= @ingredient.ingredient
