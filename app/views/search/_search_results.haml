@@ -20,7 +20,7 @@
               -first_photo = full_recipe[:recipe_photos].first
               -if first_photo
                 %a{:href => "javascript:void(0);"}
-                  = image_tag(first_photo.photo.url(:tiny), :class => "img_container", "data-original-title" => "View Photo", :rel => "tooltip")
+                  = image_tag(first_photo.photo.url(:tiny), :class => "img_container icon", "data-original-title" => "View Photo", :rel => "tooltip")
               -else
                 %a.img_container.no_img.icon-glass{:href => recipe_upload_photo_path(@the_recipe.id), "data-original-title" => "Add Photo", :rel => "tooltip"}
               = link_to(@the_recipe.title, @the_recipe, :class => "recipe_title")
@@ -30,7 +30,7 @@
                   -if index < full_recipe[:ingredients].size - 1
                     &nbsp;
             %td
-              =@the_recipe.alcohol
+              =!@the_recipe.alcohol.empty? ? @the_recipe.alcohol + '%' : "---"
             %td.tar
               =render :partial => 'recipes/actions', :locals => {:full_recipe => full_recipe}
             %td.user

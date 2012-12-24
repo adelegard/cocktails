@@ -8,20 +8,15 @@
         =render :partial => 'recipes/actions', :locals => {:full_recipe => @full_recipe}
     .photo_thumb
         -if @recipe_photos.empty?
-            .default_thumb_photo
+            %a.img_container.no_img.icon-glass{:href => recipe_upload_photo_path(@recipe.id), "data-original-title" => "Add Photo", :rel => "tooltip", "data-placement" => "bottom"}
         -else
             %a{:href => "#", "data-toggle" => "modal", "data-target" => "#photos_modal"}
-                = image_tag @recipe_photos.first.photo.url(:thumb)
-            //.num_photos 1 of #{@recipe_photos.size}
-        .add_photo
-            %a{:href => recipe_upload_photo_path(@recipe.id)}
-                %i.icon-upload
-                %span Add a Photo
+                = image_tag(@recipe_photos.first.photo.url(:thumb), :class => "img_container")
     .span5.top_recipe_details
         %h1.recipe_title
             = @recipe.title
             -if @recipe_creator
-                %small
+                %small.db
                     by
                     = link_to(@recipe_creator.name, @recipe_creator)
         .expandable.header_details.muted=@recipe.inspiration

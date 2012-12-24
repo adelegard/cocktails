@@ -10,24 +10,19 @@
         %h1
             = @user.name
             %small=@user.location
-        %br
         %a.url{:href => @user.url}=@user.url
         .expandable.header_details.muted=@user.about_me
         =render :partial => '/users/follow_btn', :locals => {:is_following => @is_following, :user_id => @user.id}
     .stats
-        %a.left
+        %a.left{:rel => "tooltip", "data-placement" => "bottom", "data-original-title" => "Number of Followers"}
             %span
                 %strong.followers= round_k @follower_users.size
                 Followers
-        %a.middle
-            %span
-                %strong= round_k @num_favorited
-                Favorites
-        %a.middle
+        %a.middle{:rel => "tooltip", "data-placement" => "bottom", "data-original-title" => "Number of Liked [Created] Recipes"}
             %span
                 %strong= round_k @num_liked
                 Likes
-        %a.right
+        %a.right{:rel => "tooltip", "data-placement" => "bottom", "data-original-title" => "Number of Disliked [Created] Recipes"}
             %span
                 %strong= round_k @num_disliked
                 Dislikes

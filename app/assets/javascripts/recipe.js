@@ -236,6 +236,12 @@ if (typeof(Cocktails.Recipe) === 'undefined') {
             btn.children(p['count_class']).html(p["count_op"] == "plus" ? (count + 1) : (count - 1));
           }
           btn.siblings(p['btn_class']).prop('disabled', p['btn_disabled']);
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+          // -display login/signup dialog
+          // -redirect to login/signup page
+          // -display message to the user that this isn't a possible action without being logged in
+          // make these buttons either to be NOT buttons, or disalbe them?
         }
       });
     },

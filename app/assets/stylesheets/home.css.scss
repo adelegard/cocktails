@@ -135,6 +135,27 @@ input:-moz-placeholder {
 	width: 5.8em;
 }
 
+.img_container {
+	display: inline-block;
+	float: left;
+	border: 1px solid #BBB;
+	@include border-radius(3px);
+
+	&:hover {
+		border: 1px solid #aaa;
+	}
+}
+.img_container.no_img {
+	text-align: center;
+	color: #555;
+	background-color: #fbfbfb;
+	text-decoration: none;
+
+	&:hover {
+		background-color: #eee;
+	}
+}
+
 .search_results {
 	.table th,
 	.table td {
@@ -172,27 +193,12 @@ input:-moz-placeholder {
 
 	.img_container {
 		height: 38px;
-		float: left;
-		margin-right: 7px;
 		width: 50px;
-		border: 1px solid #BBB;
-		@include border-radius(3px);
-
-		&:hover {
-			border: 1px solid #aaa;
-		}
+		margin-right: 7px;
 	}
 	.img_container.no_img {
 		font-size: 30px;
-		text-align: center;
 		line-height: 38px;
-		color: #555;
-		background-color: #eee;
-		text-decoration: none;
-
-		&:hover {
-			background-color: #ccc;
-		}
 	}
 	.btn-group.recipe_actions .btn {
 		line-height: 30px;
@@ -334,11 +340,15 @@ ul.recipe_ingredients {
 	margin: 0;
 }
 
-.page-header .photo_thumb {
-	display: inline-block;
-	float: left;
-	margin-right: 8px;
-	text-align: center;
+.page-header .img_container {
+	height: 150px;
+	width: 150px;
+	padding: 2px;
+	border: 2px solid #CCC;
+}
+.page-header .img_container.no_img {
+	font-size: 105px;
+	line-height: 150px;
 }
 
 .num_photos {
@@ -347,11 +357,6 @@ ul.recipe_ingredients {
 }
 .add_photo {
 	margin: 2px 0 0 3px;
-}
-.default_thumb_photo {
-	width: 150px;
-	height: 150px;
-	background: transparent asset-url("cocktails/default.jpg", image) no-repeat center left;
 }
 
 #photos_modal {
@@ -563,12 +568,13 @@ ul.recipe_ingredients {
 	display: inline-block;
 	padding: 2px;
 	border: 2px solid #ccc;
+	@include border-radius(3px);
 }
 .profile .top_details {
 	float: left;
 	text-align: left;
 	position: relative;
-	height: 150px;
+	height: 155px;
 
 	.btn_container {
 		position: absolute;
@@ -608,7 +614,6 @@ ul.recipe_ingredients {
 	float: right;
 
 	a {
-		background: #fff;
 		border: 1px solid #d0d0d0;
 		display: inline-block;
 		width: 100%;
@@ -618,8 +623,11 @@ ul.recipe_ingredients {
 		text-align: center;
 		color: #989898;
 		font-size: 16px;
-		padding: 43px 0px;
-		cursor: pointer;
+		padding: 53px 0px;
+		cursor: default;
+	}
+	a:hover {
+		background: #eee;
 	}
 	a span {
 		display: inline-block;
