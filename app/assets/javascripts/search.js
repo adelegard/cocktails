@@ -156,11 +156,3 @@ if (typeof(Cocktails.Search) === 'undefined') {
 $(function() {
   Cocktails.Search._init();
 });
-
-
-$(function() {
-
-
-
-
-});

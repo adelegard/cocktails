@@ -32,7 +32,7 @@ if (typeof(Cocktails.Utility) === 'undefined') {
       }
     },
     setupAjaxChosenIngredients: function() {
-      Cocktails.Utility._setupAjaxChosen(Cocktails.Utility._ajaxChosenIngredientSelector, 
+      Cocktails.Utility._setupAjaxChosen(Cocktails.Utility._ajaxChosenIngredientSelector,
                                          Cocktails.Utility._ajaxChosenIngredientParams);
     },
     _ajaxChosenSuccessCallback: function(data) {
