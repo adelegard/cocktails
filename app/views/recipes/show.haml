@@ -1,17 +1,16 @@
 -@pageTitle = "Recipe - #{@recipe.title}"
 
 .cb
-.page-header
+.page-header.profile
     .recipe_stats.well.fr
         -photo_url = !@recipe_photos.empty? ? @recipe_photos.first.photo.url(:large) : nil
         //=render :partial => '/recipes/social', :locals => {:recipe => @recipe, :recipe_user => @recipe_user, :photo_url => photo_url, :num_shared => @num_shared, :num_liked => @num_liked, :num_saved => @num_starred}
         =render :partial => 'recipes/actions', :locals => {:full_recipe => @full_recipe}
-    .photo_thumb
-        -if @recipe_photos.empty?
-            %a.img_container.no_img.icon-glass{:href => recipe_upload_photo_path(@recipe.id), "data-original-title" => "Add Photo", :rel => "tooltip", "data-placement" => "bottom"}
-        -else
-            %a{:href => "#", "data-toggle" => "modal", "data-target" => "#photos_modal"}
-                = image_tag(@recipe_photos.first.photo.url(:thumb), :class => "img_container")
+    -if @recipe_photos.empty?
+        %a.img_container.no_img.icon-glass{:href => recipe_upload_photo_path(@recipe.id), "data-original-title" => "Add Photo", :rel => "tooltip", "data-placement" => "bottom"}
+    -else
+        %a.img_container{:href => "#", "data-toggle" => "modal", "data-target" => "#photos_modal"}
+            = image_tag(@recipe_photos.first.photo.url(:thumb))
     .span5.top_recipe_details
         %h1.recipe_title
             = @recipe.title
