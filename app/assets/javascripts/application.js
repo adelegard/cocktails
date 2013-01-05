@@ -26,4 +26,6 @@
 //= require gravtastic
 //= require disqus_helper
 //= require galleriffic_helper
+//= require utility
+//= require script
 //= require_tree .
