@@ -10,7 +10,7 @@
         %li.nav-header Ingredients
         %li
             %input.add_ingredient.ingredients_ac{:type => "text", :placeholder => "Add Ingredient"}
-        %a.reset{:href => "/search?spirit=#{@spirit}"}Reset
+        %a.reset{:href => "/search?spirit=#{@spirit}", "data-original-title" => "Reset Filter", :rel => "tooltip"}Reset
         %input{:type => "hidden", :name => "ingredients[]"}
         %form{:id => "sidebar_indgredients_form", :action => "/search", :method => :get}
             %input{:type => "hidden", :name => "spirit", :value => @spirit}

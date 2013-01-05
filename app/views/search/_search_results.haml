@@ -1,40 +1,42 @@
 -hide_no_results_msg ||= false
-#search_results_design5.search_results
+.search_results
   -if full_recipes.length > 0 then
     %table.table.table-striped
       %thead
         %tr
-          %th.user User
           %th.tal
             = sortable "title", "Recipe"
             .asc.dn
             .desc.dn
           %th ABV
           %th
+          %th.user User
       %tbody
         -full_recipes.each do |full_recipe|
           - @creator = full_recipe[:recipe_creator]
           - @the_recipe = full_recipe[:recipe]
           %tr
+            %td.tal
+              -first_photo = full_recipe[:recipe_photos].first
+              -if first_photo
+                %a{:href => "javascript:void(0);"}
+                  = image_tag(first_photo.photo.url(:tiny), :class => "img_container icon", "data-original-title" => "View Photo", :rel => "tooltip")
+              -else
+                %a.img_container.no_img.icon-glass{:href => recipe_upload_photo_path(@the_recipe.id), "data-original-title" => "Add Photo", :rel => "tooltip"}
+              = link_to(@the_recipe.title, @the_recipe, :class => "recipe_title")
+              .ingredient_list.expandable{:class => !user_signed_in? ? "not_signed_in" : "" }
+                -full_recipe[:ingredients].each_with_index do |i, index|
+                  %a{:class => "in_lc_#{i[:in_liquor_cabinet]}", :href => ingredient_path(i[:ingredient])}=i[:ingredient][:ingredient]
+                  -if index < full_recipe[:ingredients].size - 1
+                    &nbsp;
+            %td
+              =!@the_recipe.alcohol.empty? ? @the_recipe.alcohol + '%' : "---"
+            %td.tar
+              =render :partial => 'recipes/actions', :locals => {:full_recipe => full_recipe}
             %td.user
               -if @creator != nil
                 %a{:href => user_path(@creator)}
                   %img.avatar_small{"data-email" => @creator.email}
-            %td.tal
-              -first_photo = full_recipe[:recipe_photos].first
-              -if first_photo
-                .gravatar_container
-                  = image_tag(first_photo.photo.url(:tiny), :class => "icon")
-              = link_to(@the_recipe.title, @the_recipe, :class => "recipe_title")
-              .ingredient_list.expandable{:class => !user_signed_in? ? "not_signed_in" : "" }
-                -full_recipe[:ingredients].each_with_index do |i, index|
-                  %span{:class => "in_lc_#{i[:in_liquor_cabinet]}"}=i[:ingredient][:ingredient]
-                  -if index < full_recipe[:ingredients].size - 1
-                    &nbsp;
-            %td
-              =@the_recipe.alcohol
-            %td.tar
-              =render :partial => 'recipes/actions', :locals => {:full_recipe => full_recipe}
     //= will_paginate full_recipes
   -elsif !hide_no_results_msg
     %h2 No results found!

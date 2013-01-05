@@ -10,26 +10,21 @@
         %h1
             = @user.name
             %small=@user.location
-        %br
         %a.url{:href => @user.url}=@user.url
         .expandable.header_details.muted=@user.about_me
         =render :partial => '/users/follow_btn', :locals => {:is_following => @is_following, :user_id => @user.id}
     .stats
-        %a.left
+        %a.left{:rel => "tooltip", "data-placement" => "bottom", "data-original-title" => "Number of Followers"}
             %span
-                %strong.followers=@follower_users.size
+                %strong.followers= round_k @follower_users.size
                 Followers
-        %a.middle
+        %a.middle{:rel => "tooltip", "data-placement" => "bottom", "data-original-title" => "Number of Liked [Created] Recipes"}
             %span
-                %strong=@num_favorited
-                Favorites
-        %a.middle
-            %span
-                %strong=@num_liked
+                %strong= round_k @num_liked
                 Likes
-        %a.right
+        %a.right{:rel => "tooltip", "data-placement" => "bottom", "data-original-title" => "Number of Disliked [Created] Recipes"}
             %span
-                %strong=@num_disliked
+                %strong= round_k @num_disliked
                 Dislikes
     .cb
 .profile_tabs
@@ -74,7 +69,7 @@
             #recipes_tab.tab-pane.fade.in.active
                 %h2 Created Recipes
                 %hr
-                = render :partial => '/search/search_results_table_design5', :locals => {:full_recipes => @full_recipes_created, :hide_no_results_msg => true}
+                = render :partial => '/search/search_results', :locals => {:full_recipes => @full_recipes_created, :hide_no_results_msg => true}
                 -if @full_recipes_created.length == 0
                     %h2
                         -if @is_current_user
@@ -90,7 +85,7 @@
             #favorites_tab.tab-pane.fade.in
                 %h2 Favorite Recipes
                 %hr
-                = render :partial => '/search/search_results_table_design5', :locals => {:full_recipes => @full_recipes_favorites, :hide_no_results_msg => true}
+                = render :partial => '/search/search_results', :locals => {:full_recipes => @full_recipes_favorites, :hide_no_results_msg => true}
                 -if @full_recipes_favorites.length == 0
                     %h2
                         -if @is_current_user
@@ -107,7 +102,7 @@
             #liked_tab.tab-pane.fade.in
                 %h2 Liked Recipes
                 %hr
-                = render :partial => '/search/search_results_table_design5', :locals => {:full_recipes => @full_recipes_liked, :hide_no_results_msg => true}
+                = render :partial => '/search/search_results', :locals => {:full_recipes => @full_recipes_liked, :hide_no_results_msg => true}
                 -if @full_recipes_liked.length == 0
                     %h2
                         -if @is_current_user
@@ -126,12 +121,11 @@
                         %small
                             p.s. To rate a recipe, simply click on the star that you think a given recipe deserves!
                             %br
-                            Try it here: 
-                            =render :partial => '/recipes/rating_links', :locals => {:recipe_id => -1, :user_rating => 4, :avg_rating => 4, :num_rated => 23}
+                            Try it here:
             #disliked_tab.tab-pane.fade.in
                 %h2 Disliked Recipes
                 %hr
-                = render :partial => '/search/search_results_table_design5', :locals => {:full_recipes => @full_recipes_disliked, :hide_no_results_msg => true}
+                = render :partial => '/search/search_results', :locals => {:full_recipes => @full_recipes_disliked, :hide_no_results_msg => true}
                 -if @full_recipes_disliked.length == 0
                     %h2
                         -if @is_current_user
@@ -150,8 +144,7 @@
                         %small
                             p.s. To rate a recipe, simply click on the star that you think a given recipe deserves!
                             %br
-                            Try it here: 
-                            =render :partial => '/recipes/rating_links', :locals => {:recipe_id => -1, :user_rating => 4, :avg_rating => 4, :num_rated => 23}
+                            Try it here:
             #photos_tab.tab-pane.fade.in
                 %h2 Uploaded Photos
                 %hr

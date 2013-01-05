@@ -1,28 +1,22 @@
 -@pageTitle = @ingredient.ingredient
 
 .page-header.profile
-    .photo_thumb
-        -if @ingredient_photos.empty?
-            .default_thumb_photo
-        -else
-            %a{:href => "#", "data-toggle" => "modal", "data-target" => "#photos_modal"}
-                = image_tag @ingredient_photos.first.photo.url(:thumb)
-            .num_photos 1 of #{@ingredient_photos.size}
-        .add_photo
-            %a{:href => ingredient_upload_photo_path(@ingredient.id)}
-                %i.icon-upload
-                %span Add a Photo
-    .top_details
+    -if @ingredient_photos.empty?
+        %a.img_container.no_img.icon-lemon{:href => ingredient_upload_photo_path(@ingredient.id), "data-original-title" => "Add Photo", :rel => "tooltip", "data-placement" => "bottom"}
+    -else
+        %a.img_container{:href => "#", "data-toggle" => "modal", "data-target" => "#photos_modal"}
+            = image_tag @ingredient_photos.first.photo.url(:thumb)
+    .top_details.span5
         %h1.fl= @ingredient.ingredient
         =render :partial => '/users/cabinet_btn', :locals => {:in_cabinet => @in_cabinet, :ingredient_id => @ingredient.id}
     .stats
-        %a.left
+        %a.left{:rel => "tooltip", "data-placement" => "bottom", "data-original-title" => "Number of Cabinets"}
             %span
-                %strong.cabinets=@lc_count
+                %strong.cabinets= round_k @lc_count
                 ="Cabinet".pluralize(@lc_count)
-        %a.right
+        %a.right{:rel => "tooltip", "data-placement" => "bottom", "data-original-title" => "Number of Recipes"}
             %span
-                %strong=@recipe_count
+                %strong= round_k @recipe_count
                 ="Recipe".pluralize(@recipe_count)
     .cb
 .profile_tabs
@@ -54,13 +48,13 @@
                     =render :partial => '/icons/popular'
                     Popular Recipes
                 %hr
-                = render :partial => '/search/search_results_table_design5', :locals => {:full_recipes => @full_recipes_popular}
+                = render :partial => '/search/search_results', :locals => {:full_recipes => @full_recipes_popular}
             #new_recipes_tab.tab-pane.fade.in
                 %h2
                     =render :partial => '/icons/new'
                     New Recipes
                 %hr
-                = render :partial => '/search/search_results_table_design5', :locals => {:full_recipes => @full_recipes_new}
+                = render :partial => '/search/search_results', :locals => {:full_recipes => @full_recipes_new}
             #photos_tab.photos_tab_content.tab-pane.fade.in
                 %h2
                     =render :partial => '/icons/photo'
