@@ -6,7 +6,6 @@ A website for sharing and exploring tasty cocktails.
 
 1. Install all the necessary dependencies (xcode, homebrew, rvm, ruby, mysql). 
 A decent tutorial on this is located here: http://www.frederico-araujo.com/2011/07/30/installing-rails-on-os-x-lion-with-homebrew-rvm-and-mysql/
-
 2. Clone the git repo
 
 ```
