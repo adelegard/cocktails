@@ -1,27 +1,29 @@
 class UsersController < ApplicationController
 
-  def profile
+  # GET /users/:id
+  def show
     @user = User.find(params[:id])
-    @lc_ingredients = LiquorCabinet.getByUserId(@user.id)
+    @lc_ingredients = LiquorCabinet.by_user_id(@user.id)
     @photos = RecipePhoto.where(:user_id => @user.id)
 
-    @rated_recipes = RecipeUser.getRatedRecipesByUserId(params, @user.id)
-    @total_ratings_rated = RecipeUser.getTotalRatings(@rated_recipes)
-    @full_recipes_rated = Recipe.getFullRecipes(@rated_recipes, @user.id)
+    liked_recipes = RecipeUser.liked_recipes_by_user_id(params, @user.id)
+    @full_recipes_liked = Recipe.full_recipes(liked_recipes, @user.id)
 
-    @favorite_recipes = RecipeUser.getFavoriteRecipesByUserId(params, @user.id)
-    @total_ratings_favorites = RecipeUser.getTotalRatings(@favorite_recipes)
-    @full_recipes_favorites = Recipe.getFullRecipes(@favorite_recipes, @user.id)
+    disliked_recipes = RecipeUser.disliked_recipes_by_user_id(params, @user.id)
+    @full_recipes_disliked = Recipe.full_recipes(disliked_recipes, @user.id)
 
-    @created_recipes = RecipeUser.getCreatedRecipesByUserId(params, @user.id)
-    @total_ratings_created = RecipeUser.getTotalRatings(@created_recipes)
-    @full_recipes_created = Recipe.getFullRecipes(@created_recipes, @user.id)
+    favorite_recipes = RecipeUser.favorite_recipes_by_user_id(params, @user.id)
+    @full_recipes_favorites = Recipe.full_recipes(favorite_recipes, @user.id)
 
-    @num_liked = RecipeUser.getNumLikedCreatedRecipesByUserId(@user.id)
-    @num_favorited = RecipeUser.getNumFavoritedCreatedRecipesByUserId(@user.id)
+    created_recipes = RecipeUser.created_recipes_by_user_id(params, @user.id)
+    @full_recipes_created = Recipe.full_recipes(created_recipes, @user.id)
 
-    @follower_users = UserFollow.getFollowers(@user.id)
-    @following_users = UserFollow.getFollowing(@user.id)
+    @num_liked = RecipeUser.num_liked_recipes_created_by_user_id(@user.id)
+    @num_disliked = RecipeUser.num_disliked_recipes_created_by_user_id(@user.id)
+    @num_favorited = RecipeUser.num_favorited_recipes_created_by_user_id(@user.id)
+
+    @follower_users = UserFollow.followers(@user.id)
+    @following_users = UserFollow.following(@user.id)
 
     @is_current_user = false
     @is_following = false
@@ -30,7 +32,12 @@ class UsersController < ApplicationController
         @is_following = UserFollow.where(:user_id => current_user.id, :follow_user_id => @user.id).length == 1
     end
 
-    render 'users/profile'
+    # friendly_id magic that redirects users with an old url to the current one
+    if request.path != user_path(@user)
+        redirect_to @user, :status => :moved_permanently
+    else
+        render :profile
+    end
   end
 
 end

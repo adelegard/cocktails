@@ -43,6 +43,20 @@ $(function() {
   });
 
   $.validator.addClassRules({
+
+    v_required: {
+      required: true
+    },
+    v_min_2: {
+      minlength: 2
+    },
+    v_range_1_100: {
+      range: [1, 100]
+    },
+    v_email: {
+      email: true
+    },
+
     recipe_title: {
       required: true,
       minlength: 3
@@ -68,11 +82,15 @@ $(function() {
     new_recipe_directions: {
       required: true,
       minlength: 5
+    },
+    f_user_profile_page: {
+      required: false,
+      minlength: 4
     }
   });
 
   // validate signup form on keyup and submit
-  $("form#new_recipe").validate({
+  $("form.validate").validate({
     errorClass: "help-inline",
     errorElement: "span",
     highlight:function(element, errorClass, validClass) {

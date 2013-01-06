@@ -2,7 +2,7 @@
 .page-header
     %h1= @pageTitle
 %br
-=form_for @ingredient_photo, :url => ingredient_do_upload_photo_path, :method => :put, :html => { :multipart => true } do |f|
+=form_for @ingredient_photo, :url => ingredient_do_upload_photo_path, :method => :post, :html => { :multipart => true } do |f|
     %input{:type => "hidden", :name => "ingredient_id", :value => @ingredient.id}
     = f.file_field :photo
     %br

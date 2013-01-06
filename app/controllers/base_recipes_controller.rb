@@ -7,10 +7,9 @@ class BaseRecipesController < ApplicationController
   end
 
   def setup_show
-    params.delete(:id) unless params[:id].to_i > 0
     recipe = Recipe.find(params[:id])
     user_id = current_user != nil && current_user.id ? current_user.id : nil
-    @full_recipe = Recipe.getFullRecipe(recipe, user_id)
+    @full_recipe = Recipe.full_recipe(recipe, user_id)
     setup_show_with_recipe(@full_recipe)
   end
 
@@ -27,8 +26,8 @@ class BaseRecipesController < ApplicationController
 
     @num_starred = full_recipe[:num_starred]
     @num_liked = full_recipe[:num_liked]
-    @num_rated = full_recipe[:num_rated]
-    @avg_rating = full_recipe[:avg_rating]
+    @num_disliked = full_recipe[:num_disliked]
+    @num_shared = full_recipe[:num_shared]
   end
 
 end

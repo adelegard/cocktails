@@ -3,7 +3,7 @@
     %h1= @pageTitle
 %br
 
-=form_for @recipe_photo, :url => recipe_do_upload_photo_path, :method => :put, :html => { :multipart => true } do |f|
+=form_for @recipe_photo, :url => recipe_do_upload_photo_path, :method => :post, :html => { :multipart => true } do |f|
     %input{:type => "hidden", :name => "recipe_id", :value => @recipe.id}
     = f.file_field :photo
     %br

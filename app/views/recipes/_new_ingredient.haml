@@ -1,7 +1,7 @@
-%a.icon-remove.remove_new_ingredient{:href => "javascript:void(0);"}
-%input.val.ing_val{:type => "text", :style => "width:18px;", :value => 1, :name => "recipe[ing][0][val]"}
-%select.amt{:class => "#{select_class}", "data-placeholder" => "Choose an amount...", :style => "width:100px;", :name => "recipe[ing][0][amt]"}
+%a.icon-remove.new_recipe_ingredient_remove.dib{:href => "javascript:void(0);"}
+%input.val.ing_val{:type => "text", :style => "width:18px;", :value => 1, :name => "recipe_ing[0][val]"}
+%select.amt{:class => "#{select_class}", "data-placeholder" => "Choose an amount...", :style => "width:100px;", :name => "recipe_ing[0][amt]"}
     %option oz
     %option shot
     %option tbsp
-%input.add_ingredient.ingredients_ac{:type => "text", :name => "recipe[ing][0][liquor]", :placeholder => "Enter ingredient title..."}
+%input.add_ingredient.ingredients_ac{:type => "text", :name => "recipe_ing[0][liquor]", :placeholder => "Enter ingredient title..."}

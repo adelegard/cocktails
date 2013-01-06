@@ -1,0 +1,8 @@
+-@pageTitle = "My Liked Cocktails"
+
+.page-header
+  %h1
+    =render :partial => '/icons/like'
+    =@pageTitle
+
+= render :partial => '/search/search_results', :locals => {:full_recipes => @full_recipes}

@@ -1,56 +1,59 @@
 class RecipesController < BaseRecipesController
 
-  before_filter :authenticate_user!, :except => [:index, :new_recipes, :popular, :show]
+  before_filter :authenticate_user!, :except => [:index, :recent, :popular, :show]
   before_filter :display_search_sidebar, :except => [:show, :new, :uploadphoto]
 
+  # GET /
   def index
-    setup_new_recipes
     setup_popular_recipes
-    @most_used = Ingredient.getMostUsed(params)
+    setup_new_recipes
+    setup_liked_recipes
+    setup_disliked_recipes
+    setup_favorited_recipes
+    setup_created_recipes
+    #@most_used = Ingredient.most_used(params)
   end
 
-  def new_recipes
+  # GET /recipes/recent
+  def recent
     setup_new_recipes
   end
 
+  # GET /recipes/popular
   def popular
     setup_popular_recipes
   end
 
+  # GET /recipes/:id
   def show
     setup_show
+    # friendly_id magic that redirects users with an old url to the current one
+    if request.path != recipe_path(@recipe)
+      redirect_to @recipe, :status => :moved_permanently
+    end
   end
 
   def comments
     setup_show
     @active_tab = "comments"
-    render 'recipes/show'
+    render :show
   end
 
   def photos
     setup_show
     @active_tab = "photos"
-    render 'recipes/show'
+    render :show
   end
 
+  # GET /recipes/new
   def new
     @recipe = Recipe.new
-    @glasses = Recipe.getAllGlasses
-
-    respond_to do |format|
-      format.html # new.html.erb
-      format.json { render json: @recipe }
-    end
+    @glasses = Recipe.glasses
   end
 
+  # POST /recipes/
   def create
-    @recipe = Recipe.create(:title => params[:recipe][:title], 
-                            :directions => params[:recipe][:directions],
-                            :inspiration => params[:recipe][:inspiration], 
-                            :glass => params[:glass], 
-                            :alcohol => params[:recipe][:alcohol],
-                            :servings => params[:servings],
-                            :created_by_user_id => current_user.id)
+    @recipe = Recipe.create(params[:recipe])
     if params[:recipe_photo] != nil
       recipe_photo = RecipePhoto.create(:recipe_id => @recipe.id,
                                         :user_id => current_user.id)
@@ -58,74 +61,76 @@ class RecipesController < BaseRecipesController
     end
 
     order = 1
-    params[:recipe][:ing].each do |key, val|
+    params[:recipe_ing].each do |key, val|
       ingredient = Ingredient.find_or_create_by_ingredient(val[:liquor])
       RecipeIngredient.create(:recipe_id => @recipe.id, :ingredient_id => ingredient.id, 
                            :order => order, :amount => "#{val[:val]} #{val[:amt]}")
       order = order + 1
     end
 
-    respond_to do |format|
-      if @recipe.save
-        format.html { redirect_to @recipe, notice: 'Recipe was successfully created.' }
-        format.json { render json: @recipe, status: :created, location: @recipe }
-      else
-        @glasses = Recipe.getAllGlasses
-        format.html { render action: "new" }
-        format.json { render json: @recipe.errors, status: :unprocessable_entity }
-      end
+    if @recipe.save
+      redirect_to @recipe, :notice => 'Recipe was successfully created.'
+    else
+      @glasses = Recipe.glasses
+      render :action => "new"
     end
   end
 
+  # GET /recipes/:id/uploadphoto
   def uploadphoto
-      @recipe = Recipe.where(:id => params[:id]).first
-      @recipe_photo = RecipePhoto.new(:recipe_id => @recipe.id, :user_id => current_user.id)
-      render 'recipes/upload_photo'
+    @recipe = Recipe.find(params[:id])
+    @recipe_photo = RecipePhoto.new(:recipe_id => @recipe.id, :user_id => current_user.id)
   end
 
+  # POST /recipes/:id/do_upload_photo
   def do_upload_photo
     recipe_photo = RecipePhoto.create(:recipe_id => params[:recipe_id],
                                       :user_id => current_user.id)
     recipe_photo.update_attributes(params[:recipe_photo])
     params[:id] = params[:recipe_id]
     setup_show
-    respond_to do |format|
-      if @recipe.save
-        format.html { redirect_to @recipe, notice: 'Photo was successfully added!' }
-      else
-        format.html { redirect_to @recipe, error: 'Error uploading photo :(' }
-      end
-    end
-  end
-
-  def share
-    Recipe.share(params)
-
-    respond_to do |format|
-      format.js { render :nothing => true }
+    if @recipe.save
+      redirect_to @recipe, :notice => 'Photo was successfully added!'
+    else
+      redirect_to @recipe, :error => 'Error uploading photo :('
     end
   end
 
   private
 
   def setup_popular_recipes
-    @recipes_popular = Recipe.getPopularRecipes(params)
-    @total_ratings_popular = RecipeUser.getTotalRatings(@recipes_popular)
+    recipes_popular = Recipe.popular(params)
     user_id = current_user != nil && current_user.id ? current_user.id : nil
-    @full_recipes_popular = Recipe.getFullRecipes(@recipes_popular, user_id)
-    if user_signed_in?
-      @recipe_users_popular = RecipeUser.getRecipeUsers(@recipes_popular, current_user.id)
-    end
+    @full_recipes_popular = Recipe.full_recipes(recipes_popular, user_id)
   end
 
   def setup_new_recipes
-    @recipes_new = Recipe.getNewRecipes(params)
-    @total_ratings_new = RecipeUser.getTotalRatings(@recipes_new)
+    recipes_new = Recipe.newly_created(params)
     user_id = current_user != nil && current_user.id ? current_user.id : nil
-    @full_recipes_new = Recipe.getFullRecipes(@recipes_new, user_id)
-    if user_signed_in?
-      @recipe_users_new = RecipeUser.getRecipeUsers(@recipes_new, current_user.id)
-    end
+    @full_recipes_new = Recipe.full_recipes(recipes_new, user_id)
   end
 
+  def setup_liked_recipes
+    return if !user_signed_in?
+    recipes = RecipeUser.liked_recipes_by_user_id(params, current_user.id)
+    @full_recipes_liked = Recipe.full_recipes(recipes, current_user.id)
+  end
+
+  def setup_disliked_recipes
+    return if !user_signed_in?
+    recipes = RecipeUser.disliked_recipes_by_user_id(params, current_user.id)
+    @full_recipes_disliked = Recipe.full_recipes(recipes, current_user.id)
+  end
+
+  def setup_favorited_recipes
+    return if !user_signed_in?
+    recipes = RecipeUser.favorite_recipes_by_user_id(params, current_user.id)
+    @full_recipes_favorited = Recipe.full_recipes(recipes, current_user.id)
+  end
+
+  def setup_created_recipes
+    return if !user_signed_in?
+    recipes = Recipe.created_by_user_id(params, current_user.id)
+    @full_recipes_created = Recipe.full_recipes(recipes, current_user.id)
+  end
 end

@@ -1,5 +1,18 @@
 class User < ActiveRecord::Base
   include Gravtastic
+  extend FriendlyId
+  friendly_id :friendly_name, use: [:slugged, :history]
+  def friendly_name
+    if profile_page
+      profile_page
+    elsif name
+      # lower case and remove space(s)
+      name.downcase.gsub(/\s+/, "")
+    else
+      id
+    end
+  end
+
   has_many :recipe_users
   has_many :recipe, :through => :recipe_users
   has_many :recipe_photos
@@ -12,7 +25,7 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable, :omniauthable
 
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :email, :nickname, :name, :password, :password_confirmation, :remember_me, :url, :location, :about_me
+  attr_accessible :email, :nickname, :name, :password, :password_confirmation, :remember_me, :url, :location, :about_me, :profile_page
 
   class << self
 

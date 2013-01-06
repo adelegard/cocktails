@@ -24,7 +24,7 @@ module ApplicationHelper
 	end
 
 	def sort_column
-		Recipe.column_names.include?(params[:sort]) ? params[:sort] : "rating_count"
+		Recipe.column_names.include?(params[:sort]) ? params[:sort] : "created_at"
 	end
 
 	def sort_direction

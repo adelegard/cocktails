@@ -5,6 +5,32 @@ $in_liquor_cabinet_background_color_hover: #51a351;
 $not_in_liquor_cabinet_background_color: #EE5F5B;
 $not_in_liquor_cabinet_background_color_hover: #bd362f;
 
+::-webkit-input-placeholder {
+   color: #BBB;
+}
+input:-moz-placeholder {
+   color: #BBB;  
+}
+
+.expandable.header_details {
+	border-top: 3px solid transparent;
+	margin-top: 2px;
+}
+.expandable.expanded.header_details {
+	position: relative;
+	border: 1px solid #CCC;
+	border-left: 0px solid #CCC;
+	padding: 3px;
+	margin: -3px;
+	margin-top: 1px;
+	background-color: white;
+	z-index: 1;
+	@include border-radius(3px);
+  -webkit-box-shadow: 0 3px 3px #CCC, 2px 3px 3px #CCC, 0px 3px 3px #CCC;
+     -moz-box-shadow: 0 3px 3px #CCC, 2px 3px 3px #CCC, 0px 3px 3px #CCC;
+          box-shadow: 0 3px 3px #CCC, 2px 3px 3px #CCC, 0px 3px 3px #CCC;
+}
+
 .separatorVert {
 	color: #989898;
 	font-size: 11px;
@@ -98,87 +124,111 @@ $not_in_liquor_cabinet_background_color_hover: #bd362f;
 	margin-top: 5px;
 }
 
-#search_results_design1,
-#search_results_design2,
-#search_results_design3,
-#search_results_design4 {
-	img.icon {
-		border: 1px solid transparent;
-	}
-	img.icon:hover {
-		cursor: pointer;
-		border: 1px solid pink;
-	}
-	.recipe_title {
-		//font-size: 18px;
-	}
-	.social_small {
-		font-size: 11px;
-		margin-top: 5px;
+.btn-group.recipe_actions .btn {
+	padding: 4px 14px 4px;
 
-		div {
-			width: 45px;
-		}
+	span {
+		float: right;
 	}
-	.table th, .table td {
-		padding: 6px;
-	}
+}
+.btn-group.recipe_actions .btn:nth-child(-n+2) {
+	width: 5.8em;
+}
 
-	tbody td.view_count {
-		border-left: 1px dashed #ddd;
-	}
-	tbody td.liked {
-		border-right: 1px dashed #ddd;
-	}
+.img_container {
+	display: inline-block;
+	float: left;
+	border: 1px solid #BBB;
+	@include border-radius(3px);
 
-	td.num {
-		width: 20px;
+	&:hover {
+		border: 1px solid #aaa;
 	}
-	td.num a {
-		padding: 1px 4px 2px;
-		font-size: 10.998px;
-		font-weight: bold;
-		line-height: 13px;
-		color: white;
-		vertical-align: middle;
-		white-space: nowrap;
-		text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
-		background-color: #999;
-		@include border-radius(3px);
+}
+.img_container.no_img {
+	text-align: center;
+	color: #555;
+	background-color: #fbfbfb;
+	text-decoration: none;
+
+	&:hover {
+		background-color: #eee;
 	}
 }
 
-#search_results_design3 {
+.search_results {
+	.table th,
+	.table td {
+		padding: 5px;
+	}
+	.table th.user {
+		width: 37px;
+	}
+	.table td.user {
+		border-left: 1px dashed #ccc;
+	}
+	.recipe_title {
+		font-size: 18px;
+	}
 	.ingredient_list {
-		margin-top: 5px;
 		font-size: 11px;
 		color: white;
+		width: 420px;
 
 		span {
 			padding: 2px;
 			@include border-radius(2px);
+		}
+
+		.in_lc_true {
+			color: $in_liquor_cabinet_background_color;
+		}
+		.in_lc_false {
+			color: $not_in_liquor_cabinet_background_color;
 		}
 	}
 	.ingredient_list.not_signed_in {
 		color: #000
 	}
 
-	.in_lc_true {
-		background-color: $in_liquor_cabinet_background_color;
+	.img_container {
+		height: 38px;
+		width: 50px;
+		margin-right: 7px;
 	}
-	.in_lc_false {
-		background-color: $not_in_liquor_cabinet_background_color;
+	.img_container.no_img {
+		font-size: 30px;
+		line-height: 38px;
+	}
+	.btn-group.recipe_actions .btn {
+		line-height: 30px;
+	}
+	.avatar_small {
+		margin-top: 3px;
 	}
 }
 
-.popularity {
-	height: 20px;
-	background-color: #08C;
-	@include border-radius(2px);
+.read-more,
+.read-less {
+	font-weight: bold;
+	font-size: 18px;
+	line-height: 7px;
+
+	a {
+		height: 11px;
+		display: inline-block;
+		padding: 2px;
+	}
+	a:hover {
+		text-decoration: none;
+		color: white;
+		background-color: #08C;
+		@include border-radius(2px);
+	}
 }
 
-.favorite-links {
-	margin-bottom: 1px;
+.avatar_small {
+	@include border-radius(3px);
 }
 
 .navbar .brand:hover {
@@ -188,10 +238,28 @@ $not_in_liquor_cabinet_background_color_hover: #bd362f;
 form.navbar-search .icon-search {
 	position: relative;
 	left: -25px;
+	color: #CCC;
 }
 
-.sidebar-nav.search input.add_ingredient {
-	width: 100px;
+.sidebar-nav.search {
+	input.add_ingredient {
+		width: 100px;
+	}
+	.reset {
+		display: inline-block;
+		position: relative;
+		width: 100%;
+		border: 1px solid #CCC;
+		padding: 2px 0px;
+		margin-bottom: 7px;
+		text-align: center;
+		@include border-radius(2px);
+	}
+	.reset:hover {
+		text-decoration: none;
+	//	background-color: #08C;
+	//	color: #FFF;
+	}
 }
 
 form.devise {
@@ -231,35 +299,17 @@ form.devise {
 	}
 }
 
-.favorite,
-.unfavorite {
-	width: 19px;
-	height: 19px;
-	float: left;
-	margin-left: -1px;
-
-	span {
-		margin-left: 19px;
-	}
-}
-.unfavorite {
-	background: transparent asset-url("star-lit.png", image) no-repeat center left;
-
-	&:hover {
-		background: transparent asset-url("star-lit-hover.png", image) no-repeat center left;
-	}
-}
-.favorite {
-	background: transparent asset-url("star.png", image) no-repeat center left;
-
-	&:hover {
-		background: transparent asset-url("star-hover.png", image) no-repeat center left;
-	}
+.top_recipe_details {
+	height: 75px;
 }
 
-#recipe_actions,
-#recipe_social {
+.row-fluid [class*="span"].recipe_links {
 	float: right;
+}
+
+.recipe_stats .btn-group.recipe_actions .btn {
+	font-size: 25px;
+	line-height: 80px;
 }
 
 .recipe_social {
@@ -290,11 +340,15 @@ ul.recipe_ingredients {
 	margin: 0;
 }
 
-.page-header .photo_thumb {
-	display: inline-block;
-	float: left;
-	margin-right: 8px;
-	text-align: center;
+.page-header .img_container {
+	height: 150px;
+	width: 150px;
+	padding: 2px;
+	line-height: 150px;
+	border: 2px solid #CCC;
+}
+.page-header .img_container.no_img {
+	font-size: 105px;
 }
 
 .num_photos {
@@ -303,11 +357,6 @@ ul.recipe_ingredients {
 }
 .add_photo {
 	margin: 2px 0 0 3px;
-}
-.default_thumb_photo {
-	width: 150px;
-	height: 150px;
-	background: transparent asset-url("cocktails/default.jpg", image) no-repeat center left;
 }
 
 #photos_modal {
@@ -389,8 +438,6 @@ ul.recipe_ingredients {
 	top: 0;
 	left: 0;
 	right: 0;
-	//width: 1380px;
-	//height: 2887px;
 
 	a.close_circle {
 		position: absolute;
@@ -463,20 +510,16 @@ ul.recipe_ingredients {
 	background: asset-url("cocktails/green_992.jpg", image) no-repeat 0 0;
 }
 
-.recipe_rating_count {
-	font-size: 16px;
-}
-
 .vote_container {
 	float: right;
 	margin-right: 50px;
 }
-.vote_column {
+.vote_container .vote_column {
 	float: left;
 	width: 99px;
 	border-top: 1px solid #E1E1E1;
 }
-.vote_button {
+.vote_container .vote_column .vote_button {
 	border: solid 1px #E1E1E1;
 	margin-left: -1px;
 	padding-right: 1px;
@@ -520,23 +563,25 @@ ul.recipe_ingredients {
 	}
 }
 
-.profile img {
+.profile .gravatar {
 	float: left;
-	margin-right: 15px;
+	display: inline-block;
+	padding: 2px;
+	border: 2px solid #ccc;
+	@include border-radius(3px);
 }
 .profile .top_details {
 	float: left;
 	text-align: left;
-	width: 450px;
 	position: relative;
-	height: 150px;
-	overflow: hidden;
+	height: 155px;
 
 	.btn_container {
 		position: absolute;
 		bottom: 0px;
 		left: 0px;
 		font-size: 18px;
+		white-space: nowrap;
 	}
 
 	a.url {
@@ -569,7 +614,6 @@ ul.recipe_ingredients {
 	float: right;
 
 	a {
-		background: #fff;
 		border: 1px solid #d0d0d0;
 		display: inline-block;
 		width: 100%;
@@ -579,8 +623,11 @@ ul.recipe_ingredients {
 		text-align: center;
 		color: #989898;
 		font-size: 16px;
-		padding: 43px 0px;
-		cursor: pointer;
+		padding: 53px 0px;
+		cursor: default;
+	}
+	a:hover {
+		background: #eee;
 	}
 	a span {
 		display: inline-block;
